@@ -4,7 +4,7 @@
 
 ## ✨ About Me
 
-I'm Dileepa Bandara, a developer with a focus on Artificial Intelligence, Software Development, and Cloud Computing. Beyond my professional work, I am also committed to giving back to the community. I actively volunteer with various organizations and create content designed to empower others, helping them achieve their goals and improve their lives.
+I'm Dileepa Bandara, a developer with a focus on Artificial Intelligence, Software Development, and Cloud Computing. Beyond my professional work, I am also committed to giving back to the community. I actively volunteer with various organizations and create content designed to empower others, helping them achieve their goals and improve lives.
 
 ## 🎯 Learning and Working
 
