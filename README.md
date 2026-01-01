@@ -1,3 +1,4 @@
-## Hi there 👋
+## Hi 👋
 
-I'm Dileepa Bandara. This is my new GitHub account.
+- I build things with AI here.  
+- Thanks for visiting my new GitHub!
