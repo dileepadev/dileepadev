@@ -217,7 +217,7 @@ already has.
 
 Because the Cloudinary `public_id` is derived deterministically from the repo path, the main
 site can construct an image URL without a database lookup. The stored record exists for admin
-visibility and for redirecting the old `blog.dileepa.dev/images/**` URLs, not for resolution.
+visibility, not for resolution.
 
 Detail: [`content-pipeline.md`](content-pipeline.md) §4.
 
@@ -312,8 +312,9 @@ Full task list in [`../../TODO.md`](../../TODO.md). Cutover and rollback detail 
 
 ## 7. Constraints that shape the design
 
-- **GitHub Pages cannot issue 301s.** `blog.dileepa.dev` is served from Pages today, so its DNS
-  must move to a host that can redirect before the Astro site is switched off.
+- **`blog.dileepa.dev` is retired, not redirected.** The shared links that pointed at it were
+  updated at the source instead, so the old host is simply switched off and its indexed URLs
+  404. The cost is recorded in [`redirects.md`](redirects.md) §1.
 - **`dileepadev.github.io` images are hot-linked** from READMEs across many repositories, with no
   redirect layer available. Preview images migrate out one project at a time, and a file is
   removed only once every reference to it has been updated.

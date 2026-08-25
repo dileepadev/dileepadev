@@ -22,6 +22,6 @@ Start with [`architecture/platform-overview.md`](architecture/platform-overview.
 | [dileepa-dev](https://github.com/dileepadev/dileepa-dev) | The main website |
 | [api-dileepa-dev](https://github.com/dileepadev/api-dileepa-dev) | The backend API |
 | [admin-dileepa-dev](https://github.com/dileepadev/admin-dileepa-dev) | Content management |
-| [blog-dileepa-dev](https://github.com/dileepadev/blog-dileepa-dev) | Blog content and assets |
+| [blog-dileepa-dev](https://github.com/dileepadev/blog-dileepa-dev) | Blog content — Markdown posts only; no application |
 | [links-dileepa-dev](https://github.com/dileepadev/links-dileepa-dev) | Links page |
 | [dileepadev.github.io](https://github.com/dileepadev/dileepadev.github.io) | Brand assets and project previews |

@@ -281,7 +281,7 @@ class BlogPost:
 
 | v1 | v2.0.0 | Reason |
 | --- | --- | --- |
-| `link` — absolute `https://blog.dileepa.dev/...` | `path` — relative, plus `canonicalUrl` | The host is moving; consumers compose it |
+| `link` — absolute `https://blog.dileepa.dev/...` | `path` — relative, plus `canonicalUrl` | The host is gone; consumers compose the URL |
 | `bannerUrl` — absolute, on the blog host | `banner: { url, alt }` — always `null` | Banners are retired; see below |
 | `date: str` | `publishedDate: datetime` | Strings don't sort |
 | `excerpt` | `description` | Matches the front-matter field name |
@@ -306,8 +306,9 @@ The same rule holds across the platform. Photographs appear in exactly two place
 
 ### Migration
 
-All 18 existing rows carry `blog.dileepa.dev` absolutes in `link` and `bannerUrl`. Rewriting
-them is destructive:
+All 18 existing rows carry `blog.dileepa.dev` absolutes in `link` and `bannerUrl`. Those URLs no
+longer resolve — the host is retired — so every row has to be rewritten. Rewriting is
+destructive:
 
 1. Take a **verified, restore-tested** MongoDB backup.
 2. Dry-run the migration and diff the output.

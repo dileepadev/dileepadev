@@ -109,21 +109,21 @@ page of photographs read as a deliberate section rather than decoration sprayed 
 Blog post images are not photographs in this sense — they are screenshots and diagrams inside an
 article, and they are the article's business.
 
-### The old image URLs still need redirecting
+### The old image URLs are not redirected
 
-Retiring banners does not un-publish the 19 banner URLs that are already indexed, and three
-posts embed `blog.dileepa.dev/images/posts/**` screenshots in bodies that are live today. Those
-URLs die with GitHub Pages unless something answers them.
+`blog.dileepa.dev` is retired rather than redirected — see [`redirects.md`](redirects.md) §1 —
+so the 19 already-indexed banner URLs simply stop resolving. They were retired going forward
+anyway, and nothing on the platform references them.
 
-The mapping is a rule, so the redirect is a rule:
+**Three inline screenshots are a different matter, and they are a live problem.** The post
+`2026-02-12-personalize-your-vs-code-ai-with-custom-agents` embeds them as root-relative
+`/images/posts/<slug>/N.png` paths, which the Astro app used to serve. That app is deleted, so
+those three images are broken on the published post until they are uploaded to Cloudinary and
+the Markdown is rewritten to the returned URLs.
 
-```http
-blog.dileepa.dev/images/banners/<file>  →  res.cloudinary.com/<cloud>/image/upload/blog/banners/<file>
-blog.dileepa.dev/images/posts/<slug>/<file> → .../blog/posts/<slug>/<file>
-```
-
-Recorded in [`redirects.md`](redirects.md). Nothing new is uploaded under those public IDs —
-they exist to keep already-published URLs resolving, and nothing more.
+This is a **content fix in `blog-dileepa-dev`**, not a redirect — the whole point of §4 is that a
+post's images are ordinary URLs in its body. It is blocked on the development Cloudinary key,
+which `POST /uploads` refuses with `actions=["create"]` missing.
 
 ## 5. Metadata sync
 
@@ -133,7 +133,7 @@ now the whole of it.
 
 ### What must change in the sync script
 
-The v1 script writes absolute URLs built from `SITE_URL`, defaulting to `https://blog.dileepa.dev`:
+The v1 script wrote absolute URLs built from `SITE_URL`, defaulting to `https://blog.dileepa.dev`:
 
 ```js
 link: `${SITE_URL}/blog/${slug}`,
