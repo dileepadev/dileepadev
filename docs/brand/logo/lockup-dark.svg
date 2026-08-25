@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232 48" width="232" height="48"
+     role="img" aria-label="dileepadev">
+  <!-- Lockup: neutral wordmark + emerald "/." — see docs/brand/brand-guide.md 3.1 -->
+  <!-- Live text: Manrope must be available. Outline it before sending off-platform. -->
+  <g font-family="Manrope, system-ui, -apple-system, sans-serif" font-size="32">
+    <text x="0" y="34" font-weight="500" letter-spacing="-0.64" fill="#F2F2F2">dileepadev</text>
+    <text x="196" y="34" font-weight="700" font-style="italic" fill="#23B888">/</text>
+    <circle cx="222" cy="31" r="3.2" fill="#23B888"/>
+  </g>
+</svg>
