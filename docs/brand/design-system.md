@@ -180,7 +180,7 @@ default.
 
 ### 2.6 Proportion
 
-```
+```text
 Neutrals    ████████████████████████████████████████  85%
 Emerald     ██████████████                             14%
 Functional  ▌                                            1%
