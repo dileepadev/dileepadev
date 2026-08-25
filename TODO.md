@@ -233,14 +233,20 @@ work, and the backup comes first.
       with `recursive=1` reads the whole tree in one request
 - [x] Per-resource `revalidate`; degrade-vs-fail decided per call
 
-## Phase 4 — Blog consolidation and redirects
+## Phase 4 — Blog consolidation
 
-**The highest-consequence sequence in the migration. Order is not negotiable.**
+**`blog.dileepa.dev` is retired, not redirected.** The links that pointed at it were updated at
+their source, so there is no redirect layer to build and no ordering constraint gating the
+decommission. What that costs is recorded in
+[`docs/architecture/redirects.md`](docs/architecture/redirects.md) §1.
 
 ### Content move (`blog-dileepa-dev`) ✅
 
-- [x] `src/content/posts/` → `content/posts/<year>/<month>/` — **all 18 slugs byte-identical**.
+- [x] `src/content/posts/` → `content/posts/<year>/<month>/` — **17 of 18 slugs byte-identical**.
       The directories are grouping; the file name is the slug and the slug is the URL
+- [x] **Slug drift found:** `2026-02-11-welcome` became `2026-02-10-welcome` during the move,
+      with `publishedDate` changed to match. Resolved by keeping the corrected date and adding a
+      same-site redirect — `redirects.md` §2 row 2
 - [x] `.mdx` → `.md`. Audited: the only MDX-only syntax was a `SeriesBox` import in eight posts,
       and the series box is a rendering concern now driven by `series` / `seriesOrder`
 - [x] **Banners retired.** `banner` and `bannerAlt` removed from every post; the 19 files in
@@ -248,46 +254,62 @@ work, and the backup comes first.
 - [x] Front-matter contract documented in `schema/frontmatter.md`
 - [x] `scripts/sync-blogs.mjs` retargeted: relative `path`, no `SITE_URL`, no banner, reading
       time computed from the body, and no longer skipping posts that already exist
+- [x] Audited all 18 posts for hard-coded `blog.dileepa.dev` links in the bodies — none found
+- [ ] Validate the front matter in CI — the check `src/content.config.ts` used to provide at
+      Astro build time went with the app
+
+### Astro app removed (`blog-dileepa-dev`) ✅
+
+- [x] `src/`, `astro.config.mjs`, `tsconfig.json`, `package.json`, `package-lock.json`, and the
+      Astro entries in `.vscode/` deleted. No build, no dependencies
+- [x] `.github/workflows/astro.yml` → `sync.yml`: triggered by content changes rather than
+      chained to a Pages deploy, and installs nothing — the sync script imports only `node:`
+      built-ins
+- [x] `README.md`, `AGENTS.md`, `VERSIONING.md` rewritten for a content-only repository;
+      `CHANGELOG.md` frozen at `2.0.0`
+
+### Images — the one open content blocker
+
+> [!WARNING]
+> With the Astro app gone, nothing serves `/images/posts/**`. Three screenshots in
+> `2026-02-12-personalize-your-vs-code-ai-with-custom-agents` are **broken on the published
+> post** until this is fixed.
+
 - [ ] Upload the three inline post images to Cloudinary and rewrite the Markdown to those URLs.
       **Blocked**: the development Cloudinary key is refused with
       `Request forbidden due to missing permissions (actions=["create"])`
-- [ ] Audit all 18 posts for hard-coded `blog.dileepa.dev` links **in the post bodies**
-- [ ] Validate the front matter in CI
+- [ ] Delete `public/` from `blog-dileepa-dev` once those three resolve
 
-### Redirect implementation (`dileepa-dev`)
+### Redirects that survive (`dileepa-dev`)
 
-- [ ] **Repoint `blog.dileepa.dev` DNS to Vercel** — GitHub Pages cannot issue 301s
-- [ ] `next.config.ts` redirects with `has: [{ type: "host", value: "blog.dileepa.dev" }]`
-- [ ] 18 post URLs: `blog.dileepa.dev/blog/{slug}` → `dileepa.dev/blog/{slug}` (301)
-- [ ] `blog.dileepa.dev/` and `/blog` → `dileepa.dev/blog`
-- [ ] `blog.dileepa.dev/about` → `dileepa.dev/#about`
-- [ ] `blog.dileepa.dev/images/**` → chosen image host
-- [ ] `blog.dileepa.dev/sitemap-index.xml` → `dileepa.dev/sitemap.xml`
-- [ ] **Legacy slug, single hop:** `2026-08-06-zero-to-agent-microsoft-foundry-series-kickoff` → `2026-08-06-part-1-kicking-off-the-series` — on both hosts
+Only same-site rules remain. Nothing answers the old host.
+
+- [ ] **Legacy slug, single hop:** `dileepa.dev/blog/2026-08-06-zero-to-agent-microsoft-foundry-series-kickoff`
+      → `dileepa.dev/blog/2026-08-06-part-1-kicking-off-the-series`. This lived in the blog's
+      deleted `astro.config.mjs` and is easy to lose with it
+- [ ] **Welcome slug, single hop:** `dileepa.dev/blog/2026-02-11-welcome`
+      → `dileepa.dev/blog/2026-02-10-welcome`. From the content move's rename
 - [x] Same-site: `/events` **keeps its path**. The `sessions` rename is reverted, and the
       `/sessions → /events` rules exist only for links shared from a preview deployment
 
 ### SEO
 
-- [ ] `rel=canonical` on every post pointing at the `dileepa.dev` URL
-- [ ] Carry over titles, descriptions, banners, published/updated dates, OG and Twitter cards
+- [ ] `rel=canonical` on every post pointing at its `dileepa.dev` URL
+- [ ] Carry over titles, descriptions, published/updated dates, OG and Twitter cards
 - [x] JSON-LD: `BlogPosting` on posts, `Event` on event pages
-- [ ] Google Search Console change of address from the blog property to `dileepa.dev`
-- [ ] Resubmit sitemap; keep the old sitemap URL redirecting ≥ 6 months
+- [ ] Sitemap includes `/blog/*` and omits the legacy slug; submit it for `dileepa.dev`
+- [ ] Remove the `blog.dileepa.dev` property from Search Console. **Not a change of address** —
+      that tool requires the old URLs to 301, and they do not
+- [ ] Point the Blog entry in `links-dileepa-dev/src/data/links.json` at `dileepa.dev/blog`
 
-### Decommission — only after everything above is verified in production
+### Decommission
 
-1. [ ] All 18 posts render at `dileepa.dev/blog/{slug}`
-2. [ ] Redirects verified with real HTTP requests against production
-3. [ ] DNS repointed; old URLs return **single-hop** 301s
-4. [ ] Search Console change of address submitted; indexing observed moving
-5. [ ] Tag `v2.0.0` to archive the final Astro build
-6. [ ] Delete the Astro app, `package.json`, `astro.config.mjs`, `.astro/`, the Pages workflow
-7. [ ] Disable GitHub Pages for the repository
-8. [ ] Freeze `CHANGELOG.md`; record the move out of the application release model
-
-> [!WARNING]
-> Keep the `blog.dileepa.dev` redirect layer live for **at least 12 months** — not just until launch.
+1. [ ] All 18 posts render at `dileepa.dev/blog/{slug}` — **this one still gates the rest**
+2. [ ] Tag `blog-dileepa-dev` `v2.0.0` to archive the final Astro build
+3. [x] Delete the Astro app and the Pages workflow
+4. [ ] Disable GitHub Pages for the repository
+5. [ ] Remove the `blog.dileepa.dev` DNS record
+6. [x] Freeze `CHANGELOG.md`; record the move out of the application release model
 
 ## Phase 5 — Admin application (`admin-dileepa-dev`)
 
@@ -410,8 +432,10 @@ Follows the design system, so it needs Phase 3 done first.
 
 ### Redirects and SEO
 
-- [ ] **All 19 old blog URLs return a single-hop 301 to a live 200 — against production, not localhost**
-- [ ] No blog image is broken in any migrated post
+- [ ] **All 18 posts return a direct 200 at `dileepa.dev/blog/{slug}` — against production, not localhost**
+- [ ] The legacy slug returns a single-hop 301 to a live 200
+- [ ] No blog image is broken in any migrated post — **the three inline screenshots are known
+      broken until they move to Cloudinary**
 - [ ] Canonicals, sitemap, and RSS correct and submitted
 - [ ] Social preview cards render on LinkedIn and X for site, blog, links
 
@@ -443,14 +467,15 @@ Follows the design system, so it needs Phase 3 done first.
 - [ ] Merge `feat/v2.0.0` branches (`dileepa-dev`, `api-dileepa-dev`, `admin-dileepa-dev`, `links-dileepa-dev`)
 - [ ] Tag `v2.0.0` in all seven repositories
 - [ ] Close all seven v2.0.0 issues
-- [ ] Keep the redirect layer monitored for 12 months
+- [ ] Confirm `blog.dileepa.dev` is fully switched off: Pages disabled, DNS record removed
 
 ## Risk register
 
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
-| Decommissioning the blog before redirects are live | Every indexed URL dies; ranking loss is slow to recover | The eight-step Phase 4 order; DNS moves before Pages is disabled |
-| GitHub Pages cannot serve 301s | Meta-refresh fallback transfers ranking poorly | Move `blog.dileepa.dev` DNS to Vercel |
+| ~~Decommissioning the blog before redirects are live~~ | ~~Every indexed URL dies~~ | **Accepted, not mitigated.** `blog.dileepa.dev` is retired rather than redirected — the links that mattered were updated at their source. Indexed and third-party links to the old host will 404. See `docs/architecture/redirects.md` §1 |
+| Deleting the Astro app before the main site serves the posts | The 18 posts are published nowhere | Phase 4 decommission step 1 still gates the rest: verify all 18 render at `dileepa.dev/blog/{slug}` first |
+| Losing the legacy slug redirect with `astro.config.mjs` | A shared URL breaks silently, and the config it lived in is deleted | Carried over as a same-site rule on `dileepa.dev`; `redirects.md` §2 |
 | bcrypt hashes incompatible between Node and `passlib` | Owner locked out of admin | Test with a real DB hash before cutover; staging rehearsal |
 | Blog URL rewrite in MongoDB is destructive | Data loss | Verified backup, dry-run, `legacy` field kept one release |
 | ~~Vercel Python runtime constraints~~ | ~~API cold starts or deployment failure~~ | **Moot.** The API deploys to FastAPI Cloud, not Vercel |
