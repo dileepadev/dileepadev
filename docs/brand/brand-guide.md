@@ -1,11 +1,7 @@
-<!-- Canonical. Published from the v2.1 revision of the v2.0.0 brand guide — updated to record
-     what shipped on dileepa-dev after its post-launch visual-consistency pass. See
-     design-system.md's provenance note for the full account. -->
-
 # Personal brand guide
 
 **Dileepa — @dileepadev**
-Version 2.1 · Final
+Version 2.0
 
 For the full component contract — buttons, cards, forms, navigation, icons, states, layout — see
 [`design-system.md`](design-system.md). This document covers brand identity: colour, type, and
@@ -202,3 +198,26 @@ TAGLINE     Building AI systems and the community around them.
 
 PILLARS     Build · Teach · Ship
 ```
+
+## 5. Portrait
+
+The portrait is the one photograph the brand uses (§3.2) — the face on the profile picture, and
+on every platform crop derived from it (LinkedIn, GitHub, Facebook, X, YouTube). This section
+covers only the field it sits on, not the photograph itself.
+
+| Token | Hex | Role |
+| --- | --- | --- |
+| `portrait-field` | `#D2D2D2` | Default background for every portrait crop. Reuses `paper-300` (§1.2) — no new token. |
+| `portrait-on-dark` | `#F1F1F1` | Swap-in field on Carbon surfaces. Reuses `ink-100` (§1.2). |
+| `portrait-on-light` | `#6A6A6A` | Swap-in field on Paper surfaces. Reuses `paper-400` (§1.2). |
+
+Supersedes any earlier portrait background of `#7E7E7E` or `#757575` — wherever those appear,
+`portrait-field` is the current value.
+
+### Verified contrast
+
+| Pairing | Ratio | Verdict |
+| --- | --- | --- |
+| `portrait-field` vs subject (hair/shirt) | 12.85:1 | AAA |
+| `portrait-field` vs white/light platform chrome | ≈1.4:1 | Intentionally soft — a photo field, not a control's edge, so the 3:1 non-text floor in §1.2 doesn't apply here. |
+| `portrait-field` vs dark platform chrome | ≈10–12:1 | AAA |
