@@ -35,6 +35,12 @@ How blog content gets from `blog-dileepa-dev` onto `dileepa.dev/blog`.
 Three stores, each holding what it is good at: **Git** holds the words, **Cloudinary** holds the
 images, **MongoDB** holds the index.
 
+MongoDB also holds the one part of a post that readers write rather than the author: view counts,
+reactions, and comments. Those are outside this pipeline — nothing about them is synced, built, or
+pinned to a ref, and they are fetched in the browser rather than at build time. See
+[`api-contract.md`](api-contract.md). The rule the pipeline cares about is unchanged: **the words
+stay in Git.** If post bodies ever appear in the database, the source of truth has quietly moved.
+
 Posts are grouped `content/posts/<year>/<month>/<slug>.md`. The directories are grouping only —
 they were never part of the URL and are stripped when the id becomes a slug. **The file name is
 the slug, and the slug is the URL.**
@@ -115,15 +121,11 @@ article, and they are the article's business.
 so the 19 already-indexed banner URLs simply stop resolving. They were retired going forward
 anyway, and nothing on the platform references them.
 
-**Three inline screenshots are a different matter, and they are a live problem.** The post
-`2026-02-12-personalize-your-vs-code-ai-with-custom-agents` embeds them as root-relative
-`/images/posts/<slug>/N.png` paths, which the Astro app used to serve. That app is deleted, so
-those three images are broken on the published post until they are uploaded to Cloudinary and
-the Markdown is rewritten to the returned URLs.
-
-This is a **content fix in `blog-dileepa-dev`**, not a redirect — the whole point of §4 is that a
-post's images are ordinary URLs in its body. It is blocked on the development Cloudinary key,
-which `POST /uploads` refuses with `actions=["create"]` missing.
+**The three inline screenshots that used to be an exception are gone.** The post
+`2026-02-12-personalize-your-vs-code-ai-with-custom-agents` embedded them as root-relative
+`/images/posts/**` paths that the Astro app served; they now point at Cloudinary like every other
+image, and `public/images/posts/` is deleted. No post in the repository depends on a file the
+repository holds.
 
 ## 5. Metadata sync
 
@@ -131,7 +133,7 @@ The workflow syncs front matter to `POST /blogs/sync`, upsert-by-slug and idempo
 property `scripts/sync-blogs.mjs` already had and keeps. With images out of the pipeline this is
 now the whole of it.
 
-### What must change in the sync script
+### What changed in the sync script
 
 The v1 script wrote absolute URLs built from `SITE_URL`, defaulting to `https://blog.dileepa.dev`:
 
@@ -140,8 +142,8 @@ link: `${SITE_URL}/blog/${slug}`,
 bannerUrl: frontmatter.banner ? `${SITE_URL}${frontmatter.banner}` : "",
 ```
 
-Both are wrong after consolidation, and both are already in the database on all 18 rows. The v2
-script sends:
+Both were wrong after consolidation, and both are still in the database on all 18 rows until the
+rewrite runs. The v2 script sends:
 
 ```js
 path: `/blog/${slug}`,                       // relative

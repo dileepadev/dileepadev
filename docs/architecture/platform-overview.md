@@ -273,8 +273,23 @@ correctly.
 **Reads.** The main site fetches from FastAPI at build time and revalidates on a per-resource
 interval. Blog post bodies come from GitHub at build time and are not fetched at runtime.
 
-**Writes.** Only admin writes, through server actions, authenticated with a JWT. The public
-site's one write is the contact form (`POST /contact`), which is rate-limited and unauthenticated.
+**Writes.** Admin writes go through server actions, authenticated with a JWT.
+
+**Public writes are the exception, and there are four of them** — the contact form, blog views,
+blog reactions, and comments (including comment reactions). All are unauthenticated and all are
+rate-limited harder than anything else. None collects an identity: engagement and comments key on
+a salted hash of the caller's address, which is enough to recognise a repeat and not enough to
+reconstruct who it was.
+
+This is a change in kind, not just in count. Before v2.0.0 the only thing a stranger could write
+was a message that went straight to email and was never served back. Comments are stored and
+rendered to other readers, which is why they carry a honeypot, length bounds and a depth cap, and
+why `PublicComment` has no field for the email address a commenter may leave. Detail in
+[`api-contract.md`](api-contract.md).
+
+**Reads that are not build-time.** A post page is static, but its reaction counts, view count and
+comment thread are fetched in the browser — they change while the page is open, so a cached count
+is a wrong count.
 
 **Content sync.** Pushing to the blog repo's `main` triggers a workflow that uploads changed
 images through the API and syncs post metadata to `POST /blogs/sync`, authenticated with an API
