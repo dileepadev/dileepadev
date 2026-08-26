@@ -134,9 +134,10 @@ This repository *is* the docs. Two specific ownership rules:
 
   Every vendored copy is a copy that can drift. When this file changes, the change has to be
   pushed into each consuming repo deliberately.
-- `docs/architecture/redirects.md` is the **single source of truth** for the blog URL map.
-  `dileepa-dev` implements it and `blog-dileepa-dev` depends on it. Three places must never
-  disagree about which old URL points where.
+- `docs/architecture/redirects.md` is the **single source of truth** for URL changes on
+  `dileepa.dev`; `dileepa-dev` implements it. It is no longer a cross-host map — `blog.dileepa.dev`
+  is retired rather than redirected, and what that costs is recorded in its §1 so the absence of a
+  redirect table is not mistaken for an oversight. Two same-site slug rules survive.
 
 ## Git workflow
 

@@ -96,6 +96,25 @@ Cross-repository roadmap for the v2.0.0 rebrand and platform consolidation.
 The application is built, tested and typed. What remains needs the live cluster, a FastAPI Cloud
 account, or production traffic — none of which can be done from a checkout.
 
+### Added after the contract was drafted ✅
+
+Three collections and six routes the v2.0.0 contract did not originally plan for. All are public
+writes, and none collects an identity: each keys on a salted hash of the caller's address, which
+recognises a repeat without being reversible into one.
+
+- [x] **Blog views** — de-duplicated per reader per 24h by a unique index and a TTL on
+      `blog_views`, not by a check in the handler
+- [x] **Blog reactions** — four kinds, one per reader, changeable and clearable
+- [x] **Comments** — one level of replies, live immediately, defended at the door with
+      `RATE_LIMIT_COMMENT`, length bounds, a honeypot and a depth cap
+- [x] **Comment reactions** — the same four, on comments and replies alike
+- [x] `PublicComment` has **no field** for an email address, so the public routes cannot leak one.
+      Moderation routes are admin-only on every route including the list — the one collection
+      `crud_router` could not build, because its list route is public by design
+- [x] `description` on videos
+- [x] New collections: `blog_views`, `blog_reactions`, `comments`, `comment_reactions`. All four
+      get their indexes on startup, so first deploy touches the database
+
 ### Baseline ✅
 
 - [x] Scaffold FastAPI 0.141.x on Python 3.13 with `uv`, `ruff`, `mypy`, `pytest`
@@ -183,6 +202,19 @@ work, and the backup comes first.
 
 ## Phase 3 — Main website (`dileepa-dev`)
 
+### Post interactions ✅
+
+- [x] React · Comment · Share action bar under every article, counts summarised above it
+- [x] Reactions, views and comments, all fetched in the browser — a post page is static and these
+      are the only parts that change after a build
+- [x] Comment replies one level deep, each comment and reply carrying the same four reactions
+- [x] **Emoji glyphs rather than a custom icon set** — the brand guide allows one accent hue and no
+      second, and emoji carry colour as content without entering the palette
+- [x] Verified in a browser on both themes; two defects found and fixed there that no build would
+      have caught — the compact picker covering the comment it was reacting to, and 🎓 rendering
+      near-black on the dark theme
+- [x] Video descriptions on `/videos` and the homepage, included in the search
+
 ### Foundation ✅
 
 - [x] Next.js → 16.3.x, React → 19.2.x, Tailwind → 4.3.x, `@types/node` → ^22
@@ -268,17 +300,11 @@ decommission. What that costs is recorded in
 - [x] `README.md`, `AGENTS.md`, `VERSIONING.md` rewritten for a content-only repository;
       `CHANGELOG.md` frozen at `2.0.0`
 
-### Images — the one open content blocker
+### Images ✅
 
-> [!WARNING]
-> With the Astro app gone, nothing serves `/images/posts/**`. Three screenshots in
-> `2026-02-12-personalize-your-vs-code-ai-with-custom-agents` are **broken on the published
-> post** until this is fixed.
-
-- [ ] Upload the three inline post images to Cloudinary and rewrite the Markdown to those URLs.
-      **Blocked**: the development Cloudinary key is refused with
-      `Request forbidden due to missing permissions (actions=["create"])`
-- [ ] Delete `public/` from `blog-dileepa-dev` once those three resolve
+- [x] The three inline post images are on Cloudinary; `public/images/posts/` is deleted. No post
+      depends on a file the blog repository holds
+- [ ] Delete the rest of `blog-dileepa-dev/public/` — favicon and brand images nothing reads
 
 ### Redirects that survive (`dileepa-dev`)
 
@@ -339,7 +365,16 @@ Only same-site rules remain. Nothing answers the old host.
 - [x] Dashboard counting what is **live** rather than what exists, including projects and events
 - [x] `/events` rebuilt on the v2 model; blog banner fields removed; `ToastDemo.tsx` deleted
 - [x] Single `.env`, documented as deliberate
-- [ ] Fix the README's stale "Projects & Tools" claim; re-record the demo video
+- [x] **Comments moderation screen** — hide (reversible, replies survive), edit, delete, or reply
+      as the author. The only screen showing a commenter's email address
+- [x] **Drag-to-reorder**, opt-in per screen and used by tools. Grip, position number and up/down
+      arrows on every row; the arrows are the whole keyboard and touch path, since native HTML5
+      drag reaches neither. One request per commit, optimistic, snapping back on failure
+- [x] Positions read 1..N with 1 at the top while the API keeps sorting `order` descending; the
+      inversion lives in `lib/crud.ts` alone
+- [x] `description` on the video form; view and reaction counts on the blog list, read-only
+- [x] README describes what the app actually does
+- [ ] Re-record the demo video; it shows the v1.0 UI
 - [ ] Generate a typed client from the OpenAPI spec, as `dileepa-dev` does
 
 ## Phase 6 — Links application (`links-dileepa-dev`)
@@ -458,11 +493,13 @@ Follows the design system, so it needs Phase 3 done first.
 
 ## Phase 9 — Documentation and release
 
-- [ ] `README.md` updated in all seven repositories
-- [ ] `CHANGELOG.md` updated in all seven; blog's frozen at `2.0.0`
-- [ ] `VERSIONING.md` reviewed; blog's replaced with a content policy
-- [ ] Every `TODO.md` replaced with real, current content
-- [ ] API documentation reflects FastAPI, the new models, and the new endpoints
+- [x] `README.md` current in `dileepadev`, `dileepa-dev`, `api-dileepa-dev`, `admin-dileepa-dev`,
+      `blog-dileepa-dev`. `links-dileepa-dev` and `dileepadev.github.io` still to check
+- [x] `CHANGELOG.md` current in the API, the site and the admin; blog's frozen at `2.0.0`
+- [x] `VERSIONING.md` — blog's replaced with a content policy. The API's still to review
+- [x] `TODO.md` current in the five repositories touched so far
+- [x] API documentation reflects FastAPI, the new models, and every endpoint including
+      engagement and comments — `api-contract.md`, the API `README.md`, and `http/`
 - [ ] All version numbers set to `2.0.0`
 - [ ] Merge `feat/v2.0.0` branches (`dileepa-dev`, `api-dileepa-dev`, `admin-dileepa-dev`, `links-dileepa-dev`)
 - [ ] Tag `v2.0.0` in all seven repositories
@@ -481,7 +518,7 @@ Follows the design system, so it needs Phase 3 done first.
 | ~~Vercel Python runtime constraints~~ | ~~API cold starts or deployment failure~~ | **Moot.** The API deploys to FastAPI Cloud, not Vercel |
 | A half-migrated collection sorts wrongly | Lists come back in an arbitrary order on the live site | Sorting happens in MongoDB, before the model reads `index` as `order`. Run `migrate_v1_documents.py` to completion before traffic moves |
 | The events rewrite is in place and destructive | The 26 v1 rows are gone if it is wrong | Every original is copied to `events_v1_backup` first, keeping its `_id`. Restore is `db.events_v1_backup.aggregate([{ $out: "events" }])` |
-| Cloudinary key lacks `create` | Uploads 503 and the three inline blog images cannot move | The API answers `upload_failed` rather than breaking; fix the key's permissions and re-run |
+| ~~Cloudinary key lacks `create`~~ | ~~Uploads 503 and the three inline blog images cannot move~~ | **Resolved.** The key was fixed and the three images moved; every post image is a Cloudinary URL |
 | Hard-coded hex instead of imported tokens | Platform fragments again | Design system makes token import the only sanctioned path |
 | Vendored `brand-tokens.css` copies drift | Two apps rendering different palettes | One canonical file in `dileepadev/docs/brand/`; push changes into each consuming repo deliberately |
 | Broken `dileepadev.github.io` hot-links | Silent — no build fails | Audit references before deleting; migrate one project at a time |
