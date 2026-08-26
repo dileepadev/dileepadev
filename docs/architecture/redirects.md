@@ -118,10 +118,9 @@ in `blog-dileepa-dev` will notice the break. A rename means a new row in §2.
 Blog images live on Cloudinary and are referenced by absolute URL from inside post bodies. They
 are not served by this site and need no redirect.
 
-Three screenshots predate that rule and still point at root-relative `/images/posts/**` paths
-that the retired Astro app used to serve. **Those are broken until the images are uploaded to
-Cloudinary and the Markdown is rewritten** — a content fix in `blog-dileepa-dev`, not a redirect.
-Detail in [`content-pipeline.md`](content-pipeline.md) §4.
+Three screenshots used to be an exception — root-relative paths the retired Astro app served — and
+they are now on Cloudinary like everything else. **No post depends on a file the blog repository
+holds.** Detail in [`content-pipeline.md`](content-pipeline.md) §4.
 
 The 19 retired banner URLs are not redirected, for the same reason as §1.
 
@@ -163,5 +162,5 @@ Then, by hand:
 
 - [ ] The canonical tag on each post names its own `dileepa.dev` URL
 - [ ] The sitemap lists all 18 posts and omits the legacy slug
-- [ ] The three inline images in `2026-02-12-personalize-your-vs-code-ai-with-custom-agents`
-      resolve — this is the one known-broken item, tracked in `blog-dileepa-dev`
+- [x] The three inline images in `2026-02-12-personalize-your-vs-code-ai-with-custom-agents`
+      resolve — moved to Cloudinary
