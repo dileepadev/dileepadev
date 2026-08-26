@@ -47,8 +47,16 @@ neither is optional — they cost nothing, and both old slugs were live long eno
 
 | From | To | Type |
 | --- | --- | --- |
-| `dileepa.dev/blog/2026-08-06-zero-to-agent-microsoft-foundry-series-kickoff` | `dileepa.dev/blog/2026-08-06-part-1-kicking-off-the-series` | 301 |
-| `dileepa.dev/blog/2026-02-11-welcome` | `dileepa.dev/blog/2026-02-10-welcome` | 301 |
+| `dileepa.dev/blog/2026-08-06-zero-to-agent-microsoft-foundry-series-kickoff` | `dileepa.dev/blog/2026-08-06-part-1-kicking-off-the-series` | 308 |
+| `dileepa.dev/blog/2026-02-11-welcome` | `dileepa.dev/blog/2026-02-10-welcome` | 308 |
+
+> [!NOTE]
+> **308, not 301.** Every rule in this document is implemented by `next.config.ts` with
+> `permanent: true`, and Next.js emits `308 Permanent Redirect` for that — there is no
+> configuration that makes it a `301`. The two are equivalent for search engines, which treat
+> both as permanent and pass ranking signal identically; 308 additionally forbids the method
+> rewrite that 301 historically permitted. This file said 301 until the rules were implemented
+> and the response was actually read, which is the only reason the discrepancy surfaced at all.
 
 **Row 1** existed in the blog's `astro.config.mjs`, which is deleted — it is easy to lose with
 that file.
@@ -71,8 +79,8 @@ preview deployment of the `feat/v2.0.0` branch:
 
 | From | To | Type |
 | --- | --- | --- |
-| `dileepa.dev/sessions` | `dileepa.dev/events` | 301 |
-| `dileepa.dev/sessions/:slug` | `dileepa.dev/events/:slug` | 301 |
+| `dileepa.dev/sessions` | `dileepa.dev/events` | 308 |
+| `dileepa.dev/sessions/:slug` | `dileepa.dev/events/:slug` | 308 |
 
 `/communities` and `/videos` keep their paths. `/gallery` is new in v2.0.0 and replaces nothing.
 If any of them moves, it goes in this table.
@@ -155,8 +163,8 @@ done
 Pass criteria:
 
 - Status is **200**, and `num_redirects` is **0** for all 18.
-- **Both** §2 rows return exactly **one** 301, landing on a 200.
-- The `/sessions` rules in §3 each return one 301.
+- **Both** §2 rows return exactly **one** 308, landing on a 200.
+- The `/sessions` rules in §3 each return one 308.
 
 Then, by hand:
 
