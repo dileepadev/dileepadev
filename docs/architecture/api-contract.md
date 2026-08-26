@@ -74,7 +74,7 @@ singleton, so its writes take no id. Reads accept an id or a slug wherever a res
 | `GET /educations` | ✓ | CRUD | |
 | `GET /tools` | ✓ | CRUD | |
 | `GET /communities` | ✓ | CRUD | |
-| `GET /videos` | ✓ | CRUD | |
+| `GET /videos` | ✓ | CRUD | Gains `description` in v2.0.0 |
 | **`GET /projects`** | ✓ | CRUD | **New** |
 | **`GET /projects/{slug}`** | ✓ | — | **New** |
 | **`GET /events`** | ✓ | CRUD | **Reshaped** — same path, new model |
@@ -82,6 +82,16 @@ singleton, so its writes take no id. Reads accept an id or a slug wherever a res
 | `GET /blogs` | ✓ | CRUD | Reshaped |
 | `GET /blogs/{slug}` | ✓ | — | New |
 | `POST /blogs/sync` | — | API key | Blog repo pipeline |
+| **`GET /blogs/{slug}/engagement`** | ✓ | — | **New.** Views, reaction counts, and this caller's own reaction |
+| **`POST /blogs/{slug}/views`** | ✓ | — | **New.** De-duplicated per reader per 24h |
+| **`POST /blogs/{slug}/reactions`** | ✓ | — | **New.** Set, change, or clear one reaction |
+| **`GET /blogs/{slug}/comments`** | ✓ | — | **New.** The thread. Never returns an email |
+| **`POST /blogs/{slug}/comments`** | ✓ | — | **New.** Live immediately; rate-limited, honeypotted |
+| **`POST /blogs/{slug}/comments/{id}/reactions`** | ✓ | — | **New.** Same four reactions; works on replies too |
+| **`GET /comments`** | — | ✓ | **New.** The moderation queue. **Not public** — it holds emails |
+| **`POST /comments`** | — | ✓ | **New.** The owner's own reply |
+| **`PATCH /comments/{id}`** | — | ✓ | **New.** Edit or hide |
+| **`DELETE /comments/{id}`** | — | ✓ | **New.** Permanent |
 | `POST /uploads` | — | ✓ / API key | Cloudinary-backed |
 | `GET /uploads` | — | ✓ | |
 | `DELETE /uploads/{publicId}` | — | ✓ | `publicId` is a path: Cloudinary ids contain slashes |
@@ -273,6 +283,8 @@ class BlogPost:
     seo: Seo
     meta: dict
     legacy: Legacy | None          # { link, bannerUrl, date, excerpt } — one release only
+    views: int                     # readers write this, not the admin
+    reactions: ReactionCounts      # { liked, insightful, useful, learned }
     createdAt: datetime
     updatedAt: datetime
 ```
@@ -286,9 +298,141 @@ class BlogPost:
 | `date: str` | `publishedDate: datetime` | Strings don't sort |
 | `excerpt` | `description` | Matches the front-matter field name |
 | — | `tags`, `series`, `readingTimeMinutes`, `updatedDate`, `draft`, `sourcePath`, `contentHash` | Already in front matter, previously discarded |
+| — | `views`, `reactions` | New in v2.0.0; see **Engagement** below |
 
 **The API stores metadata only.** Post bodies stay in Git and are fetched by the main site at
 build time. See [`content-pipeline.md`](content-pipeline.md).
+
+### Engagement — views and reactions
+
+Two counters on a post, written by readers rather than by the admin or the pipeline.
+
+```text
+GET  /blogs/{slug}/engagement   -> { slug, views, reactions, viewerReaction }
+POST /blogs/{slug}/views        -> the same shape, after counting
+POST /blogs/{slug}/reactions    -> the same shape, after applying { reaction }
+
+reactions      { liked, insightful, useful, learned }   counts
+viewerReaction one of those four, or null               this caller's own
+```
+
+**The vocabulary is closed.** Four reactions, validated as an enum. An open set turns a counter
+into free-text storage, and a reaction only one person can send is not a signal anyone can read.
+
+**One reaction per reader per post, changeable.** Sending a different one moves the vote; sending
+the one already chosen — or `null` — clears it. The buttons are toggles, and a toggle that cannot
+untoggle is a trap. The aggregate on the post moves by the delta, so the counts stay right without
+recounting the reactions collection on every write.
+
+**No identity is collected.** Both endpoints key on `sha256(JWT_SECRET : slug : address)`. That is
+enough to recognise a repeat and not enough to reconstruct who it was. The slug is inside the hash
+rather than beside it, so a key from one post cannot be replayed against another.
+
+**Views de-duplicate per reader per 24 hours**, and the de-duplication is a unique index, not a
+check in the handler:
+
+| Collection | Holds | Index |
+| --- | --- | --- |
+| `blog_views` | one opaque key per reader per post per window | unique on `key`; TTL on `expiresAt` |
+| `blog_reactions` | that key against the reaction chosen | unique on `(slug, key)` |
+
+A read-then-write would let two concurrent requests both conclude they are the first. Here the
+second insert fails and the increment simply does not happen. A duplicate is **not** an error to
+the caller — they asked for the post to be counted and it already is — so it returns the current
+numbers with the same 200 as a first view.
+
+The TTL index is what stops `blog_views` growing without bound; Mongo deletes each row once its
+window passes.
+
+**Counts are read-only everywhere except these endpoints.** `views` and `reactions` are absent
+from `BlogCreate`, `BlogUpdate` and `BlogSync`, so neither an admin edit nor a content re-sync can
+overwrite them. `/blogs/sync` writes with `$set` over the fields it sends, and these are not among
+them — there is a test that says so, because a counter a routine re-sync zeroes is worse than no
+counter.
+
+**Engagement on an unpublished post is a 404, not a 403.** Confirming that a slug exists but is
+hidden leaks the thing being hidden.
+
+### Comments
+
+Readers comment on posts. **There is no approval queue** — a comment is visible the moment it is
+posted. That is a deliberate trade: a conversation that waits on a moderator is not a
+conversation. The cost is that spam reaches readers until it is removed, so every defence is at
+the door rather than in a queue behind it:
+
+| Defence | What it stops |
+| --- | --- |
+| `RATE_LIMIT_COMMENT`, 6/minute per address | A spam run. Looser than contact's 3/minute — a reader may legitimately reply twice |
+| `body` ≤ 4000, `author` ≤ 80 | One request carrying an essay |
+| Honeypot field | Bots that fill in every input they find |
+| Depth cap of 1 | A thread the layout has no room for |
+
+**The honeypot answers 201 and stores nothing.** Telling a bot which field caught it is how it
+learns to stop tripping it, so a rejected submission is indistinguishable from an accepted one.
+`accepted: false` is in the body for a human client; no legitimate reader can trip it.
+
+#### Two shapes, and the difference is the point
+
+```text
+PublicComment   slug, author, body, parentId, authorIsOwner,
+                reactions, viewerReaction, timestamps
+Comment         ...plus email, published, key
+```
+
+`PublicComment` is what a reader gets. It **has no field for an email address**, so the public
+endpoint cannot serialise one — the guarantee is the shape of the model, not a filter someone has
+to remember to apply. `Comment` is admin-only and carries the email and the hashed commenter key.
+
+This is also why the admin routes are written out rather than built with `crud_router`. That
+helper's list route is deliberately public — it is what serves `/projects` and `/events` to the
+website — and `/comments` is the one collection here where public read access would disclose
+something a reader gave in confidence.
+
+#### Threading is one level deep
+
+`parentId` points at a top-level comment. A reply to a reply is **re-parented** to the thread it
+belongs to rather than rejected: the reader did nothing wrong, and the comment still belongs
+under that conversation. A parent on a different post is not honoured.
+
+**A reply outlives its parent.** Hiding or deleting a comment promotes its replies to top level
+rather than taking them with it — the person who wrote the reply is not responsible for the
+comment above it.
+
+#### `authorIsOwner`
+
+Set by `POST /comments` and by nothing else. A reader cannot claim the badge because
+`CommentCreate` has no field for it and `ApiModel` forbids extra fields — the distinction is
+enforced by the shape of the request rather than by a check that could be forgotten.
+
+#### Comments carry the same four reactions
+
+A comment — or a reply, which is a comment — offers `liked` / `insightful` / `useful` /
+`learned`, exactly as a post does. One vocabulary across the site means one enum in the API and
+one picker in the UI; two vocabularies would mean teaching readers two.
+
+The toggle rule is identical too, and is applied by the *same code*:
+`app/services/reactions.py`. It was written twice before that module existed — once for posts and
+once for comments — and the way two copies drift is a count that no longer matches the records
+behind it, which nothing would report. The service addresses the subject and the per-reader
+record by filter, so it knows nothing about blogs or comments.
+
+`viewerReaction` on a comment is **filled in per request, not stored**. The stored document holds
+counts; what a particular reader chose lives in `comment_reactions`. Reading a thread resolves
+all of them in **one** query with `$in` across the thread — one query per comment would be forty
+round trips on a forty-comment thread, on the hottest read the blog has.
+
+**The slug in the reaction path is not decorative.** It is checked against the comment, which
+keeps a comment id from being reacted to through a post it does not belong to, and makes an
+unpublished post's thread unreachable here for the same reason it is unreachable everywhere else.
+
+| Collection | Holds | Index |
+| --- | --- | --- |
+| `comment_reactions` | one reader's choice per comment | unique on `(commentId, key)` |
+
+#### Hiding versus deleting
+
+`published: false` takes a comment off the site and keeps the row; it is reversible and keeps the
+thread beneath it addressable. `DELETE` is permanent. Prefer hiding unless the content has to go.
 
 ### Banners are retired
 
