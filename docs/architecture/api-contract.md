@@ -277,7 +277,7 @@ class BlogPost:
     draft: bool
     featured: bool
     order: int
-    sourcePath: str                # "content/posts/{year}/{month}/{slug}.md" in the blog repo
+    sourcePath: str                # "posts/{year}/{month}/{slug}.md" in the blog repo
     contentHash: str               # detects changed content on sync
     published: bool
     seo: Seo

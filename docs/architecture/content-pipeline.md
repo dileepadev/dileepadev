@@ -9,7 +9,7 @@ How blog content gets from `blog-dileepa-dev` onto `dileepa.dev/blog`.
 
 ```text
   blog-dileepa-dev            Git is the source of truth
-  └── content/posts/2026/08/2026-08-21-what-is-microsoft-agent-framework.md
+  └── posts/2026/08/2026-08-21-what-is-microsoft-agent-framework.md
             │
             │  push to main
             ▼
@@ -41,7 +41,7 @@ pinned to a ref, and they are fetched in the browser rather than at build time. 
 [`api-contract.md`](api-contract.md). The rule the pipeline cares about is unchanged: **the words
 stay in Git.** If post bodies ever appear in the database, the source of truth has quietly moved.
 
-Posts are grouped `content/posts/<year>/<month>/<slug>.md`. The directories are grouping only —
+Posts are grouped `posts/<year>/<month>/<slug>.md`. The directories are grouping only —
 they were never part of the URL and are stripped when the id becomes a slug. **The file name is
 the slug, and the slug is the URL.**
 
@@ -71,7 +71,7 @@ Pin in the site repo's configuration, and bump it deliberately when publishing.
 
 ```http
 GET https://api.github.com/repos/dileepadev/blog-dileepa-dev/git/trees/<sha>?recursive=1
-GET https://raw.githubusercontent.com/dileepadev/blog-dileepa-dev/<sha>/content/posts/<year>/<month>/<slug>.md
+GET https://raw.githubusercontent.com/dileepadev/blog-dileepa-dev/<sha>/posts/<year>/<month>/<slug>.md
 ```
 
 The Git trees API rather than the contents API: posts are nested under year and month, and
@@ -204,7 +204,7 @@ that survives any change of framework.
 
 ## 8. Publishing a post, end to end
 
-1. Write `content/posts/<year>/<month>/YYYY-MM-DD-slug.md` in the blog repo. **The file name is
+1. Write `posts/<year>/<month>/YYYY-MM-DD-slug.md` in the blog repo. **The file name is
    the URL**; the directories are grouping.
 2. If the post needs an image, upload it through `POST /uploads` and paste the URL into the body.
 3. Push to `main`. The workflow syncs the metadata.

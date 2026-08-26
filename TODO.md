@@ -274,7 +274,7 @@ decommission. What that costs is recorded in
 
 ### Content move (`blog-dileepa-dev`) ✅
 
-- [x] `src/content/posts/` → `content/posts/<year>/<month>/` — **17 of 18 slugs byte-identical**.
+- [x] `src/content/posts/` → `posts/<year>/<month>/` — **17 of 18 slugs byte-identical**.
       The directories are grouping; the file name is the slug and the slug is the URL
 - [x] **Slug drift found:** `2026-02-11-welcome` became `2026-02-10-welcome` during the move,
       with `publishedDate` changed to match. Resolved by keeping the corrected date and adding a
