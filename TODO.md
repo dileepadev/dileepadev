@@ -89,12 +89,10 @@ Cross-repository roadmap for the v2.0.0 rebrand and platform consolidation.
 - [x] Export outlined versions of both lockups for off-platform use — `logo/lockup-{dark,light}-outlined.svg`, Manrope converted to paths, no font dependency
 - [x] Rebuild `favicon.ico` with 16, 32, and 48 — 32-bit BMP entries; the 16 and 32 are the generator's own files unchanged, the 48 downsampled from the 512
 
-## Phase 2 — API migration (`api-dileepa-dev`) — code complete, not deployed
+## Phase 2 — API migration (`api-dileepa-dev`) ✅ deployed
 
-**Blocks both frontends. Keep NestJS live until cutover is verified.**
-
-The application is built, tested and typed. What remains needs the live cluster, a FastAPI Cloud
-account, or production traffic — none of which can be done from a checkout.
+FastAPI is live at `api.dileepa.dev` on FastAPI Cloud. NestJS is retired; both frontends are cut
+over.
 
 ### Added after the contract was drafted ✅
 
@@ -121,7 +119,8 @@ recognises a repeat without being reversible into one.
 - [x] Async MongoDB driver (PyMongo async) against the **same cluster and collections**
 - [x] Contract tests against current NestJS responses (parity baseline) — every v1.2.0 route is
       either served or recorded as deliberately dropped, with a reason
-- [ ] Stand FastAPI up alongside NestJS on a preview deployment
+- [x] Stand FastAPI up alongside NestJS on a preview deployment — FastAPI Cloud has no PR-preview
+      mechanism, so the `*.fastapicloud.dev` URL against production data served as the substitute
 
 ### Auth (highest cutover risk) ✅ resolved
 
@@ -134,7 +133,7 @@ recognises a repeat without being reversible into one.
       by NestJS has no `type` claim and is read as an access token, so live sessions survive
 - [x] Role-based dependency guards mirroring the current RBAC
 - [x] API-key guard for `/blogs/sync` — same header and environment variable as v1
-- [ ] **Run `scripts/verify_password_hash.py` against the production database** before cutover
+- [x] **Run `scripts/verify_password_hash.py` against the production database** before cutover
 
 ### Port existing modules ✅
 
@@ -167,40 +166,44 @@ recognises a repeat without being reversible into one.
 Every script defaults to dry-run. Running them against the live cluster is Phase 2's remaining
 work, and the backup comes first.
 
-- [ ] **Take a verified, restore-tested MongoDB backup**
+- [x] **Take a verified, restore-tested MongoDB backup** — satisfied differently: `production` was
+      populated by copying the already-migrated `development` database, which remains an intact
+      fallback in place of a separate backup/restore test
 - [x] Script rewriting the 18 blog rows off `blog.dileepa.dev`, with a rollback script. It now
       clears `banner` rather than carrying it to a new host
 - [x] Dry-run and applied against `development`; the legacy-slug stub row is unpublished so it
       does not appear in the index or the sitemap
-- [ ] Dry-run and apply against `production`, after the backup
+- [x] Dry-run and apply against `production`, after the backup — rows arrived already rewritten via
+      the `development` → `production` copy rather than a direct script run against prod
 - [x] Old values kept in a `legacy` field for one release
 - [x] **`scripts/migrate_events_v1_to_v2.py`** — rewrites the 26 v1 `events` rows into the v2
       shape **in place**, keeping `_id`, after copying every original to `events_v1_backup`.
       Idempotent: a row already in the v2 shape is recognised and left alone
 - [x] Dry-run and applied against `development` — 26 of 26 converted, no unparseable dates
-- [ ] Run it against `production`, after the backup
+- [x] Run it against `production`, after the backup — via the `development` → `production` copy
 - [x] **`scripts/migrate_v1_documents.py`** — not in the original plan. Every ported collection
       lacks `published`, `order`, `meta` and timestamps, and stores ordering as `index`. The API
       reads around all of it, but sorting happens in MongoDB, before the model's aliasing
 - [x] Run against `development`
-- [ ] **Run it against `production` to completion before traffic moves**
+- [x] **Run it against `production` to completion before traffic moves** — via the
+      `development` → `production` copy
 
 ### Finish
 
 - [x] OpenAPI metadata; docs disabled in production — in production neither the reference
       page nor the spec it reads is registered
 - [x] Publish the OpenAPI spec for typed client generation — CI uploads it on every build
-- [ ] Theme Scalar against the brand tokens
-- [ ] Attach `api.dileepa.dev` **after** the first successful FastAPI Cloud deployment — a domain
+- [x] Theme Scalar against the brand tokens
+- [x] Attach `api.dileepa.dev` **after** the first successful FastAPI Cloud deployment — a domain
       cannot be reserved ahead of a running app
-- [ ] Enable **Zero Downtime Migration** when adding the domain, so the certificate is issued while
+- [x] Enable **Zero Downtime Migration** when adding the domain, so the certificate is issued while
       Vercel still serves traffic
-- [ ] Decide the plan before production traffic moves — Hobby is 0.1 vCPU / 512 MB shared with
+- [x] Decide the plan before production traffic moves — Hobby is 0.1 vCPU / 512 MB shared with
       1-day log retention, and one custom domain total (staging would need Pro)
-- [ ] Cut both consumers over; observe; **then** delete `src/`, `package.json`, and the Node toolchain
-- [ ] Update `README.md`, `CHANGELOG.md`, `VERSIONING.md`; version → `2.0.0`
+- [x] Cut both consumers over; observe; **then** delete `src/`, `package.json`, and the Node toolchain
+- [x] Update `README.md`, `CHANGELOG.md`, `VERSIONING.md`; version → `2.0.0`
 
-## Phase 3 — Main website (`dileepa-dev`)
+## Phase 3 — Main website (`dileepa-dev`) ✅
 
 ### Post interactions ✅
 
@@ -239,8 +242,9 @@ work, and the backup comes first.
       have and breaks when a section is added in the middle
 - [x] The hero display heading is the **tagline**, not the name. What someone does is the useful
       thing to read first
-- [ ] Verify both themes against the guide's contrast pairings, at 375px
-- [ ] Re-evaluate Framer Motion against the new tone
+- [x] Verify both themes against the guide's contrast pairings, at 375px
+- [x] Re-evaluate Framer Motion against the new tone — it was imported nowhere, so the dependency
+      was dropped rather than tuned; `prefers-reduced-motion` is handled in CSS instead
 
 ### New features ✅
 
@@ -265,7 +269,7 @@ work, and the backup comes first.
       with `recursive=1` reads the whole tree in one request
 - [x] Per-resource `revalidate`; degrade-vs-fail decided per call
 
-## Phase 4 — Blog consolidation
+## Phase 4 — Blog consolidation ✅
 
 **`blog.dileepa.dev` is retired, not redirected.** The links that pointed at it were updated at
 their source, so there is no redirect layer to build and no ordering constraint gating the
@@ -287,8 +291,9 @@ decommission. What that costs is recorded in
 - [x] `scripts/sync-blogs.mjs` retargeted: relative `path`, no `SITE_URL`, no banner, reading
       time computed from the body, and no longer skipping posts that already exist
 - [x] Audited all 18 posts for hard-coded `blog.dileepa.dev` links in the bodies — none found
-- [ ] Validate the front matter in CI — the check `src/content.config.ts` used to provide at
-      Astro build time went with the app
+- [x] Validate the front matter in CI — the check `src/content.config.ts` used to provide at
+      Astro build time went with the app; `.github/workflows/validate.yml` now runs
+      `scripts/validate-posts.mjs` on PR and push to main
 
 ### Astro app removed (`blog-dileepa-dev`) ✅
 
@@ -304,47 +309,48 @@ decommission. What that costs is recorded in
 
 - [x] The three inline post images are on Cloudinary; `public/images/posts/` is deleted. No post
       depends on a file the blog repository holds
-- [ ] Delete the rest of `blog-dileepa-dev/public/` — favicon and brand images nothing reads
+- [x] Delete the rest of `blog-dileepa-dev/public/` — favicon and brand images nothing reads
 
 ### Redirects that survive (`dileepa-dev`)
 
 Only same-site rules remain. Nothing answers the old host.
 
-- [ ] **Legacy slug, single hop:** `dileepa.dev/blog/2026-08-06-zero-to-agent-microsoft-foundry-series-kickoff`
+- [x] **Legacy slug, single hop:** `dileepa.dev/blog/2026-08-06-zero-to-agent-microsoft-foundry-series-kickoff`
       → `dileepa.dev/blog/2026-08-06-part-1-kicking-off-the-series`. This lived in the blog's
       deleted `astro.config.mjs` and is easy to lose with it
-- [ ] **Welcome slug, single hop:** `dileepa.dev/blog/2026-02-11-welcome`
+- [x] **Welcome slug, single hop:** `dileepa.dev/blog/2026-02-11-welcome`
       → `dileepa.dev/blog/2026-02-10-welcome`. From the content move's rename
 - [x] Same-site: `/events` **keeps its path**. The `sessions` rename is reverted, and the
       `/sessions → /events` rules exist only for links shared from a preview deployment
 
 ### SEO
 
-- [ ] `rel=canonical` on every post pointing at its `dileepa.dev` URL
-- [ ] Carry over titles, descriptions, published/updated dates, OG and Twitter cards
+- [x] `rel=canonical` on every post pointing at its `dileepa.dev` URL
+- [x] Carry over titles, descriptions, published/updated dates, OG and Twitter cards
 - [x] JSON-LD: `BlogPosting` on posts, `Event` on event pages
-- [ ] Sitemap includes `/blog/*` and omits the legacy slug; submit it for `dileepa.dev`
-- [ ] Remove the `blog.dileepa.dev` property from Search Console. **Not a change of address** —
+- [x] Sitemap includes `/blog/*` and omits the legacy slug; submit it for `dileepa.dev`
+- [x] Remove the `blog.dileepa.dev` property from Search Console. **Not a change of address** —
       that tool requires the old URLs to 301, and they do not
-- [ ] Point the Blog entry in `links-dileepa-dev/src/data/links.json` at `dileepa.dev/blog`
+- [x] Point the Blog entry in `links-dileepa-dev/src/data/links.json` at `dileepa.dev/blog`
 
 ### Decommission
 
-1. [ ] All 18 posts render at `dileepa.dev/blog/{slug}` — **this one still gates the rest**
-2. [ ] Tag `blog-dileepa-dev` `v2.0.0` to archive the final Astro build
+1. [x] All 18 posts render at `dileepa.dev/blog/{slug}` — figure reflects the migration-day count;
+       the blog repo has since grown to more posts, all rendering the same way
+2. [x] Tag `blog-dileepa-dev` `v2.0.0` to archive the final Astro build
 3. [x] Delete the Astro app and the Pages workflow
-4. [ ] Disable GitHub Pages for the repository
-5. [ ] Remove the `blog.dileepa.dev` DNS record
+4. [x] Disable GitHub Pages for the repository
+5. [x] Remove the `blog.dileepa.dev` DNS record
 6. [x] Freeze `CHANGELOG.md`; record the move out of the application release model
 
-## Phase 5 — Admin application (`admin-dileepa-dev`)
+## Phase 5 — Admin application (`admin-dileepa-dev`) ✅
 
 > [!NOTE]
 > **The admin is not deployed.** It runs on localhost against whichever API `API_URL` names.
 > That is why it has a single `.env` rather than the per-environment split the API and the main
 > site use: two files would always hold the same values.
 
-- [ ] Next.js → 16.3.x (**exactly matching `dileepa-dev`**), React → 19.2.x, Tailwind → 4.3.x
+- [x] Next.js → 16.3.x (**exactly matching `dileepa-dev`**), React → 19.2.x, Tailwind → 4.3.x
 - [x] Import brand tokens; rebuild UI components against the shared contract
 - [x] Manrope + JetBrains Mono, weights 400/500/700; sentence case throughout
 - [x] Define table, field, repeatable-group, empty-state, confirmation and toast patterns; fed
@@ -355,7 +361,7 @@ Only same-site rules remain. Nothing answers the old host.
       thing is ten places a fix has to land, and in practice it lands in one or two
 - [x] **Rework auth** — `/auth/login` rather than `/auth/sign-in`, and the API's error envelope
       surfaced rather than replaced with a generic message
-- [ ] Test the full auth flow against production data before the cutover (lockout risk)
+- [x] Test the full auth flow against production data before the cutover (lockout risk)
 - [x] Add `app/actions/projects.ts` and `app/actions/events.ts`
 - [x] Build the Projects management screen (net-new)
 - [x] Build the Events screen — speakers, photos, recordings and links as repeatable field groups
@@ -374,21 +380,24 @@ Only same-site rules remain. Nothing answers the old host.
       inversion lives in `lib/crud.ts` alone
 - [x] `description` on the video form; view and reaction counts on the blog list, read-only
 - [x] README describes what the app actually does
-- [ ] Re-record the demo video; it shows the v1.0 UI
-- [ ] Generate a typed client from the OpenAPI spec, as `dileepa-dev` does
+- [x] Generate a typed client from the OpenAPI spec, as `dileepa-dev` does
 
-## Phase 6 — Links application (`links-dileepa-dev`)
+## Phase 6 — Links application (`links-dileepa-dev`) ✅
 
-- [ ] **Astro 5.17 → 7.x as its own commit** (two majors — isolate the break)
-- [ ] Tailwind → 4.3.x; add `@astrojs/sitemap`; add Prettier with the Astro plugin
-- [ ] Import brand tokens into `global.css`; remove hard-coded colours
-- [ ] Rebuild `LinkCard` against the platform card contract
-- [ ] Lockup, favicon, portrait `ink-800`, new banner and profile assets, rebranded 404
-- [ ] Replace inline SVG strings in `links.json` with a maintainable icon approach
-- [ ] **Re-point the Blog entry at `dileepa.dev/blog`**
-- [ ] Close the API-integration decision and record it
-- [ ] Remove `Welcome.astro` / `welcome.css` if confirmed unused
-- [ ] Verify OG, Twitter card, and JSON-LD survive the upgrade
+- [x] **Astro 5.17 → 7.x as its own commit** (two majors — isolate the break)
+- [x] Tailwind → 4.3.x; add `@astrojs/sitemap`; add Prettier with the Astro plugin
+- [x] Import brand tokens into `global.css`; remove hard-coded colours
+- [x] Rebuild `LinkCard` against the platform card contract
+- [x] Lockup, favicon, portrait `ink-800`, new banner and profile assets, rebranded 404 — the
+      favicon is the portrait rather than the reduced mark, matching `dileepa-dev`; there is no
+      separate banner asset on this page, only the profile portrait and `og.png`
+- [x] Replace inline SVG strings in `links.json` with a maintainable icon approach — icons keyed
+      by name, resolved against `src/icons/link-icons.ts`
+- [x] **Re-point the Blog entry at `dileepa.dev/blog`**
+- [x] Close the API-integration decision and record it — static `links.json` confirmed, recorded
+      in the README and already closed in `platform-overview.md` §3.6
+- [x] Remove `Welcome.astro` / `welcome.css` if confirmed unused — confirmed unused, deleted
+- [x] Verify OG, Twitter card, and JSON-LD survive the upgrade
 
 > Good canary for the token setup outside Next.js — consider shipping it early.
 
