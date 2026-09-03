@@ -5,6 +5,8 @@ Cross-repository roadmap for the v2.0.0 rebrand and platform consolidation.
 > [!NOTE]
 > This is the platform-level roadmap. Each repository carries its own slice in its own `TODO.md`, and the full scope for each lives in its v2.0.0 issue. This file is the source of truth for **sequencing across repositories**.
 
+<!-- -->
+
 > [!TIP]
 > **Shipped.** All nine phases complete, all seven repositories at `2.0.0`, all seven issues
 > closed. One open item survives this file's own close-out: a real contrast bug found and fixed
