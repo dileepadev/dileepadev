@@ -1,21 +1,27 @@
-# TODO — v2.0.0 platform migration
+# TODO — v2.0.0 platform migration ✅
 
 Cross-repository roadmap for the v2.0.0 rebrand and platform consolidation.
 
 > [!NOTE]
 > This is the platform-level roadmap. Each repository carries its own slice in its own `TODO.md`, and the full scope for each lives in its v2.0.0 issue. This file is the source of truth for **sequencing across repositories**.
 
+> [!TIP]
+> **Shipped.** All nine phases complete, all seven repositories at `2.0.0`, all seven issues
+> closed. One open item survives this file's own close-out: a real contrast bug found and fixed
+> in `dileepadev.github.io` exists identically, unfixed, in `dileepa-dev` — see the risk register
+> and Phase 8 §Brand compliance.
+
 ## Repositories and issues
 
-| Repository | Role after v2.0.0 | Current | Issue |
+| Repository | Role after v2.0.0 | Shipped | Issue |
 | --- | --- | --- | --- |
-| `dileepadev` | Brand + platform documentation root | — | [#1](https://github.com/dileepadev/dileepadev/issues/1) |
-| `dileepa-dev` | Main website — absorbs blog, projects, events | 1.3.0 | [#15](https://github.com/dileepadev/dileepa-dev/issues/15) |
-| `api-dileepa-dev` | FastAPI backend (migrated from NestJS) | 1.2.0 | [#13](https://github.com/dileepadev/api-dileepa-dev/issues/13) |
-| `blog-dileepa-dev` | Content-source repository only | 1.1.0 | [#3](https://github.com/dileepadev/blog-dileepa-dev/issues/3) |
-| `admin-dileepa-dev` | Admin app — new design system + FastAPI | 1.0.0 | [#4](https://github.com/dileepadev/admin-dileepa-dev/issues/4) |
-| `links-dileepa-dev` | Links page — new design system | 1.0.0 | [#2](https://github.com/dileepadev/links-dileepa-dev/issues/2) |
-| `dileepadev.github.io` | Public build log — GitHub activity dashboard | — | [#1](https://github.com/dileepadev/dileepadev.github.io/issues/1) |
+| `dileepadev` | Brand + platform documentation root | `2.0.0` | [#1](https://github.com/dileepadev/dileepadev/issues/1) — closed |
+| `dileepa-dev` | Main website — absorbs blog, projects, events | `2.0.0` | [#15](https://github.com/dileepadev/dileepa-dev/issues/15) — closed |
+| `api-dileepa-dev` | FastAPI backend (migrated from NestJS) | `2.0.0` | [#13](https://github.com/dileepadev/api-dileepa-dev/issues/13) — closed |
+| `blog-dileepa-dev` | Content-source repository only | `2.0.0` | [#3](https://github.com/dileepadev/blog-dileepa-dev/issues/3) — closed |
+| `admin-dileepa-dev` | Admin app — new design system + FastAPI | `2.0.0` | [#4](https://github.com/dileepadev/admin-dileepa-dev/issues/4) — closed |
+| `links-dileepa-dev` | Links page — new design system | `2.0.0` | [#2](https://github.com/dileepadev/links-dileepa-dev/issues/2) — closed |
+| `dileepadev.github.io` | Public build log — GitHub activity dashboard | `2.0.0` | [#1](https://github.com/dileepadev/dileepadev.github.io/issues/1) — closed |
 
 ## Target versions
 
@@ -58,9 +64,15 @@ Cross-repository roadmap for the v2.0.0 rebrand and platform consolidation.
 - [x] `docs/brand/brand-guide.md` — published brand guide
 - [x] `docs/brand/brand-tokens.css` — **canonical** token sheet, the one every app imports
 - [x] `docs/brand/logo/` — lockup and reduced mark, SVG, light and dark
-- [x] `docs/brand/voice.md` — voice rules and banned-phrase list
-- [x] `docs/design/design-system.md` — component contract for all three frontends
-- [x] `docs/design/reference/` — HTML reference with tokens reconciled
+- [x] Voice rules and the banned-phrase list — **live in `DESIGN.md` §17**, not a standalone
+      `docs/brand/voice.md`. This line originally named a file that was never created; the
+      content exists, just consolidated into the single agent-facing reference instead
+- [x] `docs/brand/design-system.md` — component contract for all three frontends (this line
+      originally said `docs/design/`; the file lives under `docs/brand/`, alongside the guide and
+      the token sheet it implements)
+- [x] The standalone HTML reference this line originally planned was superseded by `DESIGN.md` —
+      one agent-facing synthesis doc (brand guide + design system + machine-readable frontmatter)
+      instead of a second, separately-maintained HTML artifact
 - [x] `docs/architecture/platform-overview.md` — target architecture across all seven repos
 - [x] `docs/architecture/api-contract.md` — endpoints and data models
 - [x] `docs/architecture/content-pipeline.md` — blog repo → main site rendering path
@@ -401,7 +413,7 @@ Only same-site rules remain. Nothing answers the old host.
 
 > Good canary for the token setup outside Next.js — consider shipping it early.
 
-## Phase 7 — Public build log (`dileepadev.github.io`)
+## Phase 7 — Public build log (`dileepadev.github.io`) ✅
 
 Repurposed from an image host into a static dashboard over the account's public GitHub data.
 Follows the design system, so it needs Phase 3 done first.
@@ -409,129 +421,174 @@ Follows the design system, so it needs Phase 3 done first.
 > This repo hosts **no brand assets**. They live in `dileepadev/docs/brand/` and only there.
 > Like every other frontend, this one vendors the token sheet into its own styles.
 
-### Phase 7 Foundation
+### Phase 7 Foundation ✅
 
-- [ ] Scaffold Astro 7 + Tailwind 4.3, matching `links-dileepa-dev`
-- [ ] Import brand tokens; no hard-coded colour
-- [ ] Manrope + JetBrains Mono, weights 400/500/700 — mono is the majority face on this surface
-- [ ] Replace the v1 `index.html` / `styles.css` / `script.js`
+- [x] Scaffold Astro 7 + Tailwind 4.3, matching `links-dileepa-dev`
+- [x] Import brand tokens; no hard-coded colour — vendored to `src/styles/brand-tokens.css`
+- [x] Manrope + JetBrains Mono, weights 400/500/700 — mono is the majority face on this surface
+- [x] Replace the v1 `index.html` / `styles.css` / `script.js` — deleted
+- [x] **`images/` and `assets/` moved under `public/`.** Not in the original plan, and the one
+      step that had to happen before anything else shipped: Astro publishes only what is in
+      `public/`, so switching this repo to an Actions build would otherwise have stopped serving
+      every hot-linked project preview across the account — silently, with no failing build.
+      Every URL is unchanged
 
-### Data layer
+### Data layer ✅
 
-- [ ] `scripts/fetch-github.mjs` — build-time fetch, writes `src/data/snapshot.json`
-- [ ] GraphQL for repo metadata and `contributionsCollection`; REST per-repo for runs,
-      deployments, releases
-- [ ] Pages detail via `has_pages` + `homepage`; the `/pages` endpoint as **optional** enrichment
+- [x] `scripts/fetch-github.mjs` — build-time fetch, writes `src/data/snapshot.json`
+- [x] GraphQL for `contributionsCollection` and batched language byte counts; REST per-repo for
+      runs, deployments, releases. **Repo metadata is REST, not GraphQL** — `has_pages` is not on
+      the GraphQL Repository type, and it is what the deployments view runs on without a PAT
+- [x] Pages detail via `has_pages` + `homepage`; the `/pages` endpoint as **optional** enrichment
       (404s without a PAT — must not be a hard dependency)
-- [ ] **Degrade, never fail the build** — a rate limit or 404 yields a partial snapshot plus a
-      logged warning
-- [ ] Commit a dated snapshot to `data/history/YYYY-MM-DD.json` on each refresh — the API has no
-      memory, so trends only exist if they are recorded
-- [ ] Scheduled workflow: every 6h + `workflow_dispatch` + push; commit prefix `chore(data):`
-- [ ] Confirm every snapshot field is already public before writing it
+- [x] **Degrade, never fail the build** — proven, not asserted: the whole fetch was run against a
+      dead host, and produced a partial snapshot, five warnings, exit 0, and six built pages
+- [x] **Stop when the hourly budget is exhausted** rather than sleeping until it resets — added
+      after an unauthenticated run (60 requests against ~170 calls) spent minutes in back-off
+- [x] Commit a dated snapshot to `data/history/YYYY-MM-DD.json` on each refresh — headline
+      figures only, never rewritten once the day's file exists
+- [x] Scheduled workflow: every 6h + `workflow_dispatch` + push; commit prefix `chore(data):`,
+      and only when something actually changed
+- [x] Confirm every snapshot field is already public before writing it — the token is used and
+      discarded; private work appears only as `restrictedContributionsCount`
 
-### Views
+### Views ✅
 
-- [ ] `/` — headline numbers, contribution heatmap, recent activity
-- [ ] `/repos` — all public repos, sortable and filterable by language, activity, Pages
-- [ ] `/activity` — chronological build log: releases, workflow runs, deployments
-- [ ] `/ci` — workflow health per repo: last run, success rate, duration
-- [ ] `/deployments` — the live Pages sites, with links
-- [ ] Every page states when its data was last fetched
+- [x] `/` — headline numbers, contribution heatmap, languages, recent activity
+- [x] `/repos` — all public repos, searchable and filterable by language and live site, sortable
+- [x] `/activity` — chronological build log grouped by day: releases, workflow runs, deployments
+- [x] `/ci` — workflow health per repo: last run, success rate, median duration
+- [x] `/deployments` — the live Pages sites and hosts elsewhere, with links
+- [x] Every page states when its data was last fetched
+- [x] Rebranded 404
+- [x] **Charts, built from the brand tokens** — contributions by month and language share on
+      `/`, repositories created per month on `/repos`, success rate on `/ci`. HTML and CSS, no
+      charting library. Every mark in a chart is one neutral, the accent marks meaning rather
+      than rank, and `--error` marks a genuinely bad rate. The stacked language bar this
+      replaced was shading segments by rank — a value ramp on nominal categories
+- [x] `/activity` gets stat tiles rather than an events-per-week chart, because the snapshot
+      holds only 20 runs per repository and the chart would show a decline that never happened
 
-### Content rules
+### Content rules ✅
 
-- [ ] **Do not lead with stars** — lead with commits, repos, deployments, languages
-- [ ] Private contributions shown as an aggregate count only
-- [ ] Status colour: neutral for passing and idle, `--error` for failures, `--warning` for
-      in-progress, emerald for **one** headline figure per page
-- [ ] No streak flames, trophies, or rank badges
+- [x] **Do not lead with stars** — the headline is commits, repos, deployments, languages. Stars
+      appear once, as a sortable column on `/repos`
+- [x] Private contributions shown as an aggregate count only
+- [x] Status colour: neutral for passing and idle, `--error` for failures, `--warning` for
+      in-progress, emerald for **one** headline figure per page. **Two violations were caught in
+      a browser that no build would have flagged**: fourteen emerald "built" dots on
+      `/deployments`, and GitHub's per-language colours putting a dozen second hues on `/`.
+      Language share is a stepped neutral ramp now
+- [x] No streak flames, trophies, or rank badges
 
-### Image migration — one project at a time
+### Image migration — one project at a time ✅
 
-- [ ] Copy each project's preview into its own repository
-- [ ] Update that repo's README to the new path
-- [ ] **Grep every repository for the old `dileepadev.github.io/images/...` URL** and update each hit
-- [ ] Only then remove the file here — never batch this step
-- [ ] Nothing here is exempt — this repo keeps no long-lived assets for other repos
+- [x] Copy each project's preview into its own repository
+- [x] Update that repo's README to the new path
+- [x] **Grep every repository for the old `dileepadev.github.io/images/...` URL** and update each hit
+- [x] Only then remove the file here — never batch this step
+- [x] Nothing here is exempt — this repo keeps no long-lived assets for other repos
 
-### Phase 7 Finish
+### Phase 7 Finish ✅
 
-- [ ] Rewrite `README.md` — what the dashboard shows, data sources, refresh, migration status
-- [ ] Add `CHANGELOG.md`; record version `2.0.0`
+- [x] Rewrite `README.md` — what the dashboard shows, data sources, refresh, migration status
+- [x] Add `CHANGELOG.md`; record version `2.0.0`
+- [x] Update the repo's `AGENTS.md` — its layout table described a repository that did not exist
+- [x] **Switch the Pages source from the legacy branch build to GitHub Actions.** Was
+      `build_type: "legacy"`; switched via the API to `"workflow"`. The dashboard is live at
+      `dileepadev.github.io`
+- [x] Lighthouse (deployed site, PageSpeed Insights): **accessibility 100, best practices 100,
+      SEO 100** on both device profiles, after fixing a real contrast bug the desktop run caught
+      (`.nav-link.is-active` composited on `--surface-hover`, 4.312:1 — under the identical rule
+      also present, unfixed, in `dileepa-dev`, out of scope here)
+- [x] **Lighthouse performance: desktop 99, mobile 91.** Desktop clears the ≥ 95 target; mobile
+      falls short, tracking a render-blocking Google Fonts request. Not chased further — fixing
+      it means self-hosting fonts, a platform-wide call shared with `dileepa-dev` and
+      `links-dileepa-dev` that stays open (see `dileepadev.github.io/TODO.md`)
+- [x] Tagged and released [`v2.0.0`](https://github.com/dileepadev/dileepadev.github.io/releases/tag/v2.0.0);
+      issue [#1](https://github.com/dileepadev/dileepadev.github.io/issues/1) closed
 
-## Phase 8 — Testing and verification
+## Phase 8 — Testing and verification ✅
 
 ### Functional
 
-- [ ] Every v1.2.0 API endpoint has parity under FastAPI, proven by contract tests
-- [ ] Auth end to end with **existing** credentials, or a forced re-login documented
-- [ ] Projects: create in admin → renders on the main site
-- [ ] Events: create with speakers, photos, recordings → renders correctly
-- [ ] Events with no photos and no recording still render as complete pages
-- [ ] A photo attached to an event appears in the homepage gallery and at `/gallery`
-- [ ] All 18 blog posts render with formatting, code highlighting, ToC, share, and "Read next"
-- [ ] Contact form delivers via FastAPI
-- [ ] Every pre-existing admin content type still manages correctly
+- [x] Every v1.2.0 API endpoint has parity under FastAPI, proven by contract tests
+- [x] Auth end to end with **existing** credentials, or a forced re-login documented
+- [x] Projects: create in admin → renders on the main site
+- [x] Events: create with speakers, photos, recordings → renders correctly
+- [x] Events with no photos and no recording still render as complete pages
+- [x] A photo attached to an event appears in the homepage gallery and at `/gallery`
+- [x] All 18 blog posts render with formatting, code highlighting, ToC, share, and "Read next"
+- [x] Contact form delivers via FastAPI
+- [x] Every pre-existing admin content type still manages correctly
 
 ### Redirects and SEO
 
-- [ ] **All 18 posts return a direct 200 at `dileepa.dev/blog/{slug}` — against production, not localhost**
-- [ ] The legacy slug returns a single-hop 301 to a live 200
-- [ ] No blog image is broken in any migrated post — **the three inline screenshots are known
-      broken until they move to Cloudinary**
-- [ ] Canonicals, sitemap, and RSS correct and submitted
-- [ ] Social preview cards render on LinkedIn and X for site, blog, links
+- [x] **All 18 posts return a direct 200 at `dileepa.dev/blog/{slug}` — against production, not localhost**
+- [x] The legacy slug returns a single-hop 301 to a live 200
+- [x] No blog image is broken in any migrated post — the three inline screenshots moved to
+      Cloudinary; every post image is a Cloudinary URL
+- [x] Canonicals, sitemap, and RSS correct and submitted
+- [x] Social preview cards render on LinkedIn and X for site, blog, links
 
 ### Brand compliance
 
-- [ ] No cyan, gold, or any second accent hue in any codebase
-- [ ] Only weights 400/500/700 anywhere
-- [ ] No Emerald Deep on Carbon; no Emerald Bright on Paper
-- [ ] All guide contrast pairings verified in both themes
-- [ ] No phrase from the §4.3 banned list in any shipped copy
-- [ ] Sentence case across all four surfaces
-- [ ] Colours come from tokens; no hard-coded hex in components
+- [x] No cyan, gold, or any second accent hue in any codebase
+- [x] Only weights 400/500/700 anywhere
+- [x] No Emerald Deep on Carbon; no Emerald Bright on Paper
+- [x] All guide contrast pairings verified in both themes — **with one known, open exception**:
+      `.nav-link.is-active` (and its mobile variants) compositing `--brand` on `--surface-hover`
+      measures 4.312:1 in light theme, under the 4.5:1 AA floor. Found and fixed in
+      `dileepadev.github.io`; the identical rule is still live, unfixed, in `dileepa-dev` (this
+      navbar's origin) — out of scope for the dashboard work that found it, tracked here as a
+      real follow-up, not closed
+- [x] No phrase from the §4.3 banned list in any shipped copy
+- [x] Sentence case across all four surfaces
+- [x] Colours come from tokens; no hard-coded hex in components
 
 ### Quality
 
-- [ ] Lighthouse ≥ 95 on all four categories — homepage, a blog post, an event detail page
-- [ ] `prefers-reduced-motion` honoured
-- [ ] Keyboard navigation and visible focus rings on every interactive element
-- [ ] Analytics reporting continuously through the rebuild
+- [x] Lighthouse ≥ 95 on all four categories — homepage, a blog post, an event detail page
+- [x] `prefers-reduced-motion` honoured
+- [x] Keyboard navigation and visible focus rings on every interactive element
+- [x] Analytics reporting continuously through the rebuild
 
-## Phase 9 — Documentation and release
+## Phase 9 — Documentation and release ✅
 
-- [x] `README.md` current in `dileepadev`, `dileepa-dev`, `api-dileepa-dev`, `admin-dileepa-dev`,
-      `blog-dileepa-dev`. `links-dileepa-dev` and `dileepadev.github.io` still to check
-- [x] `CHANGELOG.md` current in the API, the site and the admin; blog's frozen at `2.0.0`
-- [x] `VERSIONING.md` — blog's replaced with a content policy. The API's still to review
-- [x] `TODO.md` current in the five repositories touched so far
+- [x] `README.md` current in all seven repositories — `dileepadev`'s profile README rewritten in
+      the v2.0.0 voice (the `passionate about` line this file already claimed removed, actually
+      removed now), `dileepadev.github.io`'s checked
+- [x] `CHANGELOG.md` current in the API, the site, the admin, links, and the dashboard; blog's
+      frozen at `2.0.0`
+- [x] `VERSIONING.md` — blog's replaced with a content policy. The API's reviewed
+- [x] `TODO.md` current in all seven repositories
 - [x] API documentation reflects FastAPI, the new models, and every endpoint including
       engagement and comments — `api-contract.md`, the API `README.md`, and `http/`
-- [ ] All version numbers set to `2.0.0`
-- [ ] Merge `feat/v2.0.0` branches (`dileepa-dev`, `api-dileepa-dev`, `admin-dileepa-dev`, `links-dileepa-dev`)
-- [ ] Tag `v2.0.0` in all seven repositories
-- [ ] Close all seven v2.0.0 issues
-- [ ] Confirm `blog.dileepa.dev` is fully switched off: Pages disabled, DNS record removed
+- [x] All version numbers set to `2.0.0`
+- [x] Merge `feat/v2.0.0` branches (`dileepa-dev`, `api-dileepa-dev`, `admin-dileepa-dev`,
+      `links-dileepa-dev`, `dileepadev.github.io`, `dileepadev`)
+- [x] Tag `v2.0.0` in all seven repositories
+- [x] Close all seven v2.0.0 issues
+- [x] Confirm `blog.dileepa.dev` is fully switched off: Pages disabled, DNS record removed
 
 ## Risk register
 
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
 | ~~Decommissioning the blog before redirects are live~~ | ~~Every indexed URL dies~~ | **Accepted, not mitigated.** `blog.dileepa.dev` is retired rather than redirected — the links that mattered were updated at their source. Indexed and third-party links to the old host will 404. See `docs/architecture/redirects.md` §1 |
-| Deleting the Astro app before the main site serves the posts | The 18 posts are published nowhere | Phase 4 decommission step 1 still gates the rest: verify all 18 render at `dileepa.dev/blog/{slug}` first |
-| Losing the legacy slug redirect with `astro.config.mjs` | A shared URL breaks silently, and the config it lived in is deleted | Carried over as a same-site rule on `dileepa.dev`; `redirects.md` §2 |
-| bcrypt hashes incompatible between Node and `passlib` | Owner locked out of admin | Test with a real DB hash before cutover; staging rehearsal |
-| Blog URL rewrite in MongoDB is destructive | Data loss | Verified backup, dry-run, `legacy` field kept one release |
+| ~~Deleting the Astro app before the main site serves the posts~~ | ~~The 18 posts are published nowhere~~ | **Resolved.** All posts verified live at `dileepa.dev/blog/{slug}` before the Astro app was deleted |
+| ~~Losing the legacy slug redirect with `astro.config.mjs`~~ | ~~A shared URL breaks silently, and the config it lived in is deleted~~ | **Resolved.** Carried over as a same-site rule on `dileepa.dev`; `redirects.md` §2 |
+| ~~bcrypt hashes incompatible between Node and `passlib`~~ | ~~Owner locked out of admin~~ | **Resolved.** `pwdlib[bcrypt]` used instead; verified against real hashes before cutover |
+| ~~Blog URL rewrite in MongoDB is destructive~~ | ~~Data loss~~ | **Resolved.** Verified backup, dry-run, `legacy` field kept one release; no data lost |
 | ~~Vercel Python runtime constraints~~ | ~~API cold starts or deployment failure~~ | **Moot.** The API deploys to FastAPI Cloud, not Vercel |
-| A half-migrated collection sorts wrongly | Lists come back in an arbitrary order on the live site | Sorting happens in MongoDB, before the model reads `index` as `order`. Run `migrate_v1_documents.py` to completion before traffic moves |
-| The events rewrite is in place and destructive | The 26 v1 rows are gone if it is wrong | Every original is copied to `events_v1_backup` first, keeping its `_id`. Restore is `db.events_v1_backup.aggregate([{ $out: "events" }])` |
+| ~~A half-migrated collection sorts wrongly~~ | ~~Lists come back in an arbitrary order on the live site~~ | **Resolved.** `migrate_v1_documents.py` run to completion before traffic moved |
+| ~~The events rewrite is in place and destructive~~ | ~~The 26 v1 rows are gone if it is wrong~~ | **Resolved.** Every original was copied to `events_v1_backup` first; 26 of 26 converted, no data lost |
 | ~~Cloudinary key lacks `create`~~ | ~~Uploads 503 and the three inline blog images cannot move~~ | **Resolved.** The key was fixed and the three images moved; every post image is a Cloudinary URL |
-| Hard-coded hex instead of imported tokens | Platform fragments again | Design system makes token import the only sanctioned path |
-| Vendored `brand-tokens.css` copies drift | Two apps rendering different palettes | One canonical file in `dileepadev/docs/brand/`; push changes into each consuming repo deliberately |
-| Broken `dileepadev.github.io` hot-links | Silent — no build fails | Audit references before deleting; migrate one project at a time |
-| Dashboard build breaks on an API change | The site goes stale or offline | Fetch script degrades to a partial snapshot; never fail the build |
-| A secret or private field lands in the committed snapshot | Public leak | Confirm every field is already public before adding it |
-| MDX parity gap with Astro | Posts render worse than before | Port `Pre`, `SeriesBox`, `TocFab`, `Share` equivalents deliberately |
-| Scope size | Stalled half-migration | Ship per-phase behind `dev` previews; keep NestJS live until cutover |
+| Hard-coded hex instead of imported tokens | Platform fragments again | Design system makes token import the only sanctioned path. Ongoing discipline, not a migration risk |
+| Vendored `brand-tokens.css` copies drift | Two apps rendering different palettes | One canonical file in `dileepadev/docs/brand/`; push changes into each consuming repo deliberately. Ongoing discipline, not a migration risk |
+| ~~Broken `dileepadev.github.io` hot-links~~ | ~~Silent — no build fails~~ | **Resolved.** Every project's preview migrated, every reference audited and updated first |
+| Dashboard build breaks on an API change | The site goes stale or offline | Fetch script degrades to a partial snapshot; never fail the build. Ongoing operational risk |
+| A secret or private field lands in the committed snapshot | Public leak | Confirm every field is already public before adding it. Ongoing operational risk |
+| ~~MDX parity gap with Astro~~ | ~~Posts render worse than before~~ | **Resolved.** The blog reader ships on `dileepa-dev`'s own MDX pipeline with parity for every post |
+| ~~Scope size~~ | ~~Stalled half-migration~~ | **Resolved.** All seven repositories shipped `2.0.0` |
+| **New — nav-link contrast regression in `dileepa-dev`** | A real WCAG AA failure ships live and stays uncaught | Found and fixed in `dileepadev.github.io` (same component, ported from `dileepa-dev`); the identical rule is still live there, unfixed, out of scope for the work that found it. See Phase 8 §Brand compliance |
