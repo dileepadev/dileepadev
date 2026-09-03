@@ -36,24 +36,23 @@ to check what is planned, what is done, and in what order things must happen.
 | `README.md` | **Built.** The GitHub profile README — rendered on the profile page. Personal only: no platform, migration, or link content — GitHub already surfaces those from the profile |
 | `docs/README.md` | **Built.** Platform documentation index — the repository table and doc map that used to live in `README.md` |
 | `TODO.md` | **Built.** Cross-repository v2.0.0 roadmap |
-| `assets/` | **Built.** `cover.png` for the profile README |
-| `docs/brand/` | **Built.** Brand guide, canonical token sheet, logo, voice |
-| `docs/design/` | **Built.** Design system contract, reconciled HTML reference |
+| `CHANGELOG.md` | **Built.** Release history, back to `v0.1` |
+| `DESIGN.md` | **Built.** Machine-readable design token and UI contract — the values, where `docs/brand/` carries the prose |
+| `docs/brand/` | **Built.** Brand guide, canonical token sheet, design system contract, logo and asset sets |
 | `docs/architecture/` | **Built.** Platform overview, API contract, content pipeline, redirects |
 | `docs/migration/` | **Built.** v2.0.0 migration plan, versioning policy |
+| Community standards | **Built.** `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `VERSIONING.md`, the three guideline documents, and the `.github/` issue and PR templates |
 
-## Source material — read before writing any brand doc
+## Source material — the six conflicts, and how they were settled
 
-Three working files sit untracked at the repository root:
-`dileepa-brand-guide-v2.0.0.md`, `brand-tokens.css`, `index.html`.
+This section is a record, not a task. v2.0.0 published reconciled versions under `docs/`; the
+three working files (`dileepa-brand-guide-v2.0.0.md`, `brand-tokens.css`, `index.html`) were
+never committed at the repository root and are gone from the working tree.
 
-> [!IMPORTANT]
-> **Do not commit these three files at the repository root.** They are raw source material.
-> The task is to publish reconciled versions under `docs/`, not to check the working copies in.
-
-They disagree with each other. The brand guide is marked **Final** and wins; `brand-tokens.css`
-matches it; `index.html` does not. Six known conflicts, all of which must be resolved in
-`docs/design/design-system.md` before any application implements them:
+Keep it because the conflicts explain *why* several token values look the way they do, and
+because anyone reading an old copy of `index.html` will hit them again. The brand guide is marked
+**Final** and wins; `docs/brand/brand-tokens.css` matches it; `index.html` did not. All six are
+resolved in `docs/brand/design-system.md`:
 
 1. `index.html` declares `--cyan`, `--gold`, `--gold-deep`, `--signal-tech`. The guide permits
    **one accent**. Strip them.
@@ -71,8 +70,9 @@ matches it; `index.html` does not. Six known conflicts, all of which must be res
    `index.html` renders the slash non-italic at weight 600 and spaces the dot with `margin-right`
    rather than `margin-left`, so it reads as `/ .` rather than `/.`
 
-**The rule for every downstream repo:** `index.html` is a *layout and structure* reference.
-Every colour, type, and token value comes from `brand-tokens.css`.
+**The rule for every downstream repo still stands:** treat `index.html` as a *layout and
+structure* reference only. Every colour, type, and token value comes from
+`docs/brand/brand-tokens.css`.
 
 ## Brand rules that must never be broken
 
@@ -95,8 +95,10 @@ If a linter is ever added, it should be a Markdown linter in CI and nothing more
 
 ## Coding standards
 
-- Prose, not code. Write in the voice defined in the brand guide §4 — plain, specific,
-  unhurried. Explain rather than announce.
+- Prose, not code. Write plainly and specifically, and explain rather than announce. The
+  sentence-case rule and the banned-word list are `DESIGN.md` §17.1 and §17.2, repeated under
+  **Brand rules** below. (Brand guide §4 is a colour and type quick reference, not a voice
+  section — there is no §4.3, and `docs/brand/voice.md` was never created.)
 - The test for any sentence: could someone who hasn't built anything have written it? If yes,
   cut it and replace it with the specific.
 - Markdown only. Tables for anything comparative. Fenced code blocks with a language tag.
@@ -141,15 +143,23 @@ This repository *is* the docs. Two specific ownership rules:
 
 ## Git workflow
 
-This repository does not carry the guideline documents the application repos do. The
-conventions still apply:
+As of v2.0.0 this repository carries the same guideline documents the application repos do.
+They are the authority; what follows is the short version.
 
-- Branches: `feat/x`, `fix/x`, `docs/x`, `chore/x`. `main` is protected.
+- Branches: `feat/x`, `fix/x`, `docs/x`, `chore/x` — [BRANCH_NAMING_GUIDELINES.md](BRANCH_NAMING_GUIDELINES.md).
+  `main` is protected and there is no `dev` branch here.
 - Commits: `<type>(<scope>): <short message> (<issue refs>)` — types `feat`, `fix`, `docs`,
-  `style`, `refactor`, `perf`, `test`, `chore`. Most work here is `docs`.
+  `style`, `refactor`, `perf`, `test`, `chore`. Most work here is `docs`. Full rules in
+  [COMMIT_MESSAGE_GUIDELINES.md](COMMIT_MESSAGE_GUIDELINES.md).
+- Pull requests: title format and expectations in
+  [PULL_REQUEST_GUIDELINES.md](PULL_REQUEST_GUIDELINES.md); body structure in
+  [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md).
 - Reference the issue when the work traces to one; don't invent an issue number if none was
   given. v2.0.0 work traces to `refs #1`.
-- Versioning: this repo has no version number and does not need one.
+- Versioning: the **git tag is the version** — there is no manifest and no version string in a
+  file. A release is a tag plus the matching section in [CHANGELOG.md](CHANGELOG.md). See
+  [VERSIONING.md](VERSIONING.md). Tags before `v2.0.0` used a two-part form (`v0.1`, `v0.2`,
+  `v1.0`) and are left as they are.
 
 ## Secrets
 
@@ -158,8 +168,10 @@ show a config example, use obvious placeholders and never a real value.
 
 ## Gotchas
 
-- **The three root files are untracked on purpose.** `git add .` in this repository will stage
-  them. Stage explicitly.
+- **`docs/design/` does not exist, and never did.** The design system lives at
+  `docs/brand/design-system.md`, beside the guide it derives from. Older notes and the v2.0.0
+  issue describe a `docs/design/` directory that was planned and not built; the same goes for
+  `docs/brand/voice.md` — the voice rules are brand guide §4 and were never split out.
 - **`README.md` is personal, not platform.** It renders on the GitHub profile page — the
   most-viewed file in the whole platform — and GitHub already surfaces this repo's links and
   pinned status from the profile itself. Repository structure, the platform table, and any

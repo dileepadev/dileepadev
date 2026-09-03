@@ -9,9 +9,10 @@ Cross-repository roadmap for the v2.0.0 rebrand and platform consolidation.
 
 > [!TIP]
 > **Shipped.** All nine phases complete, all seven repositories at `2.0.0`, all seven issues
-> closed. One open item survives this file's own close-out: a real contrast bug found and fixed
-> in `dileepadev.github.io` exists identically, unfixed, in `dileepa-dev` — see the risk register
-> and Phase 8 §Brand compliance.
+> closed. Four items survive this file's own close-out. One is a real contrast bug, found and
+> fixed in `dileepadev.github.io`, that exists identically and unfixed in `dileepa-dev` — see the
+> risk register and Phase 8 §Brand compliance. The other three are documentation
+> inconsistencies found while closing out this repository — see **Open after v2.0.0**.
 
 ## Repositories and issues
 
@@ -564,6 +565,19 @@ Follows the design system, so it needs Phase 3 done first.
       frozen at `2.0.0`
 - [x] `VERSIONING.md` — blog's replaced with a content policy. The API's reviewed
 - [x] `TODO.md` current in all seven repositories
+- [x] **Community standards published in `dileepadev`.** It was the one repository without them:
+      `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `VERSIONING.md`, `CHANGELOG.md`,
+      the three guideline documents, and the `.github/` issue and PR templates. Adapted rather
+      than copied — the drafts arrived from `api-dileepa-dev` and still named it, and
+      `VERSIONING.md` described bumping `pyproject.toml` and a `GET /version` endpoint that do
+      not exist here. This repo has no build, no tests and no credentials, and the documents now
+      say so
+- [x] **`AGENTS.md` reconciled against the repository it describes.** Its layout table listed
+      `assets/` (deleted with the cover image) and `docs/design/` (never created — the design
+      system lives at `docs/brand/design-system.md`), claimed `docs/brand/voice.md` exists, and
+      told agents that three source files sit untracked at the root when they had already been
+      published under `docs/`. Also updated the git-workflow and versioning sections, both of
+      which said this repo carries neither guideline documents nor a version number
 - [x] API documentation reflects FastAPI, the new models, and every endpoint including
       engagement and comments — `api-contract.md`, the API `README.md`, and `http/`
 - [x] All version numbers set to `2.0.0`
@@ -572,6 +586,28 @@ Follows the design system, so it needs Phase 3 done first.
 - [x] Tag `v2.0.0` in all seven repositories
 - [x] Close all seven v2.0.0 issues
 - [x] Confirm `blog.dileepa.dev` is fully switched off: Pages disabled, DNS record removed
+
+## Open after v2.0.0
+
+Not blockers for the release, but recorded rather than left to be rediscovered.
+
+- [ ] **The brand guide and the shipped lockup disagree about the slash.**
+      `docs/brand/logo/lockup-dark.svg` sets the `/` with `font-style="italic"` at weight 700, and
+      `AGENTS.md` records italic as the resolution of conflict #6. The guide says the opposite in
+      two places — §3.1 ("an emerald forward slash, upright and set at weight 700") and §4
+      (`upright "/." in emerald`) — and the SVG's own comment points at §3.1 for authority. One of
+      them has to move. Left alone here because the guide is marked **Final** and frozen for the
+      duration of v2.0.0, and because which one is correct is a brand decision, not a docs fix
+- [ ] **`docs/brand/voice.md` does not exist and the §4 pointers are wrong.** Brand guide §4 is a
+      colour and type quick reference; there is no §4.3. The sentence-case rule and the banned-word
+      list live in `DESIGN.md` §17.1 and §17.2. The stale pointers in `AGENTS.md` and
+      `CONTRIBUTING.md` were corrected; the ones in [issue #1](https://github.com/dileepadev/dileepadev/issues/1)
+      are left as written, since that issue is a record of what was planned
+- [ ] **`.github/PULL_REQUEST_TEMPLATE.md` links resolve only in a rendered PR body.** Its six
+      relative links (`CONTRIBUTING.md`, the guideline documents, `CODE_OF_CONDUCT.md`) are
+      root-relative, so they 404 when the template file itself is browsed under `.github/`. They
+      work where it matters, and the same file is identical in all seven repositories — changing
+      it here alone would cost more than it fixes
 
 ## Risk register
 
