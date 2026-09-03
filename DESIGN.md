@@ -122,8 +122,8 @@ a11y:
 
 | Document | Authority | Purpose |
 | :--- | :--- | :--- |
-| [`brand-guide.md`](docs/brand-guide.md) | Brand identity authority | Colour, type, logo, voice, portrait - the *what* and *why* of the brand |
-| [`design-system.md`](docs/design-system.md) | Implementation contract authority | Tokens, components, states, layout, theming - the *how*, reconciled against the shipped site |
+| [`brand-guide.md`](docs/brand/brand-guide.md) | Brand identity authority | Colour, type, logo, voice, portrait - the *what* and *why* of the brand |
+| [`design-system.md`](docs/brand/design-system.md) | Implementation contract authority | Tokens, components, states, layout, theming - the *how*, reconciled against the shipped site |
 | **This file (`DESIGN.md`)** | AI agent reference | Synthesises both into actionable rules, machine-readable YAML, component checklists |
 | `app/globals.css` + shipped site | Ultimate source of truth | When any document disagrees with what actually renders, the shipped CSS wins |
 
