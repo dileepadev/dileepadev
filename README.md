@@ -1,5 +1,3 @@
-# Hi, I'm Dileepa 👋
+# Hi there 👋
 
-**AI Engineer.** Building AI systems and the community around them — build, teach, ship.
-
-More at [dileepa.dev](https://dileepa.dev).
+I'm an **AI Engineer**, passionate about building intelligent applications powered by modern AI.
