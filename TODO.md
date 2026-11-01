@@ -587,17 +587,59 @@ Follows the design system, so it needs Phase 3 done first.
 - [x] Close all seven v2.0.0 issues
 - [x] Confirm `blog.dileepa.dev` is fully switched off: Pages disabled, DNS record removed
 
+## v2.1.0 — monochrome brand (in progress)
+
+Tracking issue: [dileepadev#4](https://github.com/dileepadev/dileepadev/issues/4). Visual only —
+no features, routes or data change in any repository. The brand drops its hue: the accent is the
+text colour, the logo is `@dileepadev`, emerald is `--success` only. The contract is [`docs/brand/design-system.md`](docs/brand/design-system.md).
+
+The plan in #4 was "define here, pilot on `dileepadev.github.io`". What happened instead is
+**design-first on `dileepa-dev`**: the redesign was built and settled on the flagship site, then
+written down here. The remaining three sites adopt it from this repo.
+
+| Repository | Issue | State |
+| --- | --- | --- |
+| `dileepadev` | [#4](https://github.com/dileepadev/dileepadev/issues/4) | Docs and tokens rewritten; not yet committed or tagged |
+| `dileepa-dev` | [#27](https://github.com/dileepadev/dileepa-dev/issues/27) | Built on `feat/v2.1.0`, not yet pushed; OG images in progress |
+| `dileepadev.github.io` | [#7](https://github.com/dileepadev/dileepadev.github.io/issues/7) | Not started — still on the emerald sheet |
+| `links-dileepa-dev` | [#5](https://github.com/dileepadev/links-dileepa-dev/issues/5) | Not started — still on the emerald sheet |
+| `admin-dileepa-dev` | [#10](https://github.com/dileepadev/admin-dileepa-dev/issues/10) | Not started — still on the emerald sheet |
+
+### `dileepadev` (this repo)
+
+- [x] Rewrite `brand-tokens.css`, `brand-guide.md`, `design-system.md` and `DESIGN.md` to v2.1.0
+- [x] Record the decision (option B — a brand rule changes) in dileepadev#4
+- [x] `AGENTS.md` brand rules, `logo/README.md`, `covers/README.md`, `CHANGELOG.md` `[Unreleased]`
+- [ ] Commit, PR, merge; move `[Unreleased]` to `[v2.1.0]`; tag `v2.1.0` — downstream re-vendors from the tag
+- [ ] Redraw `logo/*.svg` (live text and outlined) to `@dileepadev` — brief in `logo/README.md`
+- [ ] Redraw `covers/source-1584x396.svg` and regenerate every cover; replace `og.png` and `banners/linkedin.png`
+- [ ] Recolour or retire `icons/` (pillar marks, unused since v2.1.0)
+- [ ] Close #4 once all four downstream issues are closed
+
+### `dileepa-dev`
+
+- [x] Redesign built (rail and panels, monochrome tokens, `@` lockup, forms, terminal profile)
+- [ ] New `public/og.png` / `og2.png`; bring `lib/og/card.tsx` to the same design
+- [x] `/brand` page: no emerald except the Success swatch; no `/.` anywhere
+- [ ] Re-vendor `app/brand-tokens.css` and `docs/` from the `v2.1.0` tag (the working copy was synced before the final input-focus fix in the canonical sheet)
+- [ ] Push `feat/v2.1.0`, PR, `CHANGELOG.md` `v2.1.0`, tag, GitHub release
+
+### `dileepadev.github.io`, `links-dileepa-dev`, `admin-dileepa-dev` — each
+
+- [ ] Re-vendor the sheet from the `v2.1.0` tag into both vendored paths (see #4), keeping the vendored header and the one recorded local change
+- [ ] Copy `brand-guide.md` and `design-system.md` into `docs/`; update that repo's `DESIGN.md` and `AGENTS.md` brand rules from this repo's
+- [ ] Remove every emerald use and every `/.` lockup; the lockup becomes `@dileepadev`
+- [ ] Apply the v2.1.0 contract: three text steps, corner rules, edge rule, field focus edge, link arrows, 13px floor
+- [ ] Both themes, 390px and ≥1024px, every page; no horizontal scroll
+- [ ] Bump to `2.1.0`, `CHANGELOG.md`, tag, release; close the issue
+
 ## Open after v2.0.0
 
 Not blockers for the release, but recorded rather than left to be rediscovered.
 
-- [ ] **The brand guide and the shipped lockup disagree about the slash.**
-      `docs/brand/logo/lockup-dark.svg` sets the `/` with `font-style="italic"` at weight 700, and
-      `AGENTS.md` records italic as the resolution of conflict #6. The guide says the opposite in
-      two places — §3.1 ("an emerald forward slash, upright and set at weight 700") and §4
-      (`upright "/." in emerald`) — and the SVG's own comment points at §3.1 for authority. One of
-      them has to move. Left alone here because the guide is marked **Final** and frozen for the
-      duration of v2.0.0, and because which one is correct is a brand decision, not a docs fix
+- [x] ~~**The brand guide and the shipped lockup disagree about the slash.**~~ Moot: brand v2.1.0
+      retires the `/.` lockup for `@dileepadev` (dileepadev#4). The SVGs that carried the italic
+      slash are tracked for redraw under **v2.1.0** above
 - [ ] **`docs/brand/voice.md` does not exist and the §4 pointers are wrong.** Brand guide §4 is a
       colour and type quick reference; there is no §4.3. The sentence-case rule and the banned-word
       list live in `DESIGN.md` §17.1 and §17.2. The stale pointers in `AGENTS.md` and

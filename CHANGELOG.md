@@ -11,7 +11,36 @@ Changes are organized into the following categories:
 
 ## [Unreleased]
 
-Unreleased changes go here.
+> [!NOTE]
+> **Brand v2.1.0** - the brand drops its hue. The system was designed on `dileepa.dev` (its v2.1.0
+> release) and is written down here now that it has settled (refs #4).
+
+### Changed - Unreleased
+
+- **Colour** - the accent is the text colour (`--brand` is Ink 100 on dark, Paper 900 on
+  light). Emerald is kept only as `--success`. Two tokens are new: `--fg-body` for running text
+  (8.6:1 / 7.6:1), and `--border-input` for field edges, which reach 3:1.
+- **Logo** - the handle `@dileepadev` replaces the `dileepadev /.` lockup. The `@` is set in
+  `--fg-muted` and both parts in Manrope 500.
+- **Type** - a fluid display, H1 and lead. Every heading is weight 500, weight 700 is used only
+  for the display and `<strong>`, and 13px is the smallest size.
+- **Shape** - corners follow three rules: fixed (panel 32, tile 22, block 12, inline 6), capsule
+  for controls and fields, and concentric for rows. `--radius` and `--radius-xl` are deprecated.
+- **Edges and focus** - an edge marks something you can press; labels have none. A field
+  focuses with a single 2px edge, everything else with the 3px ring.
+- **Layout** - a 1320px shell with a sticky profile rail beside the panels at 1024px and above,
+  and a floating nav below. Section icon tiles, a reading-progress back-to-top button, and form
+  validation messages drawn by the system rather than the browser.
+- `brand-tokens.css`, `brand-guide.md`, `design-system.md` and [DESIGN.md](DESIGN.md) were rewritten to match. The sheet's `.input` now focuses
+  with the edge, as the site does, instead of the ring.
+- [AGENTS.md](AGENTS.md) carries the v2.1.0 brand rules and the gotchas for adopting them;
+  [TODO.md](TODO.md) has the v2.1.0 rollout across the four sites; `logo/README.md` and
+  `covers/README.md` mark their assets stale and give the redraw brief.
+
+### Known gaps - Unreleased
+
+- The SVGs under `docs/brand/logo/`, the covers, the banners and the pillar icons still show the
+  v2 `/.` lockup and emerald. The guide marks them stale until they are redrawn.
 
 ## [v2.0.0] - 2026-09-03
 

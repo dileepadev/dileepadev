@@ -43,45 +43,26 @@ to check what is planned, what is done, and in what order things must happen.
 | `docs/migration/` | **Built.** v2.0.0 migration plan, versioning policy |
 | Community standards | **Built.** `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `VERSIONING.md`, the three guideline documents, and the `.github/` issue and PR templates |
 
-## Source material — the six conflicts, and how they were settled
-
-This section is a record, not a task. v2.0.0 published reconciled versions under `docs/`; the
-three working files (`dileepa-brand-guide-v2.0.0.md`, `brand-tokens.css`, `index.html`) were
-never committed at the repository root and are gone from the working tree.
-
-Keep it because the conflicts explain *why* several token values look the way they do, and
-because anyone reading an old copy of `index.html` will hit them again. The brand guide is marked
-**Final** and wins; `docs/brand/brand-tokens.css` matches it; `index.html` did not. All six are
-resolved in `docs/brand/design-system.md`:
-
-1. `index.html` declares `--cyan`, `--gold`, `--gold-deep`, `--signal-tech`. The guide permits
-   **one accent**. Strip them.
-2. The neutral ramps differ. `index.html` uses `ink-900 #050505`, `ink-800 #0D0D0D`,
-   `ink-700 #141414`, `ink-600 #1D1D1D`, `ink-400 #8D8D8D`, `paper-200 #E4E4DA`,
-   `paper-400 #6B6B62`, `paper-900 #12140F`. `brand-tokens.css` wins — the published contrast
-   ratios were measured against its values.
-3. `index.html` sets `--font-mono: "Manrope"` and never loads JetBrains Mono. The guide requires
-   JetBrains Mono for code and data.
-4. `index.html` loads weights `400;500;600;700;800` and uses 600 and 800. The guide permits
-   **400, 500, 700 only**.
-5. `.subsection-title::before` puts `--emerald-deep` on Carbon — the guide names that as the one
-   hard failure. Use `--brand` so it flips per theme.
-6. The lockup is `dileepadev /.` — neutral wordmark, *italic* emerald slash, then an emerald dot.
-   `index.html` renders the slash non-italic at weight 600 and spaces the dot with `margin-right`
-   rather than `margin-left`, so it reads as `/ .` rather than `/.`
-
-**The rule for every downstream repo still stands:** treat `index.html` as a *layout and
-structure* reference only. Every colour, type, and token value comes from
-`docs/brand/brand-tokens.css`.
-
 ## Brand rules that must never be broken
 
-- Emerald is the only accent. No second hue, anywhere, ever.
-- Never Emerald Deep (`#087F5B`) on Carbon. Never Emerald Bright (`#23B888`) on Paper.
+These are the **v2.1.0** rules (dileepadev#4).
+
+- **No brand hue.** The accent is the text colour — `--brand` is Ink 100 `#F1F1F1` on Carbon and
+  Paper 900 `#131313` on Paper. Colour appears only as a state: `--success`, `--error`,
+  `--warning`. Never add a hue as an accent.
+- Components use semantic tokens only — never a hex, never a raw ramp token.
+- Three text steps: `--fg` for titles, `--fg-body` for running text, `--fg-muted` for metadata.
 - Manrope for display and UI, JetBrains Mono for code and data. No third family.
-- Weights 400, 500, 700 only. No 600.
+- Weights 400, 500, 700 only. No 600. Every heading is 500; 700 is the display line and
+  `<strong>` only. Nothing smaller than 13px (`--text-label`).
+- Corners are fixed (panel, tile, block, inline), capsule (every control and field), or
+  concentric (a row inside a tile). Never invent a radius.
+- An edge means it acts: buttons, selects and interactive chips take `--border-strong`, fields
+  take `--border-input`, labels take none.
+- Every text link carries an arrow — `→` on the site, `↗` off it.
+- The logo is the handle, `@dileepadev`: the `@` in `--fg-muted`, the wordmark in `--fg`, both
+  Manrope 500, no gap. Black and white only.
 - Sentence case everywhere — headings, buttons, nav, labels.
-- The wordmark is never emerald; the `/.` is never the neutral text colour.
 - Banned words, without exception: *passionate about, leveraging, cutting-edge, revolutionize,
   game-changing, unlock, seamless, AI enthusiast, thought leader, journey, humbled to announce,
   10x.*
@@ -155,7 +136,7 @@ They are the authority; what follows is the short version.
   [PULL_REQUEST_GUIDELINES.md](PULL_REQUEST_GUIDELINES.md); body structure in
   [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md).
 - Reference the issue when the work traces to one; don't invent an issue number if none was
-  given. v2.0.0 work traces to `refs #1`.
+  given. v2.0.0 work traced to `refs #1`; v2.1.0 work traces to `refs #4`.
 - Versioning: the **git tag is the version** — there is no manifest and no version string in a
   file. A release is a tag plus the matching section in [CHANGELOG.md](CHANGELOG.md). See
   [VERSIONING.md](VERSIONING.md). Tags before `v2.0.0` used a two-part form (`v0.1`, `v0.2`,
@@ -176,5 +157,14 @@ show a config example, use obvious placeholders and never a real value.
   most-viewed file in the whole platform — and GitHub already surfaces this repo's links and
   pinned status from the profile itself. Repository structure, the platform table, and any
   migration status go in [`docs/README.md`](docs/README.md), never back into the profile README.
-- **The guide says "change at most one thing per review."** Treat the brand guide as frozen for
-  the duration of v2.0.0; queue changes for after the release.
+- **v2.1.0 was designed on `dileepa-dev` first, not here.** These documents were written from
+  the site's shipped CSS. When this repo and the shipped `dileepa-dev` CSS disagree, check the
+  site, then fix whichever is wrong here. The other three sites (`dileepadev.github.io`,
+  `links-dileepa-dev`, `admin-dileepa-dev`) adopt it from this repo, never from the site.
+- **The brand version is 2.1.0, deliberately.** Every brand file carries `v2.1.0`; do not relabel
+  it 3.0 even though `VERSIONING.md` would call a reversed brand rule major.
+- **Only a sheet headed `brand tokens v2.1.0` is current.** The copies vendored in
+  `dileepadev.github.io`, `links-dileepa-dev` and `admin-dileepa-dev` are an older sheet (labelled
+  `v2.1`, with `--brand: var(--emerald-bright)`) and must be replaced, not patched.
+- **The logo SVGs, covers, banners and icons under `docs/brand/` are out of date.** Do not hand
+  them out or copy them into a site until they are redrawn; `og.png` is current.
