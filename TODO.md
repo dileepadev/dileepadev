@@ -589,9 +589,11 @@ Follows the design system, so it needs Phase 3 done first.
 
 ## v2.1.0 — monochrome brand (in progress)
 
-Tracking issue: [dileepadev#4](https://github.com/dileepadev/dileepadev/issues/4). Visual only —
-no features, routes or data change in any repository. The brand drops its hue: the accent is the
-text colour, the logo is `@dileepadev`, emerald is `--success` only. The contract is [`docs/brand/design-system.md`](docs/brand/design-system.md).
+Tracking issue: [dileepadev#4](https://github.com/dileepadev/dileepadev/issues/4). The remaining
+rollout is visual only: no features, routes or data change in the dashboard, links page or
+admin. The completed main-site release includes the structural changes recorded in its own
+changelog. The accent is the text colour, the logo is `@dileepadev`, and emerald is `--success`
+only. The contract is [`docs/brand/design-system.md`](docs/brand/design-system.md).
 
 The plan in #4 was "define here, pilot on `dileepadev.github.io`". What happened instead is
 **design-first on `dileepa-dev`**: the redesign was built and settled on the flagship site, then
@@ -599,30 +601,58 @@ written down here. The remaining three sites adopt it from this repo.
 
 | Repository | Issue | State |
 | --- | --- | --- |
-| `dileepadev` | [#4](https://github.com/dileepadev/dileepadev/issues/4) | Docs and tokens rewritten; not yet committed or tagged |
-| `dileepa-dev` | [#27](https://github.com/dileepadev/dileepa-dev/issues/27) | Built on `feat/v2.1.0`, not yet pushed; OG images in progress |
-| `dileepadev.github.io` | [#7](https://github.com/dileepadev/dileepadev.github.io/issues/7) | Not started — still on the emerald sheet |
-| `links-dileepa-dev` | [#5](https://github.com/dileepadev/links-dileepa-dev/issues/5) | Not started — still on the emerald sheet |
-| `admin-dileepa-dev` | [#10](https://github.com/dileepadev/admin-dileepa-dev/issues/10) | Not started — still on the emerald sheet |
+| `dileepadev` | [#4](https://github.com/dileepadev/dileepadev/issues/4) | Docs, tokens and current assets committed locally on `feat/v2.1.0`; verification complete; PR, merge and root tag pending |
+| `dileepa-dev` | [#27](https://github.com/dileepadev/dileepa-dev/issues/27) | [v2.1.0 released](https://github.com/dileepadev/dileepa-dev/releases/tag/v2.1.0) on 2026-11-01; issue closed |
+| `dileepadev.github.io` | [#7](https://github.com/dileepadev/dileepadev.github.io/issues/7) | Initial monochrome tokens/docs and compatibility fixes committed on `feat/v2.1.0`; final tag sync, polish audit and release pending |
+| `links-dileepa-dev` | [#5](https://github.com/dileepadev/links-dileepa-dev/issues/5) | Initial monochrome tokens/docs and compatibility fixes committed on `feat/v2.1.0`; final tag sync, visual review and release pending |
+| `admin-dileepa-dev` | [#10](https://github.com/dileepadev/admin-dileepa-dev/issues/10) | Initial monochrome tokens/docs and compatibility fixes committed on `feat/v2.1.0`; final tag sync, visual review and release pending |
+
+Status checked on 2026-11-01. The root `v2.1.0` tag is not published. Existing downstream copies
+come from the working branch; they must be checked against the final tag before release.
 
 ### `dileepadev` (this repo)
 
 - [x] Rewrite `brand-tokens.css`, `brand-guide.md`, `design-system.md` and `DESIGN.md` to v2.1.0
-- [x] Record the decision (option B — a brand rule changes) in dileepadev#4
+- [x] Record option B and the owner's decision to keep 2.1.0 in `design-system.md` §0
 - [x] `AGENTS.md` brand rules, `logo/README.md`, `covers/README.md`, `CHANGELOG.md` `[Unreleased]`
-- [ ] Commit, PR, merge; move `[Unreleased]` to `[v2.1.0]`; tag `v2.1.0` — downstream re-vendors from the tag
-- [ ] Redraw `logo/*.svg` (live text and outlined) to `@dileepadev` — brief in `logo/README.md`
-- [ ] Redraw `covers/source-1584x396.svg` and regenerate every cover; replace `og.png` and `banners/linkedin.png`
-- [ ] Recolour or retire `icons/` (pillar marks, unused since v2.1.0)
+- [x] Redraw all six `logo/*.svg` files to `@dileepadev` and the reduced `@`; provide live-text and outlined lockups in both themes
+- [x] Redraw `covers/source-1584x396.svg` to the flat split composition and regenerate the eight wide-cover sets and LinkedIn banner
+- [x] Match `og.png`, `covers/og.png` and `covers/og-wide.png` to the approved website PNGs; replace the old OG SVG/JPG exports
+- [x] Replace the looping profile header with the static v2.1.0 cover, keeping the old asset filename as a static compatibility copy
+- [x] Recolour the six pillar marks and all PNG exports; retain `currentColor` symbols and replace the old HTML catalogue with a Markdown asset index
+- [x] Finish local verification and commit the asset and documentation updates
+- [ ] Reconcile issue #4's stale objectives: direction is settled, and the proposed 2.0.0 correction is cancelled
+- [ ] PR, merge; move `[Unreleased]` to `[v2.1.0]`; tag `v2.1.0` — include the complete asset set before downstream re-vendoring
 - [ ] Close #4 once all four downstream issues are closed
+
+Local verification on 2026-11-01: 36 SVGs parsed, 32 raster dimensions checked, all 85 shared
+CSS variables resolved, and 97 local Markdown links resolved. Both documented export commands
+ran successfully in an isolated copy; all 22 resulting PNGs matched the prepared exports
+pixel-for-pixel. The YouTube safe area, Discord at actual size, logos at 120px, and inline
+symbols on both themes were inspected. `git diff --check` is clean. There is no application
+build or test suite in this repository.
 
 ### `dileepa-dev`
 
 - [x] Redesign built (rail and panels, monochrome tokens, `@` lockup, forms, terminal profile)
-- [ ] New `public/og.png` / `og2.png`; bring `lib/og/card.tsx` to the same design
+- [x] New approved `public/og.png` and `public/og2.png`; both are now copied into the canonical asset set
 - [x] `/brand` page: no emerald except the Success swatch; no `/.` anywhere
-- [ ] Re-vendor `app/brand-tokens.css` and `docs/` from the `v2.1.0` tag (the working copy was synced before the final input-focus fix in the canonical sheet)
-- [ ] Push `feat/v2.1.0`, PR, `CHANGELOG.md` `v2.1.0`, tag, GitHub release
+- [x] Verify the current runtime sheet against canonical: colours, type and shape match, including the final input-focus fix. The root audit additionally names the existing panel-padding expression `--panel-pad`, copied from the site's local CSS; the site can receive that shared alias when the root tag is re-vendored
+- [x] Push `feat/v2.1.0`, PR, `CHANGELOG.md` `v2.1.0`, tag, GitHub release; close #27
+- [ ] After the root tag is published, verify both token copies against it and record that source; copy the completed canonical asset set and updated reference docs when needed
+
+**Follow-up found during the root asset audit:** `lib/og/card.tsx` at commit `d5fb116` still
+draws a mono terminal window for post/project/event cards, while the approved default OG card is
+the flat split composition. It also sets the logo in JetBrains Mono rather than Manrope 500.
+The completed release and closed #27 remain recorded above; this is an outstanding consistency
+correction, not a claim that the generated cards already match. Fix it in `dileepa-dev`, with
+rendered short- and long-title checks, rather than changing the canonical covers back to the
+retired terminal design.
+
+**Font override to review on the site:** `app/globals.css` aliases `--font-mono` to Manrope and
+uses a separate `--font-code` for JetBrains Mono. That differs from the canonical code-and-data
+family contract. Keep the canonical JetBrains Mono stack in the other applications; do not copy
+the site's local font override as part of their adoption.
 
 ### `dileepadev.github.io`, `links-dileepa-dev`, `admin-dileepa-dev` — each
 
@@ -638,8 +668,8 @@ written down here. The remaining three sites adopt it from this repo.
 Not blockers for the release, but recorded rather than left to be rediscovered.
 
 - [x] ~~**The brand guide and the shipped lockup disagree about the slash.**~~ Moot: brand v2.1.0
-      retires the `/.` lockup for `@dileepadev` (dileepadev#4). The SVGs that carried the italic
-      slash are tracked for redraw under **v2.1.0** above
+      retires the `/.` lockup for `@dileepadev` (dileepadev#4). The SVGs now carry the current
+      handle and neutral palette; see the v2.1.0 asset set above
 - [ ] **`docs/brand/voice.md` does not exist and the §4 pointers are wrong.** Brand guide §4 is a
       colour and type quick reference; there is no §4.3. The sentence-case rule and the banned-word
       list live in `DESIGN.md` §17.1 and §17.2. The stale pointers in `AGENTS.md` and

@@ -152,7 +152,7 @@ show a config example, use obvious placeholders and never a real value.
 - **`docs/design/` does not exist, and never did.** The design system lives at
   `docs/brand/design-system.md`, beside the guide it derives from. Older notes and the v2.0.0
   issue describe a `docs/design/` directory that was planned and not built; the same goes for
-  `docs/brand/voice.md` — the voice rules are brand guide §4 and were never split out.
+  `docs/brand/voice.md` — the voice rules are in `DESIGN.md` §17 and were never split out.
 - **`README.md` is personal, not platform.** It renders on the GitHub profile page — the
   most-viewed file in the whole platform — and GitHub already surfaces this repo's links and
   pinned status from the profile itself. Repository structure, the platform table, and any
@@ -163,8 +163,12 @@ show a config example, use obvious placeholders and never a real value.
   `links-dileepa-dev`, `admin-dileepa-dev`) adopt it from this repo, never from the site.
 - **The brand version is 2.1.0, deliberately.** Every brand file carries `v2.1.0`; do not relabel
   it 3.0 even though `VERSIONING.md` would call a reversed brand rule major.
-- **Only a sheet headed `brand tokens v2.1.0` is current.** The copies vendored in
-  `dileepadev.github.io`, `links-dileepa-dev` and `admin-dileepa-dev` are an older sheet (labelled
-  `v2.1`, with `--brand: var(--emerald-bright)`) and must be replaced, not patched.
-- **The logo SVGs, covers, banners and icons under `docs/brand/` are out of date.** Do not hand
-  them out or copy them into a site until they are redrawn; `og.png` is current.
+- **Check sheet content as well as its label.** The current sheet is headed
+  `brand tokens v2.1.0`, has `--fg-body` and `--border-input`, and sets
+  `--brand: var(--ink-100)` on Carbon. An older emerald sheet was also labelled `v2.1`.
+  The three remaining applications already have provisional monochrome copies on their work
+  branches; verify both vendored paths against the final root tag before releasing them.
+- **The current asset set lives here.** `logo/`, `covers/`, `banners/` and `icons/` under
+  `docs/brand/` now follow v2.1.0. The asset directories copied into `dileepa-dev/docs/brand/`
+  still contain older artwork; do not copy those back. Read each asset directory's README before
+  exporting. `covers/x-header-animated.svg` is a static compatibility copy, despite its name.

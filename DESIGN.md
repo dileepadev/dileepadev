@@ -322,6 +322,9 @@ into a cascade layer, or wire their framework (Tailwind 4 `@theme inline`) to it
 
 `--space-1` (4px) to `--space-16` (64px): 1, 2, 3, 4, 5, 6, 8, 10, 12, 16. Never invent a value.
 
+`--panel-pad` is `clamp(var(--space-6), 0.5rem + 3vw, var(--space-12))`: 24px to 48px,
+matching the site's section, hero and footer alignment. It is defined in the canonical sheet.
+
 ### 4.5 Radius & Hairlines
 
 | Token | Value | Rule | Applied To |
@@ -335,7 +338,7 @@ into a cascade layer, or wire their framework (Tailwind 4 `@theme inline`) to it
 | `--radius-row` | 16px | Concentric | A row 6px inside a tile |
 | `--hairline` | 1px | - | Every border and rule |
 
-`--radius` and `--radius-xl` are deprecated; don't use them in new work.
+The old generic and extra-large radius aliases are removed. Use a named role from this table.
 
 ### 4.6 Control Heights
 
@@ -610,7 +613,9 @@ More than three columns scroll inside their own box (`overflow-x: auto`, `--bord
   section app-icon tiles. Section icons are literal: a person (About), a briefcase (Work), a
   graduation cap (Education), speech bubbles (Contact).
 - **Social**: hand-authored inline SVGs, 24×24, `fill="currentColor"`, `--fg-muted` → `--fg`.
-- **Pillar marks** (`docs/brand/icons/`): unused by any surface since the About cards were removed kept as assets.
+- **Pillar marks** ([asset index](docs/brand/icons/README.md)): six retained neutral marks. Inline
+  applications use the `-symbol.svg` variants with `currentColor`; the PNGs and standalone SVGs
+  use Ink 100 on Carbon. They are separate from the current section icons.
 - Decorative icons carry `aria-hidden="true"`.
 
 ### 13.2 Photography Budget
@@ -619,6 +624,20 @@ Three places only: **the portrait** (rail, phone hero, profile), **event photogr
 event pages) and **video thumbnails** on `/videos`: 16:9, beside each video's title in a list, never
 a wall of thumbnails, with the length on a fixed dark scrim. Blog posts carry no banner. Photos sit
 at `--radius-block`; captions over a fixed dark scrim.
+
+### 13.3 Exported brand assets
+
+The [logo set](docs/brand/logo/README.md) uses `@dileepadev`, Manrope 500, in live-text and
+outlined versions for both themes. The favicon remains the portrait.
+
+The [social artwork](docs/brand/covers/README.md) uses a flat split card: neutral text and framing
+beside the colour portrait. The standard and wide OG PNGs match the completed website's approved
+exports. Covers share a 1584 × 396 source and scale without stretching. The SVG artwork carries
+outlined type and embedded images, so an export has no font or network dependency.
+
+These are export assets, not UI components. Their fixed paint values track the canonical
+semantic tokens. A component importing their shapes still uses semantic variables or
+`currentColor`; it must not copy the fixed export colours into its styles.
 
 ---
 

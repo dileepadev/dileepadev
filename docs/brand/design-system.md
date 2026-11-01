@@ -8,6 +8,40 @@ The component and token contract every frontend in the platform implements.
 Applies to `dileepa-dev`, `admin-dileepa-dev`, `links-dileepa-dev`, and the static page in
 `dileepadev.github.io`.
 
+## 0. Provenance and the v2.1.0 decision
+
+**Option B is settled:** v2.1.0 changes the brand rules. The accent is the text colour and the
+handle is the logo. It is not a refinement of the emerald system. The owner deliberately kept
+the version at **2.1.0**, including `DESIGN.md`; the proposed correction to 2.0.0 in issue #4
+does not apply.
+
+The redesign was built on `dileepa-dev` first, then documented here. The implementation checked
+for this release is `dileepa-dev` commit `d5fb116`: `app/brand-tokens.css`, `app/globals.css`,
+`components/ui/Lockup.tsx`, and the approved `public/og.png` and `public/og2.png`. Its brand
+guide, design-system document and documentation copy of the tokens matched this repository at
+that point. Its top-level `DESIGN.md` still describes the emerald system and must not overwrite
+this one.
+
+The final audit also factored the existing panel-padding expression into `--panel-pad` in the
+canonical sheet, matching the site's local variable. This adds the token the contract already
+names without changing the shared `.panel` rule's rendered padding.
+
+| Area | v2.0.0 | v2.1.0 |
+| --- | --- | --- |
+| Accent | Emerald | The text colour; colour reports a state only |
+| Logo | `dileepadev /.` | `@dileepadev`, Manrope 500, with a muted `@` |
+| Text | Primary and muted | Titles, running text and metadata each have a semantic step |
+| Type | Fixed sizes and bold headings | Fluid display and H1, headings at 500, 13px floor |
+| Shape | A general radius scale | Fixed containers, capsule controls, concentric nesting |
+| Edges and focus | One border and a halo | Edges identify controls; fields focus with one 2px edge |
+| Layout | A single column | Profile rail and panels, with floating navigation below 1024px |
+| Static social artwork | A terminal window | A flat split card with the handle, name, role, domain and portrait |
+
+`dileepadev` remains the canonical home for the resulting standards and assets. The dashboard,
+links page and admin adopt them from this repository's `v2.1.0` tag. A working-branch copy is
+provisional until its provenance is checked against that tag. The remaining release sequence is
+in [`../../TODO.md`](../../TODO.md).
+
 ## 1. The one rule about tokens
 
 **Import the token sheet. Never copy values out of it.**
@@ -216,6 +250,9 @@ display from the H1 beneath it.
 ### 4.1 Space scale
 
 `--space-1` (4px) through `--space-16` (64px), on a 4px grid: 1, 2, 3, 4, 5, 6, 8, 10, 12, 16.
+
+`--panel-pad` is `clamp(var(--space-6), 0.5rem + 3vw, var(--space-12))`, ranging from 24px
+to 48px. The panel component and content aligned with it use this shared token.
 
 ### 4.2 Shape - fixed, capsule, concentric
 
@@ -459,9 +496,10 @@ bubbles for Contact.
 **Brand & social glyphs**: GitHub, LinkedIn, X, YouTube, Instagram, Facebook - hand-authored
 inline SVGs (24×24, `fill="currentColor"`), `--fg-muted` at rest, `--fg` on hover.
 
-**Pillar marks** (`docs/brand/icons/`): the six marks drawn for the former About cards. No surface
-uses them; they stay in the repository as assets, recoloured
-through `currentColor` if they are ever used again.
+**Pillar marks** ([`icons/`](icons/)): the six marks drawn for the former About cards. The asset
+set is retained in neutral ink. Use the `-symbol.svg` variant with `currentColor` inside an
+application; the plain and badge exports are Ink 100 on Carbon. They are not the section icons
+used by the current site. The [asset index](icons/README.md) describes the variants.
 
 **Every decorative icon carries `aria-hidden="true"`;** the accessible name comes from the visible
 text or the control's `aria-label`.

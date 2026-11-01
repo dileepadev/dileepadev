@@ -25,7 +25,8 @@ Changes are organized into the following categories:
 - **Type** - a fluid display, H1 and lead. Every heading is weight 500, weight 700 is used only
   for the display and `<strong>`, and 13px is the smallest size.
 - **Shape** - corners follow three rules: fixed (panel 32, tile 22, block 12, inline 6), capsule
-  for controls and fields, and concentric for rows. `--radius` and `--radius-xl` are deprecated.
+  for controls and fields, and concentric for rows. The old generic and extra-large radius
+  aliases are removed; the reference now says so.
 - **Edges and focus** - an edge marks something you can press; labels have none. A field
   focuses with a single 2px edge, everything else with the 3px ring.
 - **Layout** - a 1320px shell with a sticky profile rail beside the panels at 1024px and above,
@@ -34,13 +35,36 @@ Changes are organized into the following categories:
 - `brand-tokens.css`, `brand-guide.md`, `design-system.md` and [DESIGN.md](DESIGN.md) were rewritten to match. The sheet's `.input` now focuses
   with the edge, as the site does, instead of the ring.
 - [AGENTS.md](AGENTS.md) carries the v2.1.0 brand rules and the gotchas for adopting them;
-  [TODO.md](TODO.md) has the v2.1.0 rollout across the four sites; `logo/README.md` and
-  `covers/README.md` mark their assets stale and give the redraw brief.
+  [TODO.md](TODO.md) records the completed website release and the existing adoption branches
+  for the dashboard, links and admin. `design-system.md` §0 records the settled brand decision,
+  the owner's 2.1.0 version choice, and the implementation used to check the contract.
+- **Logo exports** - all six SVGs now draw the handle or reduced `@`. Both themes have a
+  live-text lockup and a Manrope 500 lockup converted to filled paths; the reduced marks are
+  filled paths too, with no font dependency.
+- **Social artwork** - the wide master and all eight cover sets use the flat split composition,
+  with neutral type beside the colour portrait. SVGs embed the portrait and outline the type.
+  PNG and JPG exports are regenerated, including `banners/linkedin.png`. The standard and wide
+  OG exports preserve the completed website's approved PNGs unchanged.
+- **The profile header** uses the static cover. `x-header-animated.svg` remains as a static
+  compatibility copy, so existing references still resolve without the old looping artwork.
+- **Pillar assets** - the six marks retain their geometry in neutral ink; all twelve PNGs are
+  regenerated, and the inline symbols retain `currentColor`. The new Markdown asset index
+  describes their variants and export command.
+- Asset READMEs document native dimensions, clear space, font dependencies, the YouTube safe
+  area, the smallest Discord type size, and optional regeneration commands. No build system or
+  repository dependencies are introduced.
 
-### Known gaps - Unreleased
+### Fixed - Unreleased
 
-- The SVGs under `docs/brand/logo/`, the covers, the banners and the pillar icons still show the
-  v2 `/.` lockup and emerald. The guide marks them stale until they are redrawn.
+- **The documented panel-padding token was missing.** `--panel-pad` now names
+  `clamp(var(--space-6), 0.5rem + 3vw, var(--space-12))`, the same value the site declares
+  locally and the shared `.panel` repeated inline. The component now reads the token; its
+  rendered padding is unchanged.
+
+### Removed - Unreleased
+
+- The old `icons/index.html` catalogue, whose palette and embedded copies could drift from the
+  SVG sources. `icons/README.md` is its replacement.
 
 ## [v2.0.0] - 2026-09-03
 
