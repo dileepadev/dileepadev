@@ -1,5 +1,10 @@
 # Social covers
 
+> [!WARNING]
+> **Out of date.** `source-1584x396.svg` and everything derived from it predate brand v2.1.0 and
+> must be redrawn to the current guide (§1 colour, §3 logo) before they are uploaded anywhere.
+> The site's social card is `../og.png`; covers should follow its flat split layout.
+
 Every file here is derived from `source-1584x396.svg` - the LinkedIn-sized
 artwork, which is where edits go. Regenerate the rest rather than editing them.
 
