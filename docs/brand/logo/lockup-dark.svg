@@ -1,10 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232 48" width="232" height="48"
-     role="img" aria-label="dileepadev">
-  <!-- Lockup: neutral wordmark + emerald "/." — see docs/brand/brand-guide.md 3.1 -->
-  <!-- Live text: Manrope must be available. Outline it before sending off-platform. -->
-  <g font-family="Manrope, system-ui, -apple-system, sans-serif" font-size="32">
-    <text x="0" y="34" font-weight="500" letter-spacing="-0.64" fill="#F2F2F2">dileepadev</text>
-    <text x="196" y="34" font-weight="700" font-style="italic" fill="#23B888">/</text>
-    <circle cx="222" cy="31" r="3.2" fill="#23B888"/>
-  </g>
+<svg data-brand-version="2.1.0" xmlns="http://www.w3.org/2000/svg" width="235" height="80" viewBox="0 0 235 80" role="img" aria-labelledby="title desc">
+  <title id="title">@dileepadev</title>
+  <desc id="desc">Manrope Medium. The @ is muted; the wordmark has full contrast. Load Manrope or use the outlined version.</desc>
+  <!-- Export palette from the semantic tokens: bg #050505; bg-surface #0D0D0D; border-strong #2E2E2E; fg #F1F1F1; fg-muted #8D8D8D. -->
+  <!-- Manrope Medium (500), -0.02em tracking. Transparent field; place on #050505. -->
+  <text x="24" y="47.52" font-family="Manrope, system-ui, -apple-system, sans-serif" font-size="32" font-weight="500" letter-spacing="-0.64"><tspan fill="#8D8D8D">@</tspan><tspan fill="#F1F1F1">dileepadev</tspan></text>
 </svg>
