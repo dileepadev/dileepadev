@@ -12,59 +12,56 @@ Changes are organized into the following categories:
 ## [Unreleased]
 
 > [!NOTE]
-> **Brand v2.1.0** - the brand drops its hue. The system was designed on `dileepa.dev` (its v2.1.0
-> release) and is written down here now that it has settled (refs #4).
+> **Brand v2.1.0** replaces the emerald brand with the monochrome system built on `dileepa-dev`:
+> the accent is the text colour, the logo is `@dileepadev`, and colour appears only to report a
+> state. The website's copy is the source; everything else here is either copied from it exactly
+> or redrawn from it (refs #4). The root `v2.1.0` tag is not yet published.
 
 ### Changed - Unreleased
 
-- **Colour** - the accent is the text colour (`--brand` is Ink 100 on dark, Paper 900 on
-  light). Emerald is kept only as `--success`. Two tokens are new: `--fg-body` for running text
-  (8.6:1 / 7.6:1), and `--border-input` for field edges, which reach 3:1.
-- **Logo** - the handle `@dileepadev` replaces the `dileepadev /.` lockup. The `@` is set in
-  `--fg-muted` and both parts in Manrope 500.
-- **Type** - a fluid display, H1 and lead. Every heading is weight 500, weight 700 is used only
-  for the display and `<strong>`, and 13px is the smallest size.
-- **Shape** - corners follow three rules: fixed (panel 32, tile 22, block 12, inline 6), capsule
-  for controls and fields, and concentric for rows. The old generic and extra-large radius
-  aliases are removed; the reference now says so.
-- **Edges and focus** - an edge marks something you can press; labels have none. A field
-  focuses with a single 2px edge, everything else with the 3px ring.
-- **Layout** - a 1320px shell with a sticky profile rail beside the panels at 1024px and above,
-  and a floating nav below. Section icon tiles, a reading-progress back-to-top button, and form
-  validation messages drawn by the system rather than the browser.
-- `brand-tokens.css`, `brand-guide.md`, `design-system.md` and [DESIGN.md](DESIGN.md) were rewritten to match. The sheet's `.input` now focuses
-  with the edge, as the site does, instead of the ring.
-- [AGENTS.md](AGENTS.md) carries the v2.1.0 brand rules and the gotchas for adopting them;
-  [TODO.md](TODO.md) records the completed website release and the existing adoption branches
-  for the dashboard, links and admin. `design-system.md` §0 records the settled brand decision,
-  the owner's 2.1.0 version choice, and the implementation used to check the contract.
-- **Logo exports** - all six SVGs now draw the handle or reduced `@`. Both themes have a
-  live-text lockup and a Manrope 500 lockup converted to filled paths; the reduced marks are
-  filled paths too, with no font dependency.
-- **Social artwork** - the wide master and all eight cover sets use the flat split composition,
-  with neutral type beside the colour portrait. SVGs embed the portrait and outline the type.
-  PNG and JPG exports are regenerated, including `banners/linkedin.png`. The standard and wide
-  OG exports preserve the completed website's approved PNGs unchanged.
-- **The profile header** uses the static cover. `x-header-animated.svg` remains as a static
-  compatibility copy, so existing references still resolve without the old looping artwork.
-- **Pillar assets** - the six marks retain their geometry in neutral ink; all twelve PNGs are
-  regenerated, and the inline symbols retain `currentColor`. The new Markdown asset index
-  describes their variants and export command.
-- Asset READMEs document native dimensions, clear space, font dependencies, the YouTube safe
-  area, the smallest Discord type size, and optional regeneration commands. No build system or
-  repository dependencies are introduced.
+- Replace the brand guide, design-system contract and token sheet with the website's v2.1.0
+  files, copied byte-for-byte from its `v2.1.0` tag (commit `7c484f3`). `DESIGN.md`, the OG cards,
+  the favicon and app-icon set, the web-app manifest and `browserconfig.xml` (theme colour
+  `#050505`, not `#0D0D0D`) and the portraits are copied from the same tag. `DESIGN.md` stays at
+  2.1.0, the version the owner retained.
+- Redraw the logo as `@dileepadev`: the `@` in the muted ink and the wordmark at full contrast,
+  both Manrope 500, as live-text and outlined SVGs for Carbon and Paper. The reduced mark is now
+  the `@` on its field, replacing the `/.`.
+- Recolour the six pillar icons in black and white. The geometry is unchanged and matches the
+  website's component. The 512px PNGs are on a Carbon field and a transparent badge, where they
+  were on white.
+- Redraw the social covers as one illustration - an engineer guiding a team of AI agents up a
+  staircase of handed-over work to a shared goal - in the monochrome theme, with `@dileepadev`
+  and `dileepa.dev` set large. Exported for LinkedIn, X, YouTube, Facebook, Reddit, GitHub,
+  Twitch and Discord, each laid out for its own crop and avatar overlay. The profile README
+  header now uses the X cover.
+- Correct stale claims in the architecture and migration docs: the platform overview and API
+  contract no longer carry a `— v2.0.0` title, and say they are current as of v2.1.0 with the API
+  still at 2.0.0; the dropped `legacy` blog field and its rollback script are no longer described
+  as live; photographs are in three places, not two; the v2.0.0 migration checklist is marked as
+  the plan as written.
+- Update `AGENTS.md`, the documentation index, `VERSIONING.md` and `TODO.md` to describe exact
+  copying, the generated assets and issue-based tracking. `TODO.md` keeps only the scope table,
+  issue links and rollout order.
 
-### Fixed - Unreleased
+### Added - Unreleased
 
-- **The documented panel-padding token was missing.** `--panel-pad` now names
-  `clamp(var(--space-6), 0.5rem + 3vw, var(--space-12))`, the same value the site declares
-  locally and the shared `.panel` repeated inline. The component now reads the token; its
-  rendered padding is unchanged.
+- `docs/brand/README.md` maps every imported file to its source and records the settled option B
+  decision. `docs/brand/SHA256SUMS` lists all 38 imported files; `sha256sum -c` from the
+  repository root verifies them.
+- `docs/brand/og2.png`, the wide link-preview card, alongside `og.png`.
+- Generators, so each drawn asset can be rebuilt rather than edited: `logo/generate.py`,
+  `icons/generate.mjs` and `covers/generate.mjs`, each documented in its folder's README. The
+  icons folder gains a README.
 
 ### Removed - Unreleased
 
-- The old `icons/index.html` catalogue, whose palette and embedded copies could drift from the
-  SVG sources. `icons/README.md` is its replacement.
+- The emerald `dileepadev /.` lockup and `/.` mark, the emerald pillar icons, and the old text-led
+  and v2.0 cover sets with their `export.py`, master SVG and animated header.
+- `docs/brand/banners/linkedin.png`, replaced by `covers/linkedin-cover`, and the stale
+  `docs/brand/icons/index.html` gallery, which still used the emerald accent.
+- Duplicate `og` and `og-wide` format sets from `docs/brand/covers/`; the cards remain at
+  `docs/brand/og.png` and `docs/brand/og2.png`.
 
 ## [v2.0.0] - 2026-09-03
 

@@ -16,32 +16,33 @@ the cross-repository migration roadmap for the whole `dileepa.dev` platform.
 It ships no application. Nothing here builds, tests, or deploys. What it produces is the
 description that six other repositories implement against.
 
-| Repository | Role | v2.0.0 issue |
-| --- | --- | --- |
-| `dileepadev` | Brand + platform documentation root | #1 |
-| `dileepa-dev` | Main website — blog, projects, events | dileepa-dev#15 |
-| `api-dileepa-dev` | FastAPI backend (migrated from NestJS) | api-dileepa-dev#13 |
-| `blog-dileepa-dev` | Content-source repository only | blog-dileepa-dev#3 |
-| `admin-dileepa-dev` | Admin app | admin-dileepa-dev#4 |
-| `links-dileepa-dev` | Links page | links-dileepa-dev#2 |
+| Repository             | Role                                         | v2.0.0 issue           |
+| ---------------------- | -------------------------------------------- | ---------------------- |
+| `dileepadev`           | Brand + platform documentation root          | #1                     |
+| `dileepa-dev`          | Main website — blog, projects, events        | dileepa-dev#15         |
+| `api-dileepa-dev`      | FastAPI backend (migrated from NestJS)       | api-dileepa-dev#13     |
+| `blog-dileepa-dev`     | Content-source repository only               | blog-dileepa-dev#3     |
+| `admin-dileepa-dev`    | Admin app                                    | admin-dileepa-dev#4    |
+| `links-dileepa-dev`    | Links page                                   | links-dileepa-dev#2    |
 | `dileepadev.github.io` | Public build log — GitHub activity dashboard | dileepadev.github.io#1 |
 
-[TODO.md](TODO.md) holds the full v2.0.0 roadmap across all seven repositories and is the place
-to check what is planned, what is done, and in what order things must happen.
+[TODO.md](TODO.md) records the v2.1.0 scope, rollout order and tracking issues. Detailed
+checklists and progress belong in GitHub issues, not in `TODO.md`. Completed v2.0.0 migration
+history lives in `CHANGELOG.md` and `docs/migration/`.
 
 ## Layout
 
-| Path | Status |
-| --- | --- |
-| `README.md` | **Built.** The GitHub profile README — rendered on the profile page. Personal only: no platform, migration, or link content — GitHub already surfaces those from the profile |
-| `docs/README.md` | **Built.** Platform documentation index — the repository table and doc map that used to live in `README.md` |
-| `TODO.md` | **Built.** Cross-repository v2.0.0 roadmap |
-| `CHANGELOG.md` | **Built.** Release history, back to `v0.1` |
-| `DESIGN.md` | **Built.** Machine-readable design token and UI contract — the values, where `docs/brand/` carries the prose |
-| `docs/brand/` | **Built.** Brand guide, canonical token sheet, design system contract, logo and asset sets |
-| `docs/architecture/` | **Built.** Platform overview, API contract, content pipeline, redirects |
-| `docs/migration/` | **Built.** v2.0.0 migration plan, versioning policy |
-| Community standards | **Built.** `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `VERSIONING.md`, the three guideline documents, and the `.github/` issue and PR templates |
+| Path                 | Status                                                                                                                                                                                                                                    |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `README.md`          | **Built.** The GitHub profile README — rendered on the profile page. Personal only: no platform, migration, or link content — GitHub already surfaces those from the profile                                                              |
+| `docs/README.md`     | **Built.** Platform documentation index — the repository table and doc map that used to live in `README.md`                                                                                                                               |
+| `TODO.md`            | **Built.** v2.1.0 scope, rollout order and tracking issue links                                                                                                                                                                           |
+| `CHANGELOG.md`       | **Built.** Release history, back to `v0.1`                                                                                                                                                                                                |
+| `DESIGN.md`          | **Built.** Machine-readable design token and UI contract — the values, where `docs/brand/` carries the prose. An exact copy of the website's                                                                                              |
+| `docs/brand/`        | **Built.** The brand guide, canonical token sheet and design system contract, OG cards, favicons and portraits (exact copies of the website), plus the logo, pillar icons and social covers drawn here. `docs/brand/README.md` is the map |
+| `docs/architecture/` | **Built.** Platform overview, API contract, content pipeline, redirects                                                                                                                                                                   |
+| `docs/migration/`    | **Built.** v2.0.0 migration plan, versioning policy                                                                                                                                                                                       |
+| Community standards  | **Built.** `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `VERSIONING.md`, the three guideline documents, and the `.github/` issue and PR templates                                                                              |
 
 ## Brand rules that must never be broken
 
@@ -63,9 +64,9 @@ These are the **v2.1.0** rules (dileepadev#4).
 - The logo is the handle, `@dileepadev`: the `@` in `--fg-muted`, the wordmark in `--fg`, both
   Manrope 500, no gap. Black and white only.
 - Sentence case everywhere — headings, buttons, nav, labels.
-- Banned words, without exception: *passionate about, leveraging, cutting-edge, revolutionize,
+- Banned words, without exception: _passionate about, leveraging, cutting-edge, revolutionize,
   game-changing, unlock, seamless, AI enthusiast, thought leader, journey, humbled to announce,
-  10x.*
+  10x._
 
 ## Toolchain
 
@@ -101,10 +102,12 @@ There is nothing to run. Verification here means:
 - Every file path, token name, and hex value referenced in a doc actually exists.
 - Cross-repository links resolve.
 - The token values in `docs/brand/brand-tokens.css` match what the applications import.
+- `sha256sum -c docs/brand/SHA256SUMS`, run from the repository root, passes: the 38 imported
+  files still match the website's `v2.1.0` tag.
 
 ## Docs
 
-This repository *is* the docs. Two specific ownership rules:
+This repository _is_ the docs. Two specific ownership rules:
 
 - `docs/brand/brand-tokens.css` is the **canonical** token sheet, and this repo is the **only**
   place brand assets live. There is no mirror and no CDN — `dileepadev.github.io` is a dashboard,
@@ -113,10 +116,11 @@ This repository *is* the docs. Two specific ownership rules:
   Applications **vendor** the file: copy it into their own repo and record where it came from.
   They must never hot-link it, because `raw.githubusercontent.com` serves CSS as `text/plain`
   and browsers refuse to apply a stylesheet with that content type. Vendoring means copying the
-  *file*; it never means copying values out of it into components.
+  _file_; it never means copying values out of it into components.
 
   Every vendored copy is a copy that can drift. When this file changes, the change has to be
   pushed into each consuming repo deliberately.
+
 - `docs/architecture/redirects.md` is the **single source of truth** for URL changes on
   `dileepa.dev`; `dileepa-dev` implements it. It is no longer a cross-host map — `blog.dileepa.dev`
   is retired rather than redirected, and what that costs is recorded in its §1 so the absence of a
@@ -157,18 +161,21 @@ show a config example, use obvious placeholders and never a real value.
   most-viewed file in the whole platform — and GitHub already surfaces this repo's links and
   pinned status from the profile itself. Repository structure, the platform table, and any
   migration status go in [`docs/README.md`](docs/README.md), never back into the profile README.
-- **v2.1.0 was designed on `dileepa-dev` first, not here.** These documents were written from
-  the site's shipped CSS. When this repo and the shipped `dileepa-dev` CSS disagree, check the
-  site, then fix whichever is wrong here. The other three sites (`dileepadev.github.io`,
-  `links-dileepa-dev`, `admin-dileepa-dev`) adopt it from this repo, never from the site.
+- **v2.1.0 was designed on `dileepa-dev` first, not here.** The brand guide, design system, token
+  sheet, `DESIGN.md`, OG cards, favicons and portraits are exact copies of the website at its
+  `v2.1.0` tag. `docs/brand/README.md` records the commit, and `docs/brand/SHA256SUMS` verifies the
+  files. Do not add tokens, tune values or fix anything in a copy: change the website, ship its
+  tag, then copy again. Because copies are exact, relative links inside `DESIGN.md` follow the
+  website's layout, where `docs/brand-guide.md` is here `docs/brand/brand-guide.md`. The other three
+  sites adopt the published root tag.
 - **The brand version is 2.1.0, deliberately.** Every brand file carries `v2.1.0`; do not relabel
   it 3.0 even though `VERSIONING.md` would call a reversed brand rule major.
 - **Check sheet content as well as its label.** The current sheet is headed
   `brand tokens v2.1.0`, has `--fg-body` and `--border-input`, and sets
-  `--brand: var(--ink-100)` on Carbon. An older emerald sheet was also labelled `v2.1`.
-  The three remaining applications already have provisional monochrome copies on their work
-  branches; verify both vendored paths against the final root tag before releasing them.
-- **The current asset set lives here.** `logo/`, `covers/`, `banners/` and `icons/` under
-  `docs/brand/` now follow v2.1.0. The asset directories copied into `dileepa-dev/docs/brand/`
-  still contain older artwork; do not copy those back. Read each asset directory's README before
-  exporting. `covers/x-header-animated.svg` is a static compatibility copy, despite its name.
+  `--brand: var(--ink-100)` on Carbon. An older emerald sheet was also labelled `v2.1`, and the
+  other three applications still vendor it until their issues are done. Verify both vendored paths
+  in each against this repository's `v2.1.0` tag before releasing them.
+- **The logo, pillar icons and social covers are generated; do not edit their output.** Each of
+  `docs/brand/logo/`, `icons/` and `covers/` has a generator and a README. Change the generator
+  (or a pillar's `-symbol.svg`) and rebuild. The covers carry no personal name or photograph;
+  the OG cards, `og.png` and `og2.png`, are separate and are exact copies of the website's.

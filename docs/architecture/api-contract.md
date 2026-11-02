@@ -1,8 +1,11 @@
-# API contract — v2.0.0
+# API contract
 
 The endpoint and data-model contract for `api.dileepa.dev`. Written here so
 `api-dileepa-dev` implements against a stated shape, and `dileepa-dev` and
 `admin-dileepa-dev` consume the same one.
+
+> [!NOTE]
+> The API is at **v2.0.0**. v2.1.0 is a visual release and does not change this contract.
 
 **Implementation:** FastAPI 0.141.x · Python 3.13 · Pydantic 2.13.x · MongoDB Atlas ·
 FastAPI Cloud.
@@ -282,7 +285,6 @@ class BlogPost:
     published: bool
     seo: Seo
     meta: dict
-    legacy: Legacy | None          # { link, bannerUrl, date, excerpt } — one release only
     views: int                     # readers write this, not the admin
     reactions: ReactionCounts      # { liked, insightful, useful, learned }
     createdAt: datetime
@@ -442,11 +444,11 @@ host or renderer without a database migration.
 
 `banner` **stays on the model.** Removing a field from a response is a breaking change for every
 consumer that reads it, and buys nothing: the field is one nullable object. It is written by
-nothing and read by nothing, and `scripts/migrate_blog_urls.py` clears it while archiving the v1
-`bannerUrl` into `legacy`.
+nothing and read by nothing, and `scripts/migrate_blog_urls.py` clears it.
 
-The same rule holds across the platform. Photographs appear in exactly two places on
-`dileepa.dev`: the hero portrait, and the event gallery composed from `events[].photos`.
+The same rule holds across the platform. Photographs appear in exactly three places on
+`dileepa.dev`: the hero portrait, the event gallery composed from `events[].photos`, and video
+thumbnails.
 
 ### Migration
 
@@ -456,11 +458,9 @@ destructive:
 
 1. Take a **verified, restore-tested** MongoDB backup.
 2. Dry-run the migration and diff the output.
-3. Write the new fields; keep the old values under `legacy: { link, bannerUrl }`.
-4. Drop `legacy` once the rewritten URLs are confirmed good in production and the rollback
-   window has passed. This is a data safety net, not a deprecated interface: it is bounded by
-   confidence in the rewrite rather than by a version, and `scripts/rollback_blog_urls.py`
-   reads it, so dropping it early removes the undo.
+3. Write the new fields. The migration kept no `legacy` copy of the old values: the backup from
+   step 1 is the only way back, so confirm it restores before applying.
+4. Confirm the rewritten URLs are good in production.
 
 ## 6. Auth
 

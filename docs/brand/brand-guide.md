@@ -205,30 +205,16 @@ identity is a photograph, and a photograph has no vector form. A vector mark in 
 would put a second design there while every other surface - home screen, app icon, share sheet -
 shows the face. A PNG base64'd inside an SVG wrapper satisfies the checker and nothing else.
 
-The [logo assets](logo/README.md) include live-text and outlined lockups for both themes, plus
-the reduced `@` as filled paths. Use the outlined files off-platform so the type does not depend
-on the recipient having Manrope installed.
+> [!NOTE]
+> **Exported assets** live in `dileepadev`'s `docs/brand/`: `logo/` (the `@dileepadev` lockup and
+> the `@` mark, live-text and outlined, both themes), `covers/`, `banners/` and `og.png` all
+> follow this guide. See `logo/README.md` and `covers/README.md` there.
 
 ### 3.3 Custom mark, if commissioned later
 
 Brief: *the `@` drawn as a single continuous stroke - a ring that closes into its own `a`.* Avoid
 a circuit-board motif, a brain, a neural-net diagram, or a robot - the three visual clichés of AI
 branding, all three dated on arrival.
-
-### 3.4 Social cards and covers
-
-The approved social artwork is the flat split card: handle, name, `AI Engineer` and `dileepa.dev`
-on a Carbon surface beside the colour portrait on its field. The portrait is content, so its
-natural colour does not introduce a brand hue. The type, rules and framing remain neutral.
-
-[`og.png`](og.png), 1200 × 630, is the approved standard card copied from the completed
-`dileepa-dev` release. [`covers/og-wide.png`](covers/og-wide.png), 1600 × 900, is its 16:9
-variant. Social banners use the same composition adapted to a wide source, then scaled without
-stretching. Sources, dimensions, crop safety and regeneration instructions are in
-[`covers/README.md`](covers/README.md).
-
-`banners/linkedin.png` is the same export as `covers/linkedin-cover.png`. Keep those two files
-identical. Assets are copied into consuming repositories; none is an externally hosted dependency.
 
 ## 4. Quick reference
 

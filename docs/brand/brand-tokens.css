@@ -88,10 +88,6 @@
   --space-12: 3rem;
   --space-16: 4rem;
 
-  /* Shared by panel content and anything that aligns with it. This is the
-     same expression used by dileepa-dev's sections, hero and footer. */
-  --panel-pad: clamp(var(--space-6), 0.5rem + 3vw, var(--space-12));
-
   /* --- shape: three kinds of corner ---
      Fixed - a constant radius - for containers and marks: panel (a page
      panel, the rail, the footer, the mobile menu), tile (a card on a
@@ -388,7 +384,7 @@ a {
   background: var(--bg-surface);
   border: var(--hairline) solid var(--border-strong);
   border-radius: var(--radius-panel);
-  padding: var(--panel-pad);
+  padding: clamp(var(--space-6), 0.5rem + 3vw, var(--space-12));
 }
 
 /* A card sits one step down on its panel, with no edge. A card is not a

@@ -1,7 +1,12 @@
-# Platform overview — v2.0.0
+# Platform overview
 
-The target architecture for the `dileepa.dev` platform. Seven repositories, one brand, one API,
-one baseline version.
+The architecture of the `dileepa.dev` platform. Seven repositories, one brand, one API, one
+baseline version.
+
+> [!NOTE]
+> Current as of **v2.1.0**. The architecture below was introduced in v2.0.0 and v2.1.0 does not
+> change it: v2.1.0 is a visual release that replaces the brand (see [`docs/brand/`](../brand/)).
+> Where a section says v2.0.0, it describes what that release changed.
 
 ## 1. What changes
 
@@ -13,8 +18,8 @@ v2.0.0 is the transition from six independently versioned projects to one platfo
 | Blog | Standalone Astro site on GitHub Pages | A section of the main website |
 | Backend | NestJS 11 on Vercel serverless | FastAPI on FastAPI Cloud |
 | Content types | about, experiences, educations, communities, tools, events, videos, blogs | + **projects**; **events** reshaped in place |
-| Brand | v1, per-app | v2.0.0, one token sheet |
-| Versions | 1.0.0 – 1.3.0, drifting | **2.0.0** everywhere |
+| Brand | v1, per-app | One token sheet (monochrome since v2.1.0) |
+| Versions | 1.0.0 – 1.3.0, drifting | **2.0.0** everywhere; 2.1.0 is the visual release, starting with `dileepa-dev` |
 
 ## 2. Surfaces
 
@@ -322,7 +327,8 @@ not at all.
 6. **Links** — Astro 7, rebrand.
 7. **Public build log** — the dashboard, then preview screenshots last.
 
-Full task list in [`../../TODO.md`](../../TODO.md). Cutover and rollback detail in
+This is the completed v2.0.0 migration order. Current cross-repository work is tracked in
+[`../../TODO.md`](../../TODO.md). Cutover and rollback detail remains in
 [`../migration/v2.0.0-migration.md`](../migration/v2.0.0-migration.md).
 
 ## 7. Constraints that shape the design

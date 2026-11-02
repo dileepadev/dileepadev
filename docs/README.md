@@ -11,21 +11,22 @@ data flow.
 
 ## Contents
 
-| Path | What |
-| --- | --- |
-| [`brand/`](brand/) | Brand guide, canonical token sheet, design system and current v2.1.0 assets |
-| [`architecture/`](architecture/) | Platform overview, API contract, content pipeline, redirects |
-| [`migration/`](migration/) | v2.0.0 migration plan and versioning policy |
-| [`../TODO.md`](../TODO.md) | Completed v2.0.0 migration and current v2.1.0 rollout |
+| Path                                 | What                                                                                                                    |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| [`brand/README.md`](brand/README.md) | What is imported from the website and what is drawn here, with checksums, and the settled v2.1.0 decision               |
+| [`brand/`](brand/)                   | The brand guide, token sheet and design system; the logo, pillar icons, social covers, OG cards, favicons and portraits |
+| [`architecture/`](architecture/)     | Platform overview, API contract, content pipeline, redirects                                                            |
+| [`migration/`](migration/)           | v2.0.0 migration plan and versioning policy                                                                             |
+| [`../TODO.md`](../TODO.md)           | v2.1.0 scope, rollout order and tracking issue links                                                                    |
 
 ## The platform
 
-| Repository | What it is |
-| --- | --- |
-| [dileepadev](https://github.com/dileepadev/dileepadev) | The main user profile |
-| [dileepa-dev](https://github.com/dileepadev/dileepa-dev) | The main website |
-| [api-dileepa-dev](https://github.com/dileepadev/api-dileepa-dev) | The backend API |
-| [admin-dileepa-dev](https://github.com/dileepadev/admin-dileepa-dev) | Content management |
-| [blog-dileepa-dev](https://github.com/dileepadev/blog-dileepa-dev) | Blog content — Markdown posts only; no application |
-| [links-dileepa-dev](https://github.com/dileepadev/links-dileepa-dev) | Links page |
-| [dileepadev.github.io](https://github.com/dileepadev/dileepadev.github.io) | Public build log — a GitHub activity dashboard |
+| Repository                                                                 | What it is                                         |
+| -------------------------------------------------------------------------- | -------------------------------------------------- |
+| [dileepadev](https://github.com/dileepadev/dileepadev)                     | GitHub profile and platform documentation root     |
+| [dileepa-dev](https://github.com/dileepadev/dileepa-dev)                   | The main website                                   |
+| [api-dileepa-dev](https://github.com/dileepadev/api-dileepa-dev)           | The backend API                                    |
+| [admin-dileepa-dev](https://github.com/dileepadev/admin-dileepa-dev)       | Content management                                 |
+| [blog-dileepa-dev](https://github.com/dileepadev/blog-dileepa-dev)         | Blog content — Markdown posts only; no application |
+| [links-dileepa-dev](https://github.com/dileepadev/links-dileepa-dev)       | Links page                                         |
+| [dileepadev.github.io](https://github.com/dileepadev/dileepadev.github.io) | Public build log — a GitHub activity dashboard     |

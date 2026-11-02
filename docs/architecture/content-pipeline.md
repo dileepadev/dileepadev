@@ -108,8 +108,8 @@ credentials.** It has one key, the one it already had.
 
 ### Photographs on the platform
 
-Photographs appear in exactly two places on `dileepa.dev`: the hero portrait, and the event
-gallery composed from `events[].photos`. That is the whole image budget, and it is what makes a
+Photographs appear in exactly three places on `dileepa.dev`: the hero portrait, the event
+gallery composed from `events[].photos`, and video thumbnails. That is the whole image budget, and it is what makes a
 page of photographs read as a deliberate section rather than decoration sprayed across the site.
 
 Blog post images are not photographs in this sense — they are screenshots and diagrams inside an

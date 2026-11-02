@@ -1,66 +1,64 @@
-# Logo assets
+# Logo
 
-Brand v2.1.0. The logo is **`@dileepadev`**: the `@` in `--fg-muted`, the wordmark in `--fg`,
-both Manrope Medium (500), with no gap and `-0.02em` tracking. The full contract is in
-[`../brand-guide.md`](../brand-guide.md) §3.
+The logo is the handle, **`@dileepadev`**: the wordmark in Manrope 500 at full contrast, led by an
+`@` at the same weight in the muted step of the same ink, set as one word with no space. The
+two parts are told apart by contrast alone. Black and white only. The full rules, including what
+never to do to it, are in [`../brand-guide.md`](../brand-guide.md) §3.
 
-| File | Placement | `@` | Wordmark | Font dependency |
-| --- | --- | --- | --- | --- |
-| [`lockup-dark.svg`](lockup-dark.svg) | Carbon | `#8D8D8D` | `#F1F1F1` | Manrope 500 |
-| [`lockup-light.svg`](lockup-light.svg) | Paper | `#6A6A6A` | `#131313` | Manrope 500 |
-| [`lockup-dark-outlined.svg`](lockup-dark-outlined.svg) | Carbon | `#8D8D8D` | `#F1F1F1` | None; filled paths |
-| [`lockup-light-outlined.svg`](lockup-light-outlined.svg) | Paper | `#6A6A6A` | `#131313` | None; filled paths |
-| [`mark-dark.svg`](mark-dark.svg) | Carbon field | `#F1F1F1` | — | None; filled paths |
-| [`mark-light.svg`](mark-light.svg) | Paper field | `#131313` | — | None; filled paths |
+| File                                            | Surface          | `@`                   | Wordmark              |
+| ----------------------------------------------- | ---------------- | --------------------- | --------------------- |
+| `lockup-dark.svg`, `lockup-dark-outlined.svg`   | Carbon `#050505` | `ink-400` `#8D8D8D`   | `ink-100` `#F1F1F1`   |
+| `lockup-light.svg`, `lockup-light-outlined.svg` | Paper `#F7F7F7`  | `paper-400` `#6A6A6A` | `paper-900` `#131313` |
+| `mark-dark.svg`                                 | Carbon field     | -                     | `ink-100` `#F1F1F1`   |
+| `mark-light.svg`                                | Paper field      | -                     | `paper-900` `#131313` |
 
-The lockups have a transparent background and include 24px of clear space around the type at
-the native size, approximately its cap height. They share a 235 × 80 viewBox. The reduced marks
-are 48 × 48, with the `@` centred on a solid field. They are upright, weight 500.
+The lockups have a transparent background and are drawn to sit on the surface named in the table.
+The marks carry their field, so they work as an avatar as they are.
 
-## Which file to use
+## Live text or outlined
 
-Use an outlined version for a speaker pack, print vendor, third-party page, or any image context
-where Manrope cannot be guaranteed. The glyphs are converted from Manrope 4.505 at weight 500;
-no font is embedded and no network request is needed. “Outlined” means filled glyph paths,
-never a stroke around the letters.
+`lockup-*.svg` is live text: it renders exactly right wherever Manrope is loaded, and stays a few
+hundred bytes. `lockup-*-outlined.svg` has Manrope converted to paths, so it needs no font. Use the
+outlined file anywhere the font might be missing: a conference speaker pack, a print vendor, a
+third-party site. The two are laid out identically; the outlines come from the same kerning the
+browser applies. Manrope is licensed under the SIL OFL 1.1, which permits outlining.
 
-Live-text SVGs are for an inline context where Manrope is loaded. A surrounding page's font does
-not automatically load inside an SVG used through an `<img>`, so use the outlined file there
-too. The fallback keeps the words readable, but changes their proportions.
-
-Inside an application, prefer the CSS lockup so its semantic colours follow the theme:
+On our own surfaces, use the CSS lockup rather than these files. It follows the theme and needs no
+light and dark swap:
 
 ```html
 <a class="lockup" href="/" aria-label="dileepadev - home">
-  <span class="mark" aria-hidden="true">@</span><span class="wordmark">dileepadev</span>
+  <span class="mark" aria-hidden="true">@</span
+  ><span class="wordmark">dileepadev</span>
 </a>
 ```
 
-Those classes are defined in [`../brand-tokens.css`](../brand-tokens.css).
+`.lockup`, `.mark` and `.wordmark` are defined in [`../brand-tokens.css`](../brand-tokens.css); the
+website renders them from `components/ui/Lockup.tsx`.
 
 ## Rules
 
-- Minimum width: 120px for the full lockup, keeping the `@` legible.
-- Clear space: at least the wordmark's cap height on every side, including after scaling.
-- The `@` is muted when it leads the wordmark. The reduced `@` is full contrast because it has
-  no wordmark beside it.
-- Keep the handle lowercase, upright, at weight 500. No hue, gradient, shadow, rotation, or
-  outline stroke. A photograph behind it needs a solid backing field.
+- Minimum width **120px** for the lockup.
+- Clear space equal to the wordmark's cap-height on all four sides.
+- The `@` is always the muted step and the wordmark always full contrast. Never one colour for
+  both, never the reverse, never a hue.
+- Never outline it as a stroke, add a gradient or shadow, rotate it, or set it on a photograph
+  without a solid backing shape.
+- Use the reduced `@` mark only where the full handle will not fit: avatars and small square
+  placements.
 
 ## Favicon
 
-The favicon and app icons are the portrait, not the reduced mark. The current set is in
-[`../favicon/`](../favicon/), derived from [`../profile-picture/`](../profile-picture/).
+The favicon is the portrait, not the mark; see [`../brand-guide.md`](../brand-guide.md) §3.2. The
+icon set is in [`../favicon/`](../favicon/), copied from the website.
 
-## Other assets
+## Rebuilding
 
-| Asset | Source |
-| --- | --- |
-| Social covers and their exports | [`../covers/README.md`](../covers/README.md) |
-| LinkedIn banner | [`../banners/linkedin.png`](../banners/linkedin.png), identical to the cover export |
-| Standard OG card | [`../og.png`](../og.png), 1200 × 630 |
-| Wide OG card | [`../covers/og-wide.png`](../covers/og-wide.png), 1600 × 900 |
-| Retained neutral pillar marks | [`../icons/README.md`](../icons/README.md) |
+```sh
+python3 docs/brand/logo/generate.py
+```
 
-This repository is the canonical home. Consuming applications copy the assets they need and
-record the source tag; they do not link back to a runtime asset host.
+The script measures the live lockup in headless Chrome, takes Manrope's outlines at weight 500 and
+writes all six files. It needs `pip install fonttools`, Google Chrome on `PATH`, and Manrope
+installed as a variable font (fontconfig finds it). To change a colour, change it in the `THEMES`
+table, from `brand-tokens.css`.

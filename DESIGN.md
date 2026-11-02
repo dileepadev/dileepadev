@@ -133,11 +133,15 @@ a11y:
 
 | Document | Authority | Purpose |
 | :--- | :--- | :--- |
-| [`brand-guide.md`](docs/brand/brand-guide.md) | Brand identity authority | Colour, type, logo, voice, portrait - the *what* and *why* of the brand |
-| [`design-system.md`](docs/brand/design-system.md) | Implementation contract authority | Tokens, components, states, layout, theming - the *how* |
-| [`brand-tokens.css`](docs/brand/brand-tokens.css) | Token authority | Every value, vendored into each consuming repo |
+| [`brand-guide.md`](docs/brand-guide.md) | Brand identity authority | Colour, type, logo, voice, portrait - the *what* and *why* of the brand |
+| [`design-system.md`](docs/design-system.md) | Implementation contract authority | Tokens, components, states, layout, theming - the *how* |
+| [`brand-tokens.css`](docs/brand-tokens.css) | Token authority | Every value, vendored into each consuming repo |
 | **This file (`DESIGN.md`)** | AI agent reference | Synthesises both into actionable rules, machine-readable YAML, component checklists |
 | `dileepa-dev` (`app/globals.css`, `/brand`) | Flagship implementation | The site the system was designed on; `/brand` is the live reference |
+
+This file and the three documents above are copies of the canonical set in
+[`dileepadev`](https://github.com/dileepadev/dileepadev); this site is where the system was
+designed, and the copies are refreshed from there rather than edited here.
 
 ---
 
@@ -322,9 +326,6 @@ into a cascade layer, or wire their framework (Tailwind 4 `@theme inline`) to it
 
 `--space-1` (4px) to `--space-16` (64px): 1, 2, 3, 4, 5, 6, 8, 10, 12, 16. Never invent a value.
 
-`--panel-pad` is `clamp(var(--space-6), 0.5rem + 3vw, var(--space-12))`: 24px to 48px,
-matching the site's section, hero and footer alignment. It is defined in the canonical sheet.
-
 ### 4.5 Radius & Hairlines
 
 | Token | Value | Rule | Applied To |
@@ -338,7 +339,7 @@ matching the site's section, hero and footer alignment. It is defined in the can
 | `--radius-row` | 16px | Concentric | A row 6px inside a tile |
 | `--hairline` | 1px | - | Every border and rule |
 
-The old generic and extra-large radius aliases are removed. Use a named role from this table.
+There is no generic `--radius` or `--radius-xl`: use a named role from this table.
 
 ### 4.6 Control Heights
 
@@ -432,6 +433,11 @@ heading) or `--fg-muted` (reads as metadata).
   hairline, `--radius-panel`, padding `--panel-pad`, `--space-6` apart.
 - Panels are size containers (`container: section`): grids inside them split on the panel's
   width, not the window's.
+
+`--panel-pad` is an application layout property, declared in `dileepa-dev/app/globals.css` as
+`clamp(var(--space-6), 0.5rem + 3vw, var(--space-12))`. The imported token sheet does not declare
+it. Consuming layouts provide that property alongside their panel styles; keep the vendored
+token sheet unchanged.
 
 ### 7.2 Pages
 
@@ -610,12 +616,12 @@ More than three columns scroll inside their own box (`overflow-x: auto`, `--bord
 ### 13.1 Icons
 
 - **Interface**: Lucide (`lucide-react`). 16px in controls, 14px inline; 4rem stroke 1.5 in the
-  section app-icon tiles. Section icons are literal: a person (About), a briefcase (Work), a
-  graduation cap (Education), speech bubbles (Contact).
+  section app-icon tiles. Section icons are literal, and only the two homepage sections carry one:
+  a person (About), speech bubbles (Contact).
 - **Social**: hand-authored inline SVGs, 24×24, `fill="currentColor"`, `--fg-muted` → `--fg`.
-- **Pillar marks** ([asset index](docs/brand/icons/README.md)): six retained neutral marks. Inline
-  applications use the `-symbol.svg` variants with `currentColor`; the PNGs and standalone SVGs
-  use Ink 100 on Carbon. They are separate from the current section icons.
+- **Pillar marks** (`docs/brand/icons/` in `dileepadev`): six marks kept from the former About
+  cards; `components/icons/PillarIcons.tsx` ports the `-symbol.svg` variants, which use
+  `currentColor`.
 - Decorative icons carry `aria-hidden="true"`.
 
 ### 13.2 Photography Budget
@@ -627,17 +633,11 @@ at `--radius-block`; captions over a fixed dark scrim.
 
 ### 13.3 Exported brand assets
 
-The [logo set](docs/brand/logo/README.md) uses `@dileepadev`, Manrope 500, in live-text and
-outlined versions for both themes. The favicon remains the portrait.
-
-The [social artwork](docs/brand/covers/README.md) uses a flat split card: neutral text and framing
-beside the colour portrait. The standard and wide OG PNGs match the completed website's approved
-exports. Covers share a 1584 × 396 source and scale without stretching. The SVG artwork carries
-outlined type and embedded images, so an export has no font or network dependency.
-
-These are export assets, not UI components. Their fixed paint values track the canonical
-semantic tokens. A component importing their shapes still uses semantic variables or
-`currentColor`; it must not copy the fixed export colours into its styles.
+The site's social cards are [`public/og.png`](public/og.png) (1200x630) and
+[`public/og2.png`](public/og2.png) (1600x900): the flat split card, with the name, handle, role
+and domain beside the colour portrait. The logo files, social covers and other brand artwork
+live in [`dileepadev`](https://github.com/dileepadev/dileepadev)'s `docs/brand/`; this repo keeps
+no copies. They are export files, not UI: a component never copies their fixed colours.
 
 ---
 
