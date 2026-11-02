@@ -102,8 +102,7 @@ There is nothing to run. Verification here means:
 - Every file path, token name, and hex value referenced in a doc actually exists.
 - Cross-repository links resolve.
 - The token values in `docs/brand/brand-tokens.css` match what the applications import.
-- `sha256sum -c docs/brand/SHA256SUMS`, run from the repository root, passes: the 38 imported
-  files still match the website's `v2.1.0` tag.
+- Each imported file still matches the website's `v2.1.0` tag, byte for byte.
 
 ## Docs
 
@@ -163,8 +162,7 @@ show a config example, use obvious placeholders and never a real value.
   migration status go in [`docs/README.md`](docs/README.md), never back into the profile README.
 - **v2.1.0 was designed on `dileepa-dev` first, not here.** The brand guide, design system, token
   sheet, `DESIGN.md`, OG cards, favicons and portraits are exact copies of the website at its
-  `v2.1.0` tag. `docs/brand/README.md` records the commit, and `docs/brand/SHA256SUMS` verifies the
-  files. Do not add tokens, tune values or fix anything in a copy: change the website, ship its
+  `v2.1.0` tag. `docs/brand/README.md` records the commit and maps each file to its source. Do not add tokens, tune values or fix anything in a copy: change the website, ship its
   tag, then copy again. Because copies are exact, relative links inside `DESIGN.md` follow the
   website's layout, where `docs/brand-guide.md` is here `docs/brand/brand-guide.md`. The other three
   sites adopt the published root tag.

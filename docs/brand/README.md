@@ -25,12 +25,6 @@ reformatted or re-valued in the copy.
 | `app/favicon.ico`, the favicon and app-icon PNGs, `manifest.json`, `browserconfig.xml` | [`favicon/`](favicon/)                   | The portrait as every icon, and the web-app manifest     |
 | `public/profile/*`                                                                     | [`profile-picture/`](profile-picture/)   | The portrait: JPG, PNG, WebP and a transparent PNG       |
 
-Verify all 38 files from the repository root:
-
-```sh
-sha256sum -c docs/brand/SHA256SUMS
-```
-
 `DESIGN.md` is copied exactly, so its relative links to `docs/brand-guide.md`, `docs/brand-tokens.css`,
 `docs/design-system.md`, `public/og.png` and `public/og2.png` follow the website's layout. Here those
 files are under `docs/brand/`.

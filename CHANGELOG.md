@@ -47,8 +47,7 @@ Changes are organized into the following categories:
 ### Added - Unreleased
 
 - `docs/brand/README.md` maps every imported file to its source and records the settled option B
-  decision. `docs/brand/SHA256SUMS` lists all 38 imported files; `sha256sum -c` from the
-  repository root verifies them.
+  decision.
 - `docs/brand/og2.png`, the wide link-preview card, alongside `og.png`.
 - Generators, so each drawn asset can be rebuilt rather than edited: `logo/generate.py`,
   `icons/generate.mjs` and `covers/generate.mjs`, each documented in its folder's README. The
