@@ -5,7 +5,8 @@ The endpoint and data-model contract for `api.dileepa.dev`. Written here so
 `admin-dileepa-dev` consume the same one.
 
 > [!NOTE]
-> The API is at **v2.0.0**. v2.1.0 is a visual release and does not change this contract.
+> The API is at **v2.1.0**. It adds one public route, `GET /stats`, and changes nothing else in
+> this contract; the rest of the platform's v2.1.0 is a visual release.
 
 **Implementation:** FastAPI 0.141.x · Python 3.13 · Pydantic 2.13.x · MongoDB Atlas ·
 FastAPI Cloud.
@@ -101,6 +102,7 @@ singleton, so its writes take no id. Reads accept an id or a slug wherever a res
 | `POST /contact` | ✓ | — | Rate-limited, unauthenticated |
 | `GET /health` | ✓ | — | New. **503** when MongoDB is unreachable |
 | `GET /version` | ✓ | — | New |
+| **`GET /stats`** | ✓ | — | **New in v2.1.0.** One count per public collection, published records only, plus `generatedAt`. Cached for 60 seconds |
 | `GET /` | ✓ | — | `{ name, version, docs, website }`. v1 returned `Hello World!` |
 | `GET /docs` | ✓ | — | The API reference, rendered by Scalar. **Development only** |
 

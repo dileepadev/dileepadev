@@ -16,33 +16,33 @@ the cross-repository migration roadmap for the whole `dileepa.dev` platform.
 It ships no application. Nothing here builds, tests, or deploys. What it produces is the
 description that six other repositories implement against.
 
-| Repository             | Role                                         | v2.0.0 issue           |
-| ---------------------- | -------------------------------------------- | ---------------------- |
-| `dileepadev`           | Brand + platform documentation root          | #1                     |
-| `dileepa-dev`          | Main website — blog, projects, events        | dileepa-dev#15         |
-| `api-dileepa-dev`      | FastAPI backend (migrated from NestJS)       | api-dileepa-dev#13     |
-| `blog-dileepa-dev`     | Content-source repository only               | blog-dileepa-dev#3     |
-| `admin-dileepa-dev`    | Admin app                                    | admin-dileepa-dev#4    |
-| `links-dileepa-dev`    | Links page                                   | links-dileepa-dev#2    |
-| `dileepadev.github.io` | Public build log — GitHub activity dashboard | dileepadev.github.io#1 |
+| Repository             | Role                                         | v2.0.0 issue           | v2.1.0 issue           |
+| ---------------------- | -------------------------------------------- | ---------------------- | ---------------------- |
+| `dileepadev`           | Brand + platform documentation root          | #1                     | #4                     |
+| `dileepa-dev`          | Main website — blog, projects, events        | dileepa-dev#15         | dileepa-dev#27         |
+| `api-dileepa-dev`      | FastAPI backend (migrated from NestJS)       | api-dileepa-dev#13     | api-dileepa-dev#29     |
+| `blog-dileepa-dev`     | Content-source repository only               | blog-dileepa-dev#3     | —                      |
+| `admin-dileepa-dev`    | Admin app                                    | admin-dileepa-dev#4    | admin-dileepa-dev#10   |
+| `links-dileepa-dev`    | Links page                                   | links-dileepa-dev#2    | links-dileepa-dev#5    |
+| `dileepadev.github.io` | Public build log — GitHub activity dashboard | dileepadev.github.io#1 | dileepadev.github.io#7 |
 
-[TODO.md](TODO.md) records the v2.1.0 scope, rollout order and tracking issues. Detailed
+[TODO.md](TODO.md) records the v2.1.0 scope, release status and tracking issues. Detailed
 checklists and progress belong in GitHub issues, not in `TODO.md`. Completed v2.0.0 migration
 history lives in `CHANGELOG.md` and `docs/migration/`.
 
 ## Layout
 
-| Path                 | Status                                                                                                                                                                                                                                    |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `README.md`          | **Built.** The GitHub profile README — rendered on the profile page. Personal only: no platform, migration, or link content — GitHub already surfaces those from the profile                                                              |
-| `docs/README.md`     | **Built.** Platform documentation index — the repository table and doc map that used to live in `README.md`                                                                                                                               |
-| `TODO.md`            | **Built.** v2.1.0 scope, rollout order and tracking issue links                                                                                                                                                                           |
-| `CHANGELOG.md`       | **Built.** Release history, back to `v0.1`                                                                                                                                                                                                |
-| `DESIGN.md`          | **Built.** Machine-readable design token and UI contract — the values, where `docs/brand/` carries the prose. An exact copy of the website's                                                                                              |
-| `docs/brand/`        | **Built.** The brand guide, canonical token sheet and design system contract, OG cards, favicons and portraits (exact copies of the website), plus the logo, pillar icons and social covers drawn here. `docs/brand/README.md` is the map |
-| `docs/architecture/` | **Built.** Platform overview, API contract, content pipeline, redirects                                                                                                                                                                   |
-| `docs/migration/`    | **Built.** v2.0.0 migration plan, versioning policy                                                                                                                                                                                       |
-| Community standards  | **Built.** `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `VERSIONING.md`, the three guideline documents, and the `.github/` issue and PR templates                                                                              |
+| Path                 | Status                                                                                                                                                                                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `README.md`          | **Built.** The GitHub profile README — rendered on the profile page. Personal only: no platform or migration content — GitHub already surfaces those from the profile                                                                                         |
+| `docs/README.md`     | **Built.** Platform documentation index — the repository table and doc map that used to live in `README.md`                                                                                                                                                   |
+| `TODO.md`            | **Built.** v2.1.0 scope, release status and tracking issue links                                                                                                                                                                                              |
+| `CHANGELOG.md`       | **Built.** Release history, back to `v0.1`                                                                                                                                                                                                                    |
+| `DESIGN.md`          | **Built.** Machine-readable design token and UI contract — the values, where `docs/brand/` carries the prose. An exact copy of the website's                                                                                                                  |
+| `docs/brand/`        | **Built.** The brand guide, canonical token sheet and design system contract, OG cards, favicons and portraits (exact copies of the website), plus the logo, pillar icons and the animated profile README cover drawn here. `docs/brand/README.md` is the map |
+| `docs/architecture/` | **Built.** Platform overview, API contract, content pipeline, redirects                                                                                                                                                                                       |
+| `docs/migration/`    | **Built.** v2.0.0 migration plan, versioning policy                                                                                                                                                                                                           |
+| Community standards  | **Built.** `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `VERSIONING.md`, the three guideline documents, and the `.github/` issue and PR templates                                                                                                  |
 
 ## Brand rules that must never be broken
 
@@ -164,16 +164,17 @@ show a config example, use obvious placeholders and never a real value.
   sheet, `DESIGN.md`, OG cards, favicons and portraits are exact copies of the website at its
   `v2.1.0` tag. `docs/brand/README.md` records the commit and maps each file to its source. Do not add tokens, tune values or fix anything in a copy: change the website, ship its
   tag, then copy again. Because copies are exact, relative links inside `DESIGN.md` follow the
-  website's layout, where `docs/brand-guide.md` is here `docs/brand/brand-guide.md`. The other three
-  sites adopt the published root tag.
+  website's layout, where `docs/brand-guide.md` is here `docs/brand/brand-guide.md`.
 - **The brand version is 2.1.0, deliberately.** Every brand file carries `v2.1.0`; do not relabel
   it 3.0 even though `VERSIONING.md` would call a reversed brand rule major.
 - **Check sheet content as well as its label.** The current sheet is headed
   `brand tokens v2.1.0`, has `--fg-body` and `--border-input`, and sets
-  `--brand: var(--ink-100)` on Carbon. An older emerald sheet was also labelled `v2.1`, and the
-  other three applications still vendor it until their issues are done. Verify both vendored paths
-  in each against this repository's `v2.1.0` tag before releasing them.
-- **The logo, pillar icons and social covers are generated; do not edit their output.** Each of
-  `docs/brand/logo/`, `icons/` and `covers/` has a generator and a README. Change the generator
-  (or a pillar's `-symbol.svg`) and rebuild. The covers carry no personal name or photograph;
-  the OG cards, `og.png` and `og2.png`, are separate and are exact copies of the website's.
+  `--brand: var(--ink-100)` on Carbon. An older emerald sheet was also labelled `v2.1`, so a
+  header alone proves nothing. When an application re-vendors the sheet, compare its copy with
+  this repository's tag, not with the label.
+- **The logo, pillar icons and the profile README cover are generated; do not edit their output.**
+  `docs/brand/logo/` and `icons/` each have a generator and a README, and
+  `docs/brand/github-readme.svg` is built by `github-readme.py` beside it. Change the generator (or
+  a pillar's `-symbol.svg`) and rebuild. Social platform covers are not kept here, because they
+  change; [`docs/brand/social-cover-guide.md`](docs/brand/social-cover-guide.md) says how to make
+  one. The OG cards, `og.png` and `og2.png`, are separate and are exact copies of the website's.

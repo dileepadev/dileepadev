@@ -5,7 +5,8 @@ baseline version.
 
 > [!NOTE]
 > Current as of **v2.1.0**. The architecture below was introduced in v2.0.0 and v2.1.0 does not
-> change it: v2.1.0 is a visual release that replaces the brand (see [`docs/brand/`](../brand/)).
+> change it: v2.1.0 is a visual release that replaces the brand (see [`docs/brand/`](../brand/)),
+> and the API's only addition is a public `GET /stats` route (see [`api-contract.md`](api-contract.md)).
 > Where a section says v2.0.0, it describes what that release changed.
 
 ## 1. What changes

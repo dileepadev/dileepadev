@@ -11,13 +11,14 @@ data flow.
 
 ## Contents
 
-| Path                                 | What                                                                                                                    |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| [`brand/README.md`](brand/README.md) | What is imported from the website and what is drawn here, with checksums, and the settled v2.1.0 decision               |
-| [`brand/`](brand/)                   | The brand guide, token sheet and design system; the logo, pillar icons, social covers, OG cards, favicons and portraits |
-| [`architecture/`](architecture/)     | Platform overview, API contract, content pipeline, redirects                                                            |
-| [`migration/`](migration/)           | v2.0.0 migration plan and versioning policy                                                                             |
-| [`../TODO.md`](../TODO.md)           | v2.1.0 scope, rollout order and tracking issue links                                                                    |
+| Path                                                         | What                                                                                                                           |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| [`brand/README.md`](brand/README.md)                         | What is imported from the website and what is drawn here, and the settled v2.1.0 decision                                      |
+| [`brand/`](brand/)                                           | The brand guide, token sheet and design system; the logo, pillar icons, profile README cover, OG cards, favicons and portraits |
+| [`brand/social-cover-guide.md`](brand/social-cover-guide.md) | How to make a social platform cover: rules and current sizes. The covers are not kept here                                     |
+| [`architecture/`](architecture/)                             | Platform overview, API contract, content pipeline, redirects                                                                   |
+| [`migration/`](migration/)                                   | v2.0.0 migration plan and versioning policy                                                                                    |
+| [`../TODO.md`](../TODO.md)                                   | v2.1.0 scope, release status and tracking issue links                                                                          |
 
 ## The platform
 

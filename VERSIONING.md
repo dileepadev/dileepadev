@@ -47,7 +47,7 @@ Version numbers follow the structure:
 
 - `2.0.0` – The platform migration: brand, design system, and architecture published together
 - `2.1.0` – The monochrome brand release; the owner deliberately retained this version despite
-  the changed brand rule, as recorded in the [source import decision](docs/brand/README.md#settled-decision)
+  the changed brand rule, as recorded in the [source import decision](docs/brand/README.md#the-decision)
 - `2.0.1` – Fixes a wrong path or a broken cross-repository link
 
 ### Tag history
