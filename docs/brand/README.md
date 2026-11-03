@@ -4,8 +4,8 @@ The platform's brand, **design system v2.1.0**: a black-and-white system in whic
 the text colour, the logo is the handle `@dileepadev`, and colour appears only to report a state.
 
 Two kinds of file live here. **Imported** files are exact copies from the website, which is where
-the design was built and settled. **Drawn here** files are the logo, the pillar icons and the social
-covers; each has a generator, so it can be rebuilt rather than edited by hand.
+the design was built and settled. **Drawn here** files are the logo, the pillar icons and the animated
+profile README cover; each has a generator, so it can be rebuilt rather than edited by hand.
 
 ## Imported from the website
 
@@ -35,14 +35,15 @@ full canonical sheet, and applications vendor it from this repository's tag.
 
 ## Drawn here
 
-| Folder                        | What                                                                               | Rebuild                               |
-| ----------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------- |
-| [`logo/`](logo/README.md)     | The `@dileepadev` lockup, live-text and outlined, and the `@` mark, in both themes | `python3 docs/brand/logo/generate.py` |
-| [`icons/`](icons/README.md)   | The six pillar marks: symbol, standalone, badge and PNGs                           | `node docs/brand/icons/generate.mjs`  |
-| [`covers/`](covers/README.md) | The social covers for eight platforms                                              | `node docs/brand/covers/generate.mjs` |
+| Folder                                   | What                                                                               | Rebuild                               |
+| ---------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------- |
+| [`logo/`](logo/README.md)                | The `@dileepadev` lockup, live-text and outlined, and the `@` mark, in both themes | `python3 docs/brand/logo/generate.py` |
+| [`icons/`](icons/README.md)              | The six pillar marks: symbol, standalone, badge and PNGs                           | `node docs/brand/icons/generate.mjs`  |
+| [`github-readme.svg`](github-readme.svg) | The animated cover at the top of the profile README                                | `python3 docs/brand/github-readme.py` |
 
-All three use the semantic palette from `brand-tokens.css`, and none carries a hue. Each folder's
-README lists what its generator needs.
+All of them use the semantic palette from `brand-tokens.css`, and none carries a hue. Each folder's
+README, and the docstring of `github-readme.py`, lists what its generator needs. Social platform
+covers are not kept here; [`social-cover-guide.md`](social-cover-guide.md) says how to make one.
 
 ## The decision
 
@@ -54,7 +55,7 @@ issue #4 do.
 
 ## Updating
 
-When the website ships a new tag, copy the files in the table above from it, regenerate the
-checksums, and update the commit and date here. Do not edit an imported file in place. Then
+When the website ships a new tag, copy the files in the table above from it, check each copy
+against its source byte for byte, and update the tag, commit and date here. Do not edit an imported file in place. Then
 publish this repository's tag, and have each application re-vendor `brand-tokens.css` from it.
 Release progress is tracked in issue #4, not in a file.
