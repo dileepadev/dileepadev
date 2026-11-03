@@ -13,6 +13,71 @@ Changes are organized into the following categories:
 
 Unreleased changes go here.
 
+## [v2.1.0] - 2026-11-03
+
+> [!NOTE]
+> **Brand v2.1.0** replaces the emerald brand with the monochrome system built on `dileepa-dev`:
+> the accent is the text colour, the logo is `@dileepadev`, and colour appears only to report a
+> state. The website is the source: every brand file here is either copied from its `v2.1.0` tag
+> exactly or redrawn from it (refs #4).
+>
+> - The other repositories released v2.1.0 against the same brand: `dileepa-dev`,
+>   `dileepadev.github.io`, `links-dileepa-dev` and `admin-dileepa-dev` adopt it, and
+>   `api-dileepa-dev` adds one public route, `GET /stats`. `blog-dileepa-dev` has no v2.1.0 work.
+> - The version stays 2.1.0 by the owner's decision, although `VERSIONING.md` would call a
+>   reversed brand rule major. See [`docs/brand/README.md`](docs/brand/README.md#the-decision).
+
+### Added - v2.1.0
+
+- **An animated profile README cover**, `docs/brand/github-readme.svg`: the `@dileepadev` lockup,
+  a link to dileepa.dev, and "I develop" followed by agentic AI systems, LLM applications, RAG
+  pipelines, MCP servers and tools, eval suites and production AI backends, typed one at a time
+  with a detail line under each while the matching one of six tiles lights. Text is outlined, the
+  animation is CSS only, and it holds the first phrase for reduced motion.
+- **Generators**, so each drawn asset is rebuilt rather than edited: `logo/generate.py`,
+  `icons/generate.mjs` and `github-readme.py`. The icons folder gains a README.
+- `docs/brand/README.md`, which maps every imported file to its source tag and commit and records
+  the settled option B decision.
+- `docs/brand/og2.png`, the wide link-preview card, beside `og.png`.
+- `docs/brand/social-cover-guide.md`: the rules and current platform sizes for making a social
+  cover, now that the covers themselves are not kept here.
+
+### Changed - v2.1.0
+
+- **The brand files are the website's**, copied byte for byte from its `v2.1.0` tag (commit
+  `7c484f3`): the brand guide, design-system contract, token sheet, `DESIGN.md`, the OG card, the
+  favicon and app-icon set, `manifest.json` and `browserconfig.xml` (theme colour `#050505`, not
+  `#0D0D0D`). The portraits already matched. `DESIGN.md` stays at 2.1.0.
+- **The logo is redrawn as `@dileepadev`**: the `@` in the muted ink and the wordmark at full
+  contrast, both Manrope 500, as live-text and outlined SVGs for Carbon and Paper. The reduced
+  mark is the `@` on its field, replacing the `/.`.
+- **The six pillar icons are black and white.** The geometry is unchanged and matches the
+  website's component; the 512px PNGs are on a Carbon field and a transparent badge, where they
+  were on white.
+- **The profile README is rewritten around the cover**: the cover as the heading, one line on what
+  I build, a "What I do" list of four areas, "How I work" as a short agent-run trace (evals before
+  features, least-privilege agents, traces as tests, cost per task, regressions caught by re-run
+  evals), an "After hours" line linking the website's projects, blog, events, videos and
+  communities pages, and an "Elsewhere" row (website, links page, build log, email). Every link
+  is marked as leaving the page, and there is no emoji.
+- The API contract records the API at v2.1.0 and its one new route, the public `GET /stats`; the
+  platform overview mentions it. Both say they are current as of v2.1.0 and no longer carry a
+  `— v2.0.0` title.
+- Stale claims are corrected: the dropped `legacy` blog field and its rollback script are no
+  longer described as live, photographs are in three places, not two, and the v2.0.0 migration
+  checklist is marked as the plan as written.
+- `AGENTS.md`, `VERSIONING.md`, the documentation index and `TODO.md` describe exact copying, the
+  generated assets and issue-based tracking. `AGENTS.md` lists each repository's v2.1.0 issue, and
+  `TODO.md` keeps only the scope, each repository's release status and the issue links.
+
+### Removed - v2.1.0
+
+- `docs/brand/covers/` and `docs/brand/banners/`. Social platform covers change too often to keep
+  in the repository; `docs/brand/social-cover-guide.md` says how to make one.
+- The emerald `dileepadev /.` lockup and `/.` mark, the emerald pillar icons, and the old
+  text-led and v2.0 cover sets with their `export.py`, master SVG and animated header.
+- The stale `docs/brand/icons/index.html` gallery, which still used the emerald accent.
+
 ## [v2.0.0] - 2026-09-03
 
 > [!NOTE]
@@ -156,6 +221,7 @@ Unreleased changes go here.
 <!-- v0.0.1 -->
 
 [Unreleased]: https://github.com/dileepadev/dileepadev/branches
+[v2.1.0]: https://github.com/dileepadev/dileepadev/releases/tag/v2.1.0
 [v2.0.0]: https://github.com/dileepadev/dileepadev/releases/tag/v2.0.0
 [v1.0]: https://github.com/dileepadev/dileepadev/releases/tag/v1.0
 [v0.2]: https://github.com/dileepadev/dileepadev/releases/tag/v0.2

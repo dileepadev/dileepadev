@@ -46,7 +46,8 @@ Version numbers follow the structure:
 ### Examples
 
 - `2.0.0` – The platform migration: brand, design system, and architecture published together
-- `2.1.0` – Adds a document or an asset without invalidating a vendored copy
+- `2.1.0` – The monochrome brand release; the owner deliberately retained this version despite
+  the changed brand rule, as recorded in the [source import decision](docs/brand/README.md#the-decision)
 - `2.0.1` – Fixes a wrong path or a broken cross-repository link
 
 ### Tag history
@@ -68,8 +69,10 @@ All notable changes are documented in the [CHANGELOG.md](CHANGELOG.md) file.
    - Security work is not a category of its own. Hardening goes under **Added** and a
      vulnerability closed goes under **Fixed**, each as a `Security` subsection inside that
      category. Anything deprecated is recorded under **Removed**, beside what replaces it
-3. Check that [TODO.md](TODO.md) reflects what actually shipped, and that every file path and
-   token name referenced in a changed document still exists. There is no build to catch these
+3. Check the release's tracking issue for completed work and acceptance criteria. Keep
+   [TODO.md](TODO.md) as the scope and rollout overview, with progress recorded in issues.
+   Verify that every file path and token name referenced in a changed document still exists;
+   there is no build to catch these
 4. Commit changes with a version-related message (e.g. `chore: release v1.2.0`)
 5. Tag the release:
 

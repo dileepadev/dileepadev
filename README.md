@@ -1,10 +1,35 @@
-# ![Dileepa Bandara - AI Engineer. Building AI systems and the community around them](docs/brand/covers/x-header-animated.svg)
+# ![Dileepa, @dileepadev - AI Engineer. I develop agentic AI systems, LLM applications, RAG pipelines, MCP servers and tools, eval suites and production AI backends.](docs/brand/github-readme.svg)
 
-Hi everyone, I’m an AI Engineer building reliable, practical AI systems, from LLMs and autonomous agents to cloud infrastructure and production applications. I also contribute through open source, technical writing, talks, workshops, and mentorship.
+I design, build and ship **AI systems**, from agents and retrieval to evaluation and production backends.
 
-[Website](https://dileepa.dev) ·
-[Blog](https://dileepa.dev/blog) ·
-[Build log](https://dileepadev.github.io) ·
-[LinkedIn](https://linkedin.com/in/dileepadev) ·
-[YouTube](https://youtube.com/@dileepadev) ·
-[Email](mailto:contact@dileepa.dev)
+## What I do
+
+- **Systems & architecture:** AI system design, orchestration and cloud infrastructure.
+- **Agents & applications:** Autonomous agents, multi-agent workflows and LLM applications.
+- **Retrieval & tools:** RAG pipelines, MCP servers and integrations.
+- **Evaluation & production:** Eval suites, regression checks and backend services.
+
+## How I work
+
+```text
+$ dileepadev run --task "ship an AI system"
+
+  [1/5] plan    ✓ eval written before the feature
+  [2/5] build   ✓ agents get least-privilege scopes, not blanket trust
+  [3/5] trace   ✓ every run recorded, every failure turned into a test
+  [4/5] ship    ✓ guardrails on, cost tracked per task
+  [5/5] learn   ✓ evals re-run, regressions caught before users see them
+
+  ↻ loop: next task starts from what this one taught
+```
+
+## After hours
+
+I build [projects ↗](https://dileepa.dev/projects), write [technical articles ↗](https://dileepa.dev/blog), give [talks and workshops ↗](https://dileepa.dev/events), make [educational videos ↗](https://dileepa.dev/videos) and help run [developer communities ↗](https://dileepa.dev/communities).
+
+## Elsewhere
+
+[Website ↗](https://dileepa.dev) ·
+[Links ↗](https://links.dileepa.dev) ·
+[Build log ↗](https://dileepadev.github.io) ·
+[Email ↗](mailto:contact@dileepa.dev)
